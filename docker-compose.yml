@@ -41,8 +41,7 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: all
-              capabilities: [gpu, compute]
+              capabilities: ["compute", "utility"]
 
 volumes:
   weaviate_data:
