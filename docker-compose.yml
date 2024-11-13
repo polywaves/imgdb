@@ -36,6 +36,7 @@ services:
     environment:
       ENABLE_CUDA: 1
       CUDA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
     deploy:
       resources:
         reservations:
