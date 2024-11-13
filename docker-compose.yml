@@ -36,14 +36,14 @@ services:
     environment:
       ENABLE_CUDA: 1
       CUDA_VISIBLE_DEVICES: all
-      NVIDIA_DRIVER_CAPABILITIES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute, gpu
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
               count: 1
-              capabilities: ["compute", "gpu", "utility", "video"]
+              capabilities: ["compute", "gpu"]
 
 volumes:
   weaviate_data:
