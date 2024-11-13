@@ -43,7 +43,7 @@ services:
             - driver: nvidia
               device_ids: ['0']
               capabilities:
-                - all
+                - compute
 
 volumes:
   weaviate_data:
