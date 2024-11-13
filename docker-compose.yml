@@ -22,8 +22,8 @@ services:
       - weaviate_data:/var/lib/weaviate
     restart: on-failure:0
     environment:
-      IMAGE_INFERENCE_API: http://i2v-neural:8181
-      # IMAGE_INFERENCE_API: http://87.242.104.141:8080
+      # IMAGE_INFERENCE_API: http://i2v-neural:8181
+      IMAGE_INFERENCE_API: http://87.242.104.141:8181
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: true
       PERSISTENCE_DATA_PATH: /var/lib/weaviate
