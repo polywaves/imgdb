@@ -42,7 +42,7 @@ services:
           devices:
             - driver: nvidia
               count: all
-              capabilities: ["compute", "utility", "utility", "video"]
+              capabilities: ["compute", "gpu", "utility", "video"]
 
 volumes:
   weaviate_data:
