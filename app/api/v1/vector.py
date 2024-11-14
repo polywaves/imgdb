@@ -59,7 +59,7 @@ async def training_by_url(url: str, uid: int):
       }
     })
 
-    # weaviate_provider.create_image_vector(items=items)
+    weaviate_provider.create_image_vector(items=items)
 
     return {
       "detail": f"Image vector created successfully"
