@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 # Whitelisted IPs
-WHITELISTED_IPS = ["5.61.63.91", "0.0.0.0", "127.0.0.1", "192.168.65.1"]
+WHITELISTED_IPS = ["5.61.63.91", "46.138.188.236", "0.0.0.0", "127.0.0.1", "192.168.65.1"]
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:

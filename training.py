@@ -7,7 +7,6 @@ url = "http://87.242.104.141:8000/api/v1/vector/training/"
 headers = {
   'Content-Type': 'application/json'
 }
-collection_name="test1"
 
 images = pandas.read_csv("./imgs_396k.csv", on_bad_lines="skip", sep=";", low_memory=False, names=["id", "uid", "img"])
 
