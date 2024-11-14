@@ -9,6 +9,9 @@ services:
       - 80:80
     volumes:
       - ./:/usr/src/app
+    depends_on:
+      - weaviate
+      - mongo
 
   mongo:
     image: mongo
@@ -37,6 +40,8 @@ services:
     restart: always
     env_file:
       - .env
+    depends_on:
+      - i2v-neural
   
   i2v-neural:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
