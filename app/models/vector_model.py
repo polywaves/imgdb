@@ -1,47 +1,47 @@
-from pydantic import BaseModel, Field
-from typing import List
+from pydantic import BaseModel
+from typing import List, Optional
 
 
 class ImageSizes(BaseModel):
-  n: str = Field()
-  w: int = Field()
-  h: int = Field()
+  n: str = None
+  w: int = 0
+  h: int = 0
 
 
 class Images(BaseModel):
-  img_id: int = Field()
-  img: str = Field()
-  sizes: List[ImageSizes]
+  img_id: int = None
+  img: str = None
+  sizes: Optional[List[ImageSizes]] = list()
 
 
 class Video(BaseModel):
-  poster: str = Field()
-  main: str = Field()
-  id_poster: str = Field()
-  id_main: str = Field()
+  poster: Optional[str] = None
+  main: Optional[str] = None
+  id_poster: Optional[str] = None
+  id_main: Optional[str] = None
 
 
 class TrainingByJson(BaseModel):
-  id: str = Field()
-  os: str = Field()
-  ds: str = Field()
-  of: str = Field()
-  ins: str = Field()
-  vendor_capt: str = Field()
-  vendor_id: str = Field()
-  point_id: str = Field()
-  vk_post: str = Field()
-  price: float = Field()
-  by: str = Field()
-  item_name: str = Field()
-  like: str = Field()
-  views: str = Field()
-  posted: str = Field()
-  text: str = Field()
-  images: List[Images]
-  video: Video
-  sizes: List[str]
-  options: List[str]
+  id: str = None
+  os: Optional[str] = None
+  ds: Optional[str] = None
+  of: Optional[str] = None
+  ins: Optional[str] = None
+  vendor_capt: Optional[str] = None
+  vendor_id: Optional[str] = None
+  point_id: Optional[str] = None
+  vk_post: Optional[str] = None
+  price: Optional[float] = None
+  by: Optional[str] = None
+  item_name: Optional[str] = None
+  like: Optional[str] = None
+  views: Optional[str] = None
+  posted: Optional[str] = None
+  text: Optional[str] = None
+  images: List[Images] = list()
+  video: Optional[Video] = dict()
+  sizes: Optional[List[str]] = list()
+  options: Optional[List[str]] = list()
 
 
 class DeletePostsByIds(BaseModel):
