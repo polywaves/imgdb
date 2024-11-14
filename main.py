@@ -5,7 +5,9 @@ from app.utils.logger_util import logger
 
 from app.api import v1
 
-app = FastAPI()
+app = FastAPI(
+  redirect_slashes=False
+)
 
 app.add_middleware(
   CORSMiddleware,
