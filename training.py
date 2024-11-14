@@ -3,7 +3,7 @@ import json
 import pandas
 
 # url = "http://0.0.0.0:8000/api/v1/image/training/"
-url = "http://87.242.104.141:8000/api/v1/vector/training/"
+url = "http://87.242.104.141:8000/api/v1/vector/training"
 headers = {
   'Content-Type': 'application/json'
 }
