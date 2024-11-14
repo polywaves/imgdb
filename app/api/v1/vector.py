@@ -118,6 +118,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
   items = list()
   images = list()
   for image in params.images:
+    weaviate_provider.delete_image_by_uid(uid=int(image.img_id))
+
     items.append({
       "image": image_util.from_url_to_base64(image.img),
       "uid": int(image.img_id)
@@ -129,6 +131,9 @@ async def training_by_json(params: vector_model.TrainingByJson):
       "options": options
     })
 
+  await posts_collection.delete_one({
+    "id": params.id
+  })
   await posts_collection.insert_one(params.model_dump())
 
   weaviate_provider.create_image_vector(items=items)
