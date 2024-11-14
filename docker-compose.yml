@@ -19,7 +19,7 @@ services:
       - 8080:8080
       - 50051:50051
     volumes:
-      - weaviate_data:/var/lib/weaviate
+      - weaviate_data_test:/var/lib/weaviate
     restart: on-failure:0
     environment:
       IMAGE_INFERENCE_API: http://i2v-neural:8080
@@ -35,7 +35,7 @@ services:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
     environment:
-      ENABLE_CUDA: 0
+      ENABLE_CUDA: 1
     deploy:
       resources:
         reservations:
@@ -45,4 +45,4 @@ services:
               capabilities: ["compute"]
 
 volumes:
-  weaviate_data:
+  weaviate_data_test:
