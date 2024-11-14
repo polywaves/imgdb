@@ -6,6 +6,12 @@ from app.utils.logger_util import logger
 router = APIRouter()
 
 
+try:
+  weaviate_provider.create_collection()
+except Exception as e:
+  logger.debug(e)
+
+
 @router.get("/delete_by_uid", tags=["Delete image vector by uid"])
 async def delete_by_uid(uid: int):
   try:

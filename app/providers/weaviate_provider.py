@@ -3,7 +3,7 @@ from weaviate.classes.config import Configure, DataType, Property
 from weaviate.classes.query import MetadataQuery, Filter
 
 
-collection_name = 'test1'
+collection_name = 'test3'
 
 
 client = weaviate.connect_to_custom(
@@ -94,3 +94,4 @@ def delete_image_by_uid(uid: int) -> object:
   )
 
   return response
+
