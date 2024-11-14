@@ -3,8 +3,22 @@ services:
     build:
       context: .
     restart: always
+    env_file:
+      - .env
     ports:
-      - 8000:8000
+      - 80:80
+    volumes:
+      - ./:/usr/src/app
+
+  mongo:
+    image: mongo
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/etc/mongo
 
   weaviate:
     command:
@@ -20,23 +34,15 @@ services:
       - 50051:50051
     volumes:
       - weaviate_data:/var/lib/weaviate
-    restart: on-failure:0
-    environment:
-      IMAGE_INFERENCE_API: http://i2v-neural:8080
-      # IMAGE_INFERENCE_API: http://87.242.104.141:8181
-      QUERY_DEFAULTS_LIMIT: 25
-      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: true
-      PERSISTENCE_DATA_PATH: /var/lib/weaviate
-      DEFAULT_VECTORIZER_MODULE: img2vec-neural
-      ENABLE_MODULES: img2vec-neural
-      CLUSTER_HOSTNAME: node1
+    restart: always
+    env_file:
+      - .env
   
   i2v-neural:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
-    environment:
-      ENABLE_CUDA: 1
-      CUDA_VISIBLE_DEVICES: 0
+    env_file:
+      - .env
     deploy:
       resources:
         reservations:
@@ -47,3 +53,4 @@ services:
 
 volumes:
   weaviate_data:
+  mongo_data:

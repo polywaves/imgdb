@@ -1,18 +1,19 @@
+import os
 import weaviate 
 from weaviate.classes.config import Configure, DataType, Property
 from weaviate.classes.query import MetadataQuery, Filter
 
 
-collection_name = 'test3'
+collection_name = os.environ["WEAVIATE_COLLECTION_NAME"]
 
 
 client = weaviate.connect_to_custom(
-  http_host="87.242.104.141",
-  http_port=8080,
-  http_secure=False,
-  grpc_host="87.242.104.141",
-  grpc_port=50051,
-  grpc_secure=False
+  http_host=os.environ["WEAVIATE_HOST"],
+  http_port=os.environ["WEAVIATE_HTTP_PORT"],
+  http_secure=os.environ["WEAVIATE_HTTP_SECURE"],
+  grpc_host=os.environ["WEAVIATE_HOST"],
+  grpc_port=os.environ["WEAVIATE_GRPC_PORT"],
+  grpc_secure=os.environ["WEAVIATE_GRPC_SECURE"]
 )
 
 
@@ -51,13 +52,6 @@ def create_collection() -> object:
       Property(
         name="uid", 
         data_type=DataType.INT
-      ),
-      Property(
-        name="data",
-        data_type=DataType.OBJECT,
-        nested_properties=[
-          Property(name="url", data_type=DataType.TEXT)
-        ]
       )
     ]
   )

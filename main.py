@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 # Whitelisted IPs
-WHITELISTED_IPS = ["5.61.63.91", "46.138.188.236", "87.242.104.141", "0.0.0.0", "127.0.0.1", "192.168.65.1"]
+# WHITELISTED_IPS = ["5.61.63.91", "46.138.188.236", "87.242.104.141", "0.0.0.0", "127.0.0.1", "192.168.65.1"]
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:
@@ -27,8 +27,8 @@ async def add_process_time_header(request: Request, call_next) -> any:
   ip = str(request.client.host)
   logger.info(f"Client ip is {ip}")
 
-  if ip not in WHITELISTED_IPS:
-    raise HTTPException(status_code=500, detail=f"IP {ip} is not allowed to access this resource.")  
+  # if ip not in WHITELISTED_IPS:
+  #   raise HTTPException(status_code=500, detail=f"IP {ip} is not allowed to access this resource.")  
 
   response = await call_next(request)
   logger.info(f"Response time is {time.time() - start_time} sec")
