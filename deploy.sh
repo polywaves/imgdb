@@ -1,7 +1,7 @@
 #!/bin/bash
 
 git pull
-# docker compose down
-docker compose build
-docker compose up -d
-docker compose logs -f
+# docker -f docker-compose.prod.yml compose down
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml logs -f

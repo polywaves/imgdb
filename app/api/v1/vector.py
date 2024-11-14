@@ -15,12 +15,13 @@ except Exception as e:
 
 
 posts_collection = db.get_collection("posts")
-
+# await posts_collection.create_index("user_id", unique=True)
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image)
+  vectors = weaviate_provider.search_near_image(image=image, limit=30)
 
   response = list()
+  post_ids = []
   for vector in vectors:
     distance = vector.metadata.distance
     uid = vector.properties["uid"]
@@ -29,23 +30,26 @@ async def search_posts(image: str) -> dict:
       "images.img_id": uid
     })
 
-    images = list()
-    for image in post["images"]:
-      item = {
-        "img_id": image["img_id"],
-        "options": {
-          "img": image["img"],
-          "sizes": image["sizes"]
+    if post["id"] not in post_ids:
+      post_ids.append(post["id"])
+
+      images = list()
+      for image in post["images"]:
+        item = {
+          "img_id": image["img_id"],
+          "options": {
+            "img": image["img"],
+            "sizes": image["sizes"]
+          }
         }
-      }
 
-      images.append(item)
+        images.append(item)
 
-    response.append({
-      "post_id": post["id"],
-      "distance": distance,
-      "images": images
-    })
+      response.append({
+        "post_id": post["id"],
+        "distance": distance,
+        "images": images
+      })
 
   return response
 
