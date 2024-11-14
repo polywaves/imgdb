@@ -35,7 +35,7 @@ services:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
     environment:
-      ENABLE_CUDA: 1
+      ENABLE_CUDA: 0
     deploy:
       resources:
         reservations:
