@@ -33,23 +33,9 @@ async def search_posts(image: str) -> dict:
     if post["id"] not in post_ids:
       post_ids.append(post["id"])
 
-      images = list()
-      for image in post["images"]:
-        item = {
-          "img_id": image["img_id"],
-          "options": {
-            "img": image["img"],
-            "sizes": image["sizes"]
-          }
-        }
-
-        images.append(item)
-
-      response.append({
-        "post_id": post["id"],
-        "distance": distance,
-        "images": images
-      })
+      del post["_id"]
+      post["distance"] = distance
+      response.append(post)
 
   return response
 
@@ -96,33 +82,51 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   }
 
 
-@router.get("/search", tags=["Search near vectors by url"])
+@router.get("/search_by_url", tags=["Search near vectors by url"])
 async def search_by_url(url: str):
   image = image_util.from_url_to_base64(url)
   response = await search_posts(image=image)
 
-  return {
-    "data": response
-  }
+  return response
 
 
-@router.post("/search", tags=["Search near vectors by uploading image"])
+@router.get("/search_by_img_id", tags=["Search near vectors by existing img id"])
+async def search_by_img_id(img_id: int):
+  post = await posts_collection.find_one({
+    "images.img_id": img_id
+  })
+
+  response = list()
+  for image in post["images"]:
+    if image["img_id"] == img_id:
+      image = image_util.from_url_to_base64(image["img"])
+      response = await search_posts(image=image)
+
+  return response
+
+
+@router.post("/search_by_upload", tags=["Search near vectors by uploading image"])
 async def search_by_upload(image: UploadFile = File()):
   image = image_util.to_base64(await image.read())
   response = await search_posts(image=image)
 
-  return {
-    "data": response
-  }
+  return response
   
 
 @router.post("/training", tags=["Training by json"])
 async def training_by_json(params: vector_model.TrainingByJson):
   items = list()
+  images = list()
   for image in params.images:
     items.append({
       "image": image_util.from_url_to_base64(image.img),
       "uid": int(image.img_id)
+    })
+
+    options = dict()
+    images.append({
+      "img_id": image.img_id,
+      "options": options
     })
 
   await posts_collection.insert_one(params.model_dump())
@@ -130,6 +134,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
   weaviate_provider.create_image_vector(items=items)
 
   return {
-    "detail": f"Image vector created successfully"
+    "post_id": params.id,
+    "images": images
   }
 

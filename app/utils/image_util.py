@@ -2,7 +2,7 @@ import base64
 import requests
 
 def load(url: str) -> bytearray:
-  response = requests.get(url)
+  response = requests.get(url, verify=False)
   
   return response.content
 
