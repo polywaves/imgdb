@@ -50,7 +50,7 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 10
       resources:
         reservations:
           devices:
