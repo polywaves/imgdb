@@ -13,12 +13,14 @@ services:
       - i2v-neural
       - weaviate
       - mongo
+    labels:
+      autoheal-app: true
     healthcheck:
-      test: curl --fail http://0.0.0.0:80/health || exit 1
+      test: curl --fail http://localhost/health || exit 1
       interval: 3s
       timeout: 3s
       retries: 3
-      start_period: 3s
+      start_period: 5s
 
   mongo:
     image: mongo
@@ -60,7 +62,7 @@ services:
     restart: always
     image: willfarrell/autoheal
     environment:
-      - AUTOHEAL_CONTAINER_LABEL=all
+      - AUTOHEAL_CONTAINER_LABEL=autoheal-app
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
