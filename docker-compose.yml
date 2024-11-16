@@ -48,13 +48,6 @@ services:
     restart: always
     env_file:
       - .env
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: ["compute"]
 
 volumes:
   weaviate_data:

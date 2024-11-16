@@ -17,6 +17,8 @@ except Exception as e:
 posts_collection = db.get_collection("posts")
 # await posts_collection.create_index("user_id", unique=True)
 
+logger.info(weaviate_provider.get_count_of_unique_uids())
+
 async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image, limit=30)
 

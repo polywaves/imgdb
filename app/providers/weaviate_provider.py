@@ -1,7 +1,8 @@
 import os
 import weaviate 
 from weaviate.classes.config import Configure, DataType, Property
-from weaviate.classes.query import MetadataQuery, Filter
+from weaviate.classes.query import MetadataQuery, Filter, Metrics
+from weaviate.classes.aggregate import GroupByAggregate
 
 
 collection_name = os.environ["WEAVIATE_COLLECTION_NAME"]
@@ -88,4 +89,13 @@ def delete_image_by_uid(uid: int) -> object:
   )
 
   return response
+
+
+def get_count_of_unique_uids():
+  collection = client.collections.get(collection_name)
+  response = collection.aggregate.over_all(
+    group_by=GroupByAggregate(prop="uid")
+  )
+
+  return response.groups
 
