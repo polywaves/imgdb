@@ -1,5 +1,6 @@
 import os
 import weaviate 
+from weaviate.config import AdditionalConfig, Timeout
 from weaviate.classes.config import Configure, DataType, Property
 from weaviate.classes.query import MetadataQuery, Filter, Metrics
 from weaviate.classes.aggregate import GroupByAggregate
@@ -14,7 +15,14 @@ client = weaviate.connect_to_custom(
   http_secure=os.environ["WEAVIATE_HTTP_SECURE"],
   grpc_host=os.environ["WEAVIATE_HOST"],
   grpc_port=os.environ["WEAVIATE_GRPC_PORT"],
-  grpc_secure=os.environ["WEAVIATE_GRPC_SECURE"]
+  grpc_secure=os.environ["WEAVIATE_GRPC_SECURE"],
+  additional_config=AdditionalConfig(
+    timeout=Timeout(
+      init=120, 
+      query=60, 
+      insert=120
+    )
+  )
 )
 
 

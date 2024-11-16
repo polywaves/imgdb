@@ -15,12 +15,6 @@ services:
       - mongo
     labels:
       autoheal-app: true
-    healthcheck:
-      test: curl --fail http://localhost/health || exit 1
-      interval: 3s
-      timeout: 3s
-      retries: 3
-      start_period: 3s
 
   mongo:
     image: mongo
@@ -58,23 +52,14 @@ services:
     env_file:
       - .env
     deploy:
-      # mode: replicated
-      # replicas: 10
+      mode: replicated
+      replicas: 10
       resources:
         reservations:
           devices:
             - driver: nvidia
               count: 1
               capabilities: ["compute"]
-
-  autoheal:
-    restart: always
-    image: willfarrell/autoheal:latest
-    environment:
-      - AUTOHEAL_CONTAINER_LABEL=autoheal-app
-      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   weaviate_data:
