@@ -10,8 +10,15 @@ services:
     volumes:
       - ./:/usr/src/app
     depends_on:
+      - i2v-neural
       - weaviate
       - mongo
+    healthcheck:
+      test: curl --fail http://0.0.0.0:80/health || exit 1
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
 
   mongo:
     image: mongo
@@ -48,6 +55,14 @@ services:
     restart: always
     env_file:
       - .env
+
+  autoheal:
+    restart: always
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   weaviate_data:

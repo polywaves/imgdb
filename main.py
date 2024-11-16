@@ -17,6 +17,12 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
+@app.get("/health")
+def health_check():
+  return {
+    "status": "healthy"
+  }
+
 # Whitelisted IPs
 # WHITELISTED_IPS = ["5.61.63.91", "46.138.188.236", "87.242.104.141", "0.0.0.0", "127.0.0.1", "192.168.65.1"]
 
