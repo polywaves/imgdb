@@ -58,8 +58,8 @@ services:
     env_file:
       - .env
     deploy:
-      mode: replicated
-      replicas: 10
+      # mode: replicated
+      # replicas: 10
       resources:
         reservations:
           devices:
