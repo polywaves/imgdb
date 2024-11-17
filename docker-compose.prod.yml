@@ -5,8 +5,8 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - 80:80
+    # ports:
+    #   - 80:80
     volumes:
       - ./:/usr/src/app
     deploy:
@@ -44,9 +44,9 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-    ports:
-      - 8080:8080
-      - 50051:50051
+    # ports:
+    #   - 8080:8080
+    #   - 50051:50051
     volumes:
       - weaviate_data:/var/lib/weaviate
     restart: always
