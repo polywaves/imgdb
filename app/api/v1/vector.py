@@ -40,7 +40,7 @@ async def search_posts(image: str) -> dict:
       post_ids.append(post["id"])
 
       del post["_id"]
-      post["distance"] = round(distance, 5)
+      post["distance"] = round(distance, 7)
       response.append(post)
 
   return response
