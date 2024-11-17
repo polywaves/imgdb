@@ -14,7 +14,7 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-    depends_on:
+    links:
       - api
 
   api:
@@ -35,7 +35,7 @@ services:
         max_attempts: 10
     #   mode: replicated
     #   replicas: 10
-    depends_on:
+    links:
       - i2v-neural
       - weaviate
       - mongo
@@ -76,7 +76,7 @@ services:
       - weaviate_data:/var/lib/weaviate
     env_file:
       - .env
-    depends_on:
+    links:
       - i2v-neural
     deploy:
       restart_policy:
