@@ -30,7 +30,7 @@ async def search_posts(image: str) -> dict:
     uid = vector.properties["uid"]
 
     post = await posts_collection.find_one({
-      "images.img_id": uid
+      "images.img_id": int(uid)
     })
 
     if post["id"] not in post_ids:
