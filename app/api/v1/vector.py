@@ -33,6 +33,9 @@ async def search_posts(image: str) -> dict:
       "images.img_id": int(uid)
     })
 
+    if not post:
+      continue
+
     if post["id"] not in post_ids:
       post_ids.append(post["id"])
 
