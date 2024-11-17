@@ -10,8 +10,8 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-      mode: replicated
-      replicas: 15
+      # mode: replicated
+      # replicas: 15
 
   api:
     build:
