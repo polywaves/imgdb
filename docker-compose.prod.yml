@@ -22,8 +22,8 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-      # mode: replicated
-      # replicas: 20
+      mode: replicated
+      replicas: 10
 
   mongo:
     image: mongo
@@ -49,7 +49,7 @@ services:
         delay: 1s
         max_attempts: 10
       mode: replicated
-      replicas: 20
+      replicas: 14
       resources:
         reservations:
           devices:
