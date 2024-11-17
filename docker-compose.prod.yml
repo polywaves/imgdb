@@ -16,6 +16,7 @@ services:
       - i2v-neural
       - weaviate
       - mongo
+      - autoheal
     labels:
       autoheal-app: true
     healthcheck:
