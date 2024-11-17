@@ -26,8 +26,8 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-    #   mode: replicated
-    #   replicas: 10
+      mode: replicated
+      replicas: 10
     # labels:
     #   autoheal-app: true
     # healthcheck:
@@ -60,8 +60,8 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-      # mode: replicated
-      # replicas: 10
+      mode: replicated
+      replicas: 10
       resources:
         reservations:
           devices:
