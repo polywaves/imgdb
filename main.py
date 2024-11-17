@@ -1,6 +1,6 @@
 import time
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Request
+# from fastapi.middleware.cors import CORSMiddleware
 from app.utils.logger_util import logger
 
 from app.api import v1
@@ -9,19 +9,13 @@ app = FastAPI(
   redirect_slashes=False
 )
 
-app.add_middleware(
-  CORSMiddleware,
-  allow_origins=["*"],
-  allow_credentials=True,
-  allow_methods=["*"],
-  allow_headers=["*"],
-)
-
-@app.get("/health")
-def health_check():
-  return {
-    "status": "healthy"
-  }
+# app.add_middleware(
+#   CORSMiddleware,
+#   allow_origins=["*"],
+#   allow_credentials=True,
+#   allow_methods=["*"],
+#   allow_headers=["*"],
+# )
 
 # Whitelisted IPs
 # WHITELISTED_IPS = ["5.61.63.91", "46.138.188.236", "87.242.104.141", "0.0.0.0", "127.0.0.1", "192.168.65.1"]
@@ -42,3 +36,9 @@ async def add_process_time_header(request: Request, call_next) -> any:
   return response
 
 app.include_router(v1.router, prefix='/api/v1')
+
+@app.get("/health")
+def health_check():
+  return {
+    "status": "healthy"
+  }
