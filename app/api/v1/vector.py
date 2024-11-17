@@ -1,3 +1,4 @@
+import json
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from app.providers import weaviate_provider
 from app.models import vector_model
@@ -95,11 +96,14 @@ async def search_by_url(url: str):
 @router.get("/search_by_img_id", tags=["Search near vectors by existing img id"])
 async def search_by_img_id(img_id: int):
   post = await posts_collection.find_one({
-    "images.img_id": img_id
+    "images.img_id": int(img_id)
   })
 
   if not post:
-    raise HTTPException(status_code=500, detail="Post not found")
+    raise HTTPException(status_code=500, response=json.dumps({
+      "result": 0,
+      "msg": f"Post image with {img_id} id not found"
+    }))
 
   response = list()
   for image in post["images"]:
