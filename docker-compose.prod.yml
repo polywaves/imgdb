@@ -28,14 +28,14 @@ services:
         max_attempts: 10
     #   mode: replicated
     #   replicas: 10
-    labels:
-      autoheal-app: true
-    healthcheck:
-      test: curl --fail http://api:8080/health || exit 1
-      interval: 3s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
+    # labels:
+    #   autoheal-app: true
+    # healthcheck:
+    #   test: curl --fail http://api:8080/health || exit 1
+    #   interval: 3s
+    #   timeout: 3s
+    #   retries: 3
+    #   start_period: 5s
 
   mongo:
     image: mongo
