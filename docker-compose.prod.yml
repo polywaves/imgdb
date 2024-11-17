@@ -89,7 +89,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_data:/var/lib/weaviate
+      - weaviate_node_1:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -115,7 +115,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_data:/var/lib/weaviate
+      - weaviate_node_2:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -142,7 +142,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_data:/var/lib/weaviate
+      - weaviate_node_3:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -159,5 +159,7 @@ services:
         max_attempts: 10
 
 volumes:
-  weaviate_data:
+  weaviate_node_1:
+  weaviate_node_2:
+  weaviate_node_3:
   mongo_data:
