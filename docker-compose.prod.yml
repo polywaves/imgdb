@@ -9,9 +9,9 @@ services:
     #   - 80:80
     volumes:
       - ./:/usr/src/app
-    deploy:
-      mode: replicated
-      replicas: 10
+    # deploy:
+    #   mode: replicated
+    #   replicas: 10
     depends_on:
       - i2v-neural
       - weaviate
