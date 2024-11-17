@@ -11,7 +11,7 @@ services:
         delay: 1s
         max_attempts: 10
       mode: replicated
-      replicas: 10
+      replicas: 20
 
   api:
     build:
@@ -25,7 +25,7 @@ services:
         delay: 1s
         max_attempts: 10
       mode: replicated
-      replicas: 10
+      replicas: 20
     # labels:
     #   autoheal-app: true
     # healthcheck:
@@ -154,7 +154,7 @@ services:
       restart_policy:
         condition: on-failure
         delay: 1s
-        max_attempts: 10
+        max_attempts: 20
 
 volumes:
   weaviate_node_1:
