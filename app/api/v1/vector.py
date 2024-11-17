@@ -84,7 +84,7 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   }
 
 
-@router.get("/search_by_url", tags=["Search near vectors by url"])
+@router.post("/search_by_url", tags=["Search near vectors by url"])
 async def search_by_url(url: str):
   image = image_util.from_url_to_base64(url)
   response = await search_posts(image=image)
@@ -97,6 +97,9 @@ async def search_by_img_id(img_id: int):
   post = await posts_collection.find_one({
     "images.img_id": img_id
   })
+
+  if not post:
+    raise HTTPException(status_code=500, detail="Post not found")
 
   response = list()
   for image in post["images"]:
