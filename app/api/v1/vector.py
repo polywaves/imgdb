@@ -75,6 +75,7 @@ async def delete_posts_by_ids(post_ids: str):
   deleted = await delete_posts(post_ids=post_ids.split(','))
   
   return {
+    "status": 1,
     "deleted": deleted
   }
   
@@ -84,6 +85,7 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   deleted = await delete_posts(post_ids=params.post_ids)
   
   return {
+    "status": 1,
     "deleted": deleted
   }
 
@@ -91,9 +93,12 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
 @router.post("/search_by_url", tags=["Search near vectors by url"])
 async def search_by_url(url: str):
   image = image_util.from_url_to_base64(url)
-  response = await search_posts(image=image)
+  posts = await search_posts(image=image)
 
-  return response
+  return {
+    "status": 1,
+    "posts": posts
+  }
 
 
 @router.get("/search_by_img_id", tags=["Search near vectors by existing img id"])
@@ -103,26 +108,32 @@ async def search_by_img_id(img_id: int):
   })
 
   if not post:
-    raise HTTPException(status_code=500, response=json.dumps({
-      "result": 0,
-      "msg": f"Post image with {img_id} id not found"
-    }))
+    return {
+      "status": 1,
+      "posts": []
+    }
 
-  response = list()
+  posts = list()
   for image in post["images"]:
     if image["img_id"] == img_id:
       image = image_util.from_url_to_base64(image["img"])
-      response = await search_posts(image=image)
+      posts = await search_posts(image=image)
 
-  return response
+  return {
+    "status": 1,
+    "posts": posts
+  }
 
 
 @router.post("/search_by_upload", tags=["Search near vectors by uploading image"])
 async def search_by_upload(image: UploadFile = File()):
   image = image_util.to_base64(await image.read())
-  response = await search_posts(image=image)
+  posts = await search_posts(image=image)
 
-  return response
+  return {
+    "status": 1,
+    "posts": posts
+  }
   
 
 @router.post("/training", tags=["Training by json"])
@@ -151,6 +162,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
   weaviate_provider.create_image_vector(items=items)
 
   return {
+    "status": 1,
     "post_id": params.id,
     "images": images
   }
