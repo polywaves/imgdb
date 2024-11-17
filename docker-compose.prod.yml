@@ -14,8 +14,6 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-    links:
-      - api
 
   api:
     build:
@@ -30,11 +28,6 @@ services:
         max_attempts: 10
     #   mode: replicated
     #   replicas: 10
-    links:
-      - i2v-neural
-      - weaviate
-      - mongo
-      # - autoheal
     labels:
       autoheal-app: true
     healthcheck:
@@ -71,8 +64,6 @@ services:
       - weaviate_data:/var/lib/weaviate
     env_file:
       - .env
-    links:
-      - i2v-neural
     deploy:
       restart_policy:
         condition: on-failure
