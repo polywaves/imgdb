@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import mongo
 from app.utils.logger_util import logger
 from app.api import v1
+from starlette.concurrency import iterate_in_threadpool
 
 
 app = FastAPI(
@@ -36,7 +37,10 @@ async def add_process_time_header(request: Request, call_next) -> any:
 
   response = await call_next(request)
 
-  logger.debug(vars(response))
+  response_body = [chunk async for chunk in response.body_iterator]
+  response.body_iterator = iterate_in_threadpool(iter(response_body))
+
+  logger.debug(f"response_body={response_body[0].decode()}")
 
   # client_ip = request.client.host
   # if "X-Real-Ip" in request.headers:
