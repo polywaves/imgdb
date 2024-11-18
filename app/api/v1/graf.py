@@ -1,9 +1,9 @@
 from time import time
-from datetime import datetime
 from fastapi import APIRouter
 from app import mongo
 from app.utils.logger_util import logger
 from app.utils import response_util
+from app.utils.text_util import date_format
 from app.providers import weaviate_provider
 
 router = APIRouter()
@@ -23,7 +23,7 @@ async def uni_vectors():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
@@ -41,7 +41,7 @@ async def uni_ids():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
@@ -59,7 +59,7 @@ async def uni_posts():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
@@ -81,7 +81,7 @@ async def hour_requests():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
@@ -103,7 +103,7 @@ async def day_requests():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
@@ -125,7 +125,7 @@ async def week_requests():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
@@ -143,7 +143,7 @@ async def usage():
     "data": [
       {
         "rkey": time(),
-        "dt": datetime.now(),
+        "dt": date_format(),
         "val1": result
       }
     ]
