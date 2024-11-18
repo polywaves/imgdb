@@ -71,12 +71,15 @@ async def uni_posts():
 async def minute_requests(filter: str = None):
   start_time = time()
 
-  result = await mongo.requests_collection.count_documents({
-    "url": f"/{filter}/",
+  query = {
     "created_at": {
       "$gt": (datetime.now() - timedelta(minutes=1)).timestamp()
     }
-  })
+  }
+  if filter:
+    query["url"] = f"/{filter}/"
+
+  result = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -91,15 +94,18 @@ async def minute_requests(filter: str = None):
 
 
 @router.get("/hour_requests", tags=["Get count of last hour requests"])
-async def hour_requests():
+async def hour_requests(filter: str = None):
   start_time = time()
 
-  result = await mongo.requests_collection.count_documents({
-    "url": f"/{filter}/",
+  query = {
     "created_at": {
       "$gt": (datetime.now() - timedelta(hours=1)).timestamp()
     }
-  })
+  }
+  if filter:
+    query["url"] = f"/{filter}/"
+
+  result = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -114,15 +120,18 @@ async def hour_requests():
   
 
 @router.get("/day_requests", tags=["Get count of last 24h requests"])
-async def day_requests():
+async def day_requests(filter: str = None):
   start_time = time()
 
-  result = await mongo.requests_collection.count_documents({
-    "url": f"/{filter}/",
+  query = {
     "created_at": {
       "$gt": (datetime.now() - timedelta(days=1)).timestamp()
     }
-  })
+  }
+  if filter:
+    query["url"] = f"/{filter}/"
+
+  result = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -137,15 +146,18 @@ async def day_requests():
 
 
 @router.get("/week_requests", tags=["Get count of last week requests"])
-async def week_requests():
+async def week_requests(filter: str = None):
   start_time = time()
 
-  result = await mongo.requests_collection.count_documents({
-    "url": f"/{filter}/",
+  query = {
     "created_at": {
       "$gt": (datetime.now() - timedelta(weeks=1)).timestamp()
     }
-  })
+  }
+  if filter:
+    query["url"] = f"/{filter}/"
+
+  result = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
