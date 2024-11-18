@@ -16,7 +16,7 @@ services:
   api:
     build:
       context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
+    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors  --log-level=debug
     env_file:
       - .env
     deploy:
