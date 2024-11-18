@@ -36,6 +36,8 @@ async def add_process_time_header(request: Request, call_next) -> any:
 
   response = await call_next(request)
 
+  logger.debug(vars(response))
+
   # client_ip = request.client.host
   # if "X-Real-Ip" in request.headers:
   #   client_ip = request.headers["X-Real-Ip"]
