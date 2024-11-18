@@ -32,7 +32,6 @@ if os.environ["MODE"] == 'development':
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:
-  logger.debug(request.headers)
   logger.debug(await request.body())
 
   response = await call_next(request)
@@ -40,7 +39,7 @@ async def add_process_time_header(request: Request, call_next) -> any:
   response_body = [chunk async for chunk in response.body_iterator]
   response.body_iterator = iterate_in_threadpool(iter(response_body))
 
-  logger.debug(f"response_body={response_body[0].decode()}")
+  logger.debug(f"{response_body[0].decode()}")
 
   # client_ip = request.client.host
   # if "X-Real-Ip" in request.headers:
