@@ -34,7 +34,7 @@ async def add_process_time_header(request: Request, call_next) -> any:
   logger.debug(request.headers)
   logger.debug(await request.body())
 
-  # response = await call_next(request)
+  response = await call_next(request)
 
   # client_ip = request.client.host
   # if "X-Real-Ip" in request.headers:
@@ -49,7 +49,7 @@ async def add_process_time_header(request: Request, call_next) -> any:
   #   "created_at": time()
   # })
 
-  # return response
+  return response
 
 
 app.include_router(v1.router, prefix='/api/v1')
