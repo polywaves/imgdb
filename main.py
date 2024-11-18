@@ -31,7 +31,7 @@ if os.environ["MODE"] == 'development':
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:
-  logger.debug(request.json())
+  logger.debug(await request.json())
 
   response = await call_next(request)
 
