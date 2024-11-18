@@ -69,7 +69,7 @@ async def uni_posts():
 
 @router.get("/minute_requests", tags=["Get count of last minute requests. \
                                        Use filter query parameter for count by matches in stored request url. \
-                                       Example: http://domain/api/v1/graf/minute_requests"])
+                                       Example: http://domain/api/v1/graf/minute_requests?filter=training"])
 async def minute_requests(filter: str = None):
   start_time = time()
 
@@ -99,7 +99,7 @@ async def minute_requests(filter: str = None):
 
 @router.get("/hour_requests", tags=["Get count of last hour requests. \
                                      Use filter query parameter for count by matches in stored request url. \
-                                     Example: http://domain/api/v1/graf/minute_requests"])
+                                     Example: http://domain/api/v1/graf/minute_requests?filter=training"])
 async def hour_requests(filter: str = None):
   start_time = time()
 
@@ -129,7 +129,7 @@ async def hour_requests(filter: str = None):
 
 @router.get("/day_requests", tags=["Get count of last 24h requests. \
                                     Use filter query parameter for count by matches in stored request url. \
-                                    Example: http://domain/api/v1/graf/minute_requests"])
+                                    Example: http://domain/api/v1/graf/minute_requests?filter=training"])
 async def day_requests(filter: str = None):
   start_time = time()
 
@@ -159,7 +159,7 @@ async def day_requests(filter: str = None):
 
 @router.get("/week_requests", tags=["Get count of last week requests. \
                                      Use filter query parameter for count by matches in stored request url. \
-                                     Example: http://domain/api/v1/graf/minute_requests"])
+                                     Example: http://domain/api/v1/graf/minute_requests?filter=training"])
 async def week_requests(filter: str = None):
   start_time = time()
 
