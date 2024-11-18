@@ -36,18 +36,18 @@ async def add_process_time_header(request: Request, call_next) -> any:
 
   response = await call_next(request)
 
-  client_ip = request.client.host
-  if "X-Real-Ip" in request.headers:
-    client_ip = request.headers["X-Real-Ip"]
+  # client_ip = request.client.host
+  # if "X-Real-Ip" in request.headers:
+  #   client_ip = request.headers["X-Real-Ip"]
 
-  logger.info(f"Client ip: {client_ip}")
+  # logger.info(f"Client ip: {client_ip}")
 
-  ## Count requests
-  mongo.requests_collection.insert_one({
-    "client_ip": client_ip,
-    "url": str(request.url),
-    "created_at": time()
-  })
+  # ## Count requests
+  # mongo.requests_collection.insert_one({
+  #   "client_ip": client_ip,
+  #   "url": str(request.url),
+  #   "created_at": time()
+  # })
 
   return response
 
