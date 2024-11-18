@@ -38,10 +38,10 @@ class TrainingByJson(BaseModel):
   views: Optional[str] = None
   posted: Optional[str] = None
   text: Optional[str] = None
-  images: List[Images] = list()
-  video: Optional[Video] = Video
-  sizes: Optional[List[str]] = list()
-  options: Optional[List[str]] = list()
+  images: List[Images] = None
+  video: Optional[Video] = None
+  sizes: Optional[List[str]] = None
+  options: Optional[List[str]] = None
 
 
 class DeletePostsByIds(BaseModel):
