@@ -75,7 +75,7 @@ async def delete_posts_by_ids(post_ids: str):
   deleted = await delete_posts(post_ids=post_ids.split(','))
 
   return response_util.response({
-    "status": 1,
+    "result": 1,
     "deleted": deleted
   }, start_time=start_time)
   
@@ -87,7 +87,7 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   deleted = await delete_posts(post_ids=params.post_ids)
   
   return response_util.response({
-    "status": 1,
+    "result": 1,
     "deleted": deleted
   }, start_time=start_time)
 
@@ -100,7 +100,7 @@ async def search_by_url(url: str):
   posts = await search_posts(image=image)
 
   return response_util.response({
-    "status": 1,
+    "result": 1,
     "posts": posts
   }, start_time=start_time)
 
@@ -115,7 +115,7 @@ async def search_by_img_id(img_id: int):
 
   if not post:
     return response_util.response({
-      "status": 1,
+      "result": 1,
       "posts": []
     }, start_time=start_time)
 
@@ -126,7 +126,7 @@ async def search_by_img_id(img_id: int):
       posts = await search_posts(image=image)
 
   return response_util.response({
-    "status": 1,
+    "result": 1,
     "posts": posts
   }, start_time=start_time)
 
@@ -139,7 +139,7 @@ async def search_by_upload(image: UploadFile = File()):
   posts = await search_posts(image=image)
 
   return response_util.response({
-    "status": 1,
+    "result": 1,
     "posts": posts
   }, start_time=start_time)
   
@@ -206,7 +206,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
     logger.debug(e)
 
   return response_util.response({
-    "status": 1,
+    "result": 1,
     "post_id": params.id,
     "images": images
   }, start_time=start_time)

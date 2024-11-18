@@ -67,7 +67,9 @@ async def uni_posts():
   }, start_time=start_time)
 
 
-@router.get("/minute_requests", tags=["Get count of last minute requests"])
+@router.get("/minute_requests", tags=["Get count of last minute requests. \
+                                       Use filter query parameter for count by matches in stored request url. \
+                                       Example: http://domain/api/v1/graf/minute_requests"])
 async def minute_requests(filter: str = None):
   start_time = time()
 
@@ -95,7 +97,9 @@ async def minute_requests(filter: str = None):
   }, start_time=start_time)
 
 
-@router.get("/hour_requests", tags=["Get count of last hour requests"])
+@router.get("/hour_requests", tags=["Get count of last hour requests. \
+                                     Use filter query parameter for count by matches in stored request url. \
+                                     Example: http://domain/api/v1/graf/minute_requests"])
 async def hour_requests(filter: str = None):
   start_time = time()
 
@@ -123,7 +127,9 @@ async def hour_requests(filter: str = None):
   }, start_time=start_time)
   
 
-@router.get("/day_requests", tags=["Get count of last 24h requests"])
+@router.get("/day_requests", tags=["Get count of last 24h requests. \
+                                    Use filter query parameter for count by matches in stored request url. \
+                                    Example: http://domain/api/v1/graf/minute_requests"])
 async def day_requests(filter: str = None):
   start_time = time()
 
@@ -151,7 +157,9 @@ async def day_requests(filter: str = None):
   }, start_time=start_time)
 
 
-@router.get("/week_requests", tags=["Get count of last week requests"])
+@router.get("/week_requests", tags=["Get count of last week requests. \
+                                     Use filter query parameter for count by matches in stored request url. \
+                                     Example: http://domain/api/v1/graf/minute_requests"])
 async def week_requests(filter: str = None):
   start_time = time()
 
