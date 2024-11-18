@@ -77,7 +77,9 @@ async def minute_requests(filter: str = None):
     }
   }
   if filter:
-    query["url"] = f"/{filter}/"
+    query["url"] = {
+      "$regex": filter
+    }
 
   result = await mongo.requests_collection.count_documents(query)
 
@@ -103,7 +105,9 @@ async def hour_requests(filter: str = None):
     }
   }
   if filter:
-    query["url"] = f"/{filter}/"
+    query["url"] = {
+      "$regex": filter
+    }
 
   result = await mongo.requests_collection.count_documents(query)
 
@@ -129,7 +133,9 @@ async def day_requests(filter: str = None):
     }
   }
   if filter:
-    query["url"] = f"/{filter}/"
+    query["url"] = {
+      "$regex": filter
+    }
 
   result = await mongo.requests_collection.count_documents(query)
 
@@ -155,7 +161,9 @@ async def week_requests(filter: str = None):
     }
   }
   if filter:
-    query["url"] = f"/{filter}/"
+    query["url"] = {
+      "$regex": filter
+    }
 
   result = await mongo.requests_collection.count_documents(query)
 
