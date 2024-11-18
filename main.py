@@ -6,6 +6,7 @@ from app import mongo
 from app.utils.logger_util import logger
 from app.api import v1
 from starlette.concurrency import iterate_in_threadpool
+import json
 
 
 app = FastAPI(
@@ -32,7 +33,7 @@ if os.environ["MODE"] == 'development':
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:
-  logger.debug(await request.body())
+  logger.debug(json.dumps(await request.body()))
 
   response = await call_next(request)
 
