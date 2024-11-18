@@ -13,7 +13,7 @@ router = APIRouter()
 # logger.info(weaviate_provider.get_count_of_unique_uids())
 
 
-@router.get("/uni_vectors", tags=["Get count of uniq vectors"])
+@router.get("/uni_vectors", tags=["Get count of unique vectors"])
 async def uni_vectors():
   start_time = time()
 
@@ -31,7 +31,7 @@ async def uni_vectors():
   }, start_time=start_time)
   
 
-@router.get("/uni_ids", tags=["Get count of uniq image ids"])
+@router.get("/uni_ids", tags=["Get count of unique image ids"])
 async def uni_ids():
   start_time = time()
 
@@ -49,7 +49,7 @@ async def uni_ids():
   }, start_time=start_time)
   
 
-@router.get("/uni_posts", tags=["Get count of uniq post ids"])
+@router.get("/uni_posts", tags=["Get count of unique post ids"])
 async def uni_posts():
   start_time = time()
 
@@ -68,10 +68,11 @@ async def uni_posts():
 
 
 @router.get("/minute_requests", tags=["Get count of last minute requests"])
-async def minute_requests():
+async def minute_requests(filter: str = None):
   start_time = time()
 
   result = await mongo.requests_collection.count_documents({
+    "url": f"/{filter}/",
     "created_at": {
       "$gt": (datetime.now() - timedelta(minutes=1)).timestamp()
     }
@@ -94,6 +95,7 @@ async def hour_requests():
   start_time = time()
 
   result = await mongo.requests_collection.count_documents({
+    "url": f"/{filter}/",
     "created_at": {
       "$gt": (datetime.now() - timedelta(hours=1)).timestamp()
     }
@@ -116,6 +118,7 @@ async def day_requests():
   start_time = time()
 
   result = await mongo.requests_collection.count_documents({
+    "url": f"/{filter}/",
     "created_at": {
       "$gt": (datetime.now() - timedelta(days=1)).timestamp()
     }
@@ -138,6 +141,7 @@ async def week_requests():
   start_time = time()
 
   result = await mongo.requests_collection.count_documents({
+    "url": f"/{filter}/",
     "created_at": {
       "$gt": (datetime.now() - timedelta(weeks=1)).timestamp()
     }
