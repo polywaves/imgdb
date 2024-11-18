@@ -20,8 +20,8 @@ services:
     env_file:
       - .env
     deploy:
-      mode: replicated
-      replicas: 20
+      # mode: replicated
+      # replicas: 20
       restart_policy:
         condition: on-failure
         delay: 1s
