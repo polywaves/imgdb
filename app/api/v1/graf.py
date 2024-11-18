@@ -67,7 +67,7 @@ async def uni_posts():
   }, start_time=start_time)
 
 
-@router.get("/minute_requests", tags=["Get count of last hour requests"])
+@router.get("/minute_requests", tags=["Get count of last minute requests"])
 async def minute_requests():
   start_time = time()
 
