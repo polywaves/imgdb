@@ -164,3 +164,4 @@ cython_debug/
 *.csv
 in/
 test.json
+data/

@@ -26,7 +26,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongo_data:/etc/mongo
+      - ./data/mongo:/etc/mongo
 
   weaviate:
     command:
@@ -38,7 +38,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate:/var/lib/weaviate
+      - ./data/weaviate:/var/lib/weaviate
     restart: always
     env_file:
       - .env
@@ -57,7 +57,3 @@ services:
       - AUTOHEAL_DEFAULT_STOP_TIMEOUT=1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-volumes:
-  weaviate:
-  mongo_data:

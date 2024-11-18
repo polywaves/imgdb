@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from app.api.v1 import vector, graf
 
+
+
 router = APIRouter()
 
 
