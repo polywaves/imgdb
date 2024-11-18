@@ -7,7 +7,7 @@ def urldecode(text: str) -> str:
 
 
 def dt_format(date: str = datetime.now()) -> str:
-  return date.strftime("%d.%m.%y%H:%M:%S")
+  return date.strftime("%d.%m.%y %H:%M:%S")
 
 
 def rkey_format(date: str = datetime.now()) -> str:

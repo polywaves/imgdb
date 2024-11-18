@@ -6,6 +6,7 @@ from app.utils.logger_util import logger
 from app.utils import response_util
 from app.utils.text_util import dt_format, rkey_format
 from app.providers import weaviate_provider
+from app.utils import usage_util
 
 router = APIRouter()
 
@@ -17,7 +18,7 @@ router = APIRouter()
 async def uni_vectors():
   start_time = time()
 
-  result = 0
+  val1 = 0
 
   return response_util.response({
     "result": 1, 
@@ -25,7 +26,7 @@ async def uni_vectors():
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
@@ -35,7 +36,7 @@ async def uni_vectors():
 async def uni_ids():
   start_time = time()
 
-  result = await mongo.post_image_ids_collection.count_documents({})
+  val1 = await mongo.post_image_ids_collection.count_documents({})
 
   return response_util.response({
     "result": 1,
@@ -43,7 +44,7 @@ async def uni_ids():
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
@@ -53,7 +54,7 @@ async def uni_ids():
 async def uni_posts():
   start_time = time()
 
-  result = await mongo.posts_collection.count_documents({})
+  val1 = await mongo.posts_collection.count_documents({})
 
   return response_util.response({
     "result": 1,
@@ -61,15 +62,16 @@ async def uni_posts():
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
 
 
-@router.get("/minute_requests", tags=["Get count of last minute requests. \
-                                       Use filter query parameter for count by matches in stored request url. \
-                                       Example: http://domain/api/v1/graf/minute_requests?filter=training"])
+@router.get("/minute_requests", 
+            tags=["Get count of last minute requests."], 
+            description="Use filter query parameter for count by matches in stored request url. \
+                         Example: http://domain/api/v1/graf/minute_requests?filter=training")
 async def minute_requests(filter: str = None):
   start_time = time()
 
@@ -83,7 +85,7 @@ async def minute_requests(filter: str = None):
       "$regex": filter
     }
 
-  result = await mongo.requests_collection.count_documents(query)
+  val1 = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -91,15 +93,16 @@ async def minute_requests(filter: str = None):
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
 
 
-@router.get("/hour_requests", tags=["Get count of last hour requests. \
-                                     Use filter query parameter for count by matches in stored request url. \
-                                     Example: http://domain/api/v1/graf/minute_requests?filter=training"])
+@router.get("/hour_requests", 
+            tags=["Get count of last hour requests."], 
+            description="Use filter query parameter for count by matches in stored request url. \
+                         Example: http://domain/api/v1/graf/hour_requests?filter=training")
 async def hour_requests(filter: str = None):
   start_time = time()
 
@@ -113,7 +116,7 @@ async def hour_requests(filter: str = None):
       "$regex": filter
     }
 
-  result = await mongo.requests_collection.count_documents(query)
+  val1 = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -121,15 +124,16 @@ async def hour_requests(filter: str = None):
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
   
 
-@router.get("/day_requests", tags=["Get count of last 24h requests. \
-                                    Use filter query parameter for count by matches in stored request url. \
-                                    Example: http://domain/api/v1/graf/minute_requests?filter=training"])
+@router.get("/day_requests", 
+            tags=["Get count of last 24h requests."], 
+            description="Use filter query parameter for count by matches in stored request url. \
+                         Example: http://domain/api/v1/graf/day_requests?filter=training")
 async def day_requests(filter: str = None):
   start_time = time()
 
@@ -143,7 +147,7 @@ async def day_requests(filter: str = None):
       "$regex": filter
     }
 
-  result = await mongo.requests_collection.count_documents(query)
+  val1 = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -151,15 +155,16 @@ async def day_requests(filter: str = None):
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
 
 
-@router.get("/week_requests", tags=["Get count of last week requests. \
-                                     Use filter query parameter for count by matches in stored request url. \
-                                     Example: http://domain/api/v1/graf/minute_requests?filter=training"])
+@router.get("/week_requests", 
+            tags=["Get count of last week requests."], 
+            description="Use filter query parameter for count by matches in stored request url. \
+                         Example: http://domain/api/v1/graf/week_requests?filter=training")
 async def week_requests(filter: str = None):
   start_time = time()
 
@@ -173,7 +178,7 @@ async def week_requests(filter: str = None):
       "$regex": filter
     }
 
-  result = await mongo.requests_collection.count_documents(query)
+  val1 = await mongo.requests_collection.count_documents(query)
 
   return response_util.response({
     "result": 1,
@@ -181,17 +186,17 @@ async def week_requests(filter: str = None):
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)
 
 
-@router.get("/usage", tags=["Get current usage of cpu and gpu"])
+@router.get("/cpu_usage", tags=["Get current usage of cpu"])
 async def usage():
   start_time = time()
 
-  result = 0
+  val1 = usage_util.get_cpu_usage()
 
   return response_util.response({
     "result": 1,
@@ -199,7 +204,61 @@ async def usage():
       {
         "rkey": rkey_format(),
         "dt": dt_format(),
-        "val1": result
+        "val1": str(val1)
+      }
+    ]
+  }, start_time=start_time)
+
+
+@router.get("/gpu_usage", tags=["Get current usage of gpu"])
+async def usage():
+  start_time = time()
+
+  val1 = usage_util.get_gpu_usage()
+
+  return response_util.response({
+    "result": 1,
+    "data": [
+      {
+        "rkey": rkey_format(),
+        "dt": dt_format(),
+        "val1": str(val1)
+      }
+    ]
+  }, start_time=start_time)
+
+
+@router.get("/memory_usage", tags=["Get current usage of memory"])
+async def usage():
+  start_time = time()
+
+  val1 = usage_util.get_memory_usage()
+
+  return response_util.response({
+    "result": 1,
+    "data": [
+      {
+        "rkey": rkey_format(),
+        "dt": dt_format(),
+        "val1": str(val1)
+      }
+    ]
+  }, start_time=start_time)
+
+
+@router.get("/disk_usage", tags=["Get current usage of disk"])
+async def usage():
+  start_time = time()
+
+  val1 = usage_util.get_disk_usage()
+
+  return response_util.response({
+    "result": 1,
+    "data": [
+      {
+        "rkey": rkey_format(),
+        "dt": dt_format(),
+        "val1": str(val1)
       }
     ]
   }, start_time=start_time)

@@ -9,6 +9,8 @@ services:
       - 8080:8080
     volumes:
       - ./:/usr/src/app
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
     labels:
       autoheal-app: true
     healthcheck:
