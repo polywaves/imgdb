@@ -1,7 +1,11 @@
 import time
+from app.utils.logger_util import logger
 
 
 def response(data: dict, start_time) -> dict:
-  data["speed"] = int((time.time() - start_time) * 1000)
+  speed = int(time.time() - start_time)
+  data["speed"] = speed * 1000
+
+  logger.debug(f"RESPONSE TIME: {speed}")
 
   return data
