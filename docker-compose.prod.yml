@@ -10,6 +10,12 @@ services:
         condition: on-failure
         delay: 1s
         max_attempts: 10
+    depends_on:
+      - api-1
+      - api-2
+      - api-3
+      - api-4
+      - api-5
 
   api-1:
     build:
