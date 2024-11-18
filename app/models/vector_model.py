@@ -39,7 +39,7 @@ class TrainingByJson(BaseModel):
   posted: Optional[str] = None
   text: Optional[str] = None
   images: List[Images] = list()
-  video: Optional[Video] = dict()
+  video: Optional[Video] = object()
   sizes: Optional[List[str]] = list()
   options: Optional[List[str]] = list()
 
