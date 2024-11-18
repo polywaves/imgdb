@@ -152,8 +152,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
   images = list()
 
 
-  return response_util.response({
-    "status": 1,
-    "post_id": params.id,
-    "images": images
-  }, start_time=start_time)
+  # return response_util.response({
+  #   "status": 1,
+  #   "post_id": params.id,
+  #   "images": images
+  # }, start_time=start_time)
