@@ -148,8 +148,6 @@ async def search_by_upload(image: UploadFile = File()):
 async def training_by_json(params: vector_model.TrainingByJson):
   start_time = time()
 
-  logger.debug(params)
-
   items = list()
   images = list()
   for image in params.images:
@@ -191,6 +189,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
   params.options = options
 
   post = params.model_dump()
+
+  logger.debug(post)
 
   await mongo.posts_collection.insert_one(post)
 
