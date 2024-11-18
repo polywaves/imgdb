@@ -67,6 +67,28 @@ async def uni_posts():
   }, start_time=start_time)
 
 
+@router.get("/minute_requests", tags=["Get count of last hour requests"])
+async def minute_requests():
+  start_time = time()
+
+  result = await mongo.requests_collection.count_documents({
+    "created_at": {
+      "$gt": (datetime.now() - timedelta(minutes=1)).timestamp()
+    }
+  })
+
+  return response_util.response({
+    "result": 1,
+    "data": [
+      {
+        "rkey": rkey_format(),
+        "dt": dt_format(),
+        "val1": result
+      }
+    ]
+  }, start_time=start_time)
+
+
 @router.get("/hour_requests", tags=["Get count of last hour requests"])
 async def hour_requests():
   start_time = time()
