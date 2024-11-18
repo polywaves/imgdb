@@ -33,28 +33,25 @@ if os.environ["MODE"] == 'development':
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:
-  body = await request.body()
-  logger.debug(body.decode("latin_1"))
-
   response = await call_next(request)
 
-  response_body = [chunk async for chunk in response.body_iterator]
-  response.body_iterator = iterate_in_threadpool(iter(response_body))
+  # response_body = [chunk async for chunk in response.body_iterator]
+  # response.body_iterator = iterate_in_threadpool(iter(response_body))
 
-  logger.debug(f"{response_body[0].decode()}")
+  # logger.debug(f"{response_body[0].decode()}")
 
-  # client_ip = request.client.host
-  # if "X-Real-Ip" in request.headers:
-  #   client_ip = request.headers["X-Real-Ip"]
+  client_ip = request.client.host
+  if "X-Real-Ip" in request.headers:
+    client_ip = request.headers["X-Real-Ip"]
 
-  # logger.info(f"Client ip: {client_ip}")
+  logger.info(f"Client ip: {client_ip}")
 
-  # ## Count requests
-  # mongo.requests_collection.insert_one({
-  #   "client_ip": client_ip,
-  #   "url": str(request.url),
-  #   "created_at": time()
-  # })
+  ## Count requests
+  mongo.requests_collection.insert_one({
+    "client_ip": client_ip,
+    "url": str(request.url),
+    "created_at": time()
+  })
 
   return response
 
