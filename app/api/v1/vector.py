@@ -179,6 +179,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
   weaviate_provider.create_image_vector(items=items)
 
   ## Decode texts
+  params.vendor_capt = text_util.urldecode(params.vendor_capt)
   params.by = text_util.urldecode(params.by)
   params.item_name = text_util.urldecode(params.item_name)
   params.text = text_util.urldecode(params.text)
