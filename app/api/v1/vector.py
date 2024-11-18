@@ -190,8 +190,6 @@ async def training_by_json(params: vector_model.TrainingByJson):
 
   post = params.model_dump()
 
-  logger.debug(post)
-
   await mongo.posts_collection.insert_one(post)
 
   insert_image_ids = list()
