@@ -150,10 +150,63 @@ async def training_by_json(params: vector_model.TrainingByJson):
 
   items = list()
   images = list()
+  for image in params.images:
+    items.append({
+      "image": image_util.from_url_to_base64(image.img),
+      "uid": int(image.img_id),
+      "post_id": int(params.id)
+    })
 
+    options = dict()
+    images.append({
+      "img_id": image.img_id,
+      "options": options
+    })
 
-  # return response_util.response({
-  #   "status": 1,
-  #   "post_id": params.id,
-  #   "images": images
-  # }, start_time=start_time)
+  try:
+    weaviate_provider.delete_images_by_post_id(post_id=int(params.id))
+  except Exception:
+    logger.debug(f"Post id {params.id} not found in vectorizer database")
+
+  await mongo.post_image_ids_collection.delete_many({
+    "post_id": str(params.id)
+  })
+  await mongo.posts_collection.delete_many({
+    "id": str(params.id)
+  })
+
+  ## Vectorize image
+  weaviate_provider.create_image_vector(items=items)
+
+  ## Decode texts
+  params.vendor_capt = text_util.urldecode(params.vendor_capt)
+  params.by = text_util.urldecode(params.by)
+  params.item_name = text_util.urldecode(params.item_name)
+  params.text = text_util.urldecode(params.text)
+
+  options = list()
+  for option in params.options:
+    options.append(text_util.urldecode(option))
+  params.options = options
+
+  post = params.model_dump()
+
+  await mongo.posts_collection.insert_one(post)
+
+  insert_image_ids = list()
+  for image in post["images"]:
+    insert_image_ids.append({
+      "id": image["img_id"],
+      "post_id": params.id
+    })
+
+  try:
+    await mongo.post_image_ids_collection.insert_many(insert_image_ids)
+  except Exception as e:
+    logger.debug(e)
+
+  return response_util.response({
+    "status": 1,
+    "post_id": params.id,
+    "images": images
+  }, start_time=start_time)
