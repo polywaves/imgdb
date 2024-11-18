@@ -1,9 +1,10 @@
 from time import time
+from datetime import datetime, timedelta
 from fastapi import APIRouter
 from app import mongo
 from app.utils.logger_util import logger
 from app.utils import response_util
-from app.utils.text_util import date_format
+from app.utils.text_util import dt_format, rkey_format
 from app.providers import weaviate_provider
 
 router = APIRouter()
@@ -22,8 +23,8 @@ async def uni_vectors():
     "result": 1, 
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]
@@ -40,8 +41,8 @@ async def uni_ids():
     "result": 1,
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]
@@ -58,8 +59,8 @@ async def uni_posts():
     "result": 1,
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]
@@ -72,7 +73,7 @@ async def hour_requests():
 
   result = await mongo.requests_collection.count_documents({
     "created_at": {
-      "$gt": time() - (3600 * 1000)
+      "$gt": (datetime.now() - timedelta(hours=1)).timestamp()
     }
   })
 
@@ -80,8 +81,8 @@ async def hour_requests():
     "result": 1,
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]
@@ -94,7 +95,7 @@ async def day_requests():
 
   result = await mongo.requests_collection.count_documents({
     "created_at": {
-      "$gt": time() - (86400 * 1000)
+      "$gt": (datetime.now() - timedelta(days=1)).timestamp()
     }
   })
 
@@ -102,8 +103,8 @@ async def day_requests():
     "result": 1,
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]
@@ -116,7 +117,7 @@ async def week_requests():
 
   result = await mongo.requests_collection.count_documents({
     "created_at": {
-      "$gt": time() - (86400 * 7 * 1000)
+      "$gt": (datetime.now() - timedelta(weeks=1)).timestamp()
     }
   })
 
@@ -124,8 +125,8 @@ async def week_requests():
     "result": 1,
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]
@@ -142,8 +143,8 @@ async def usage():
     "result": 1,
     "data": [
       {
-        "rkey": time(),
-        "dt": date_format(),
+        "rkey": rkey_format(),
+        "dt": dt_format(),
         "val1": result
       }
     ]

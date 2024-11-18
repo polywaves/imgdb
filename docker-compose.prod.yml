@@ -23,7 +23,7 @@ services:
         delay: 1s
         max_attempts: 10
       mode: replicated
-      replicas: 10
+      replicas: 20
 
   mongo:
     image: mongo
@@ -49,7 +49,7 @@ services:
         delay: 1s
         max_attempts: 10
       mode: replicated
-      replicas: 14
+      replicas: 20
       resources:
         reservations:
           devices:

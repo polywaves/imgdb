@@ -6,5 +6,9 @@ def urldecode(text: str) -> str:
   return unquote(text).replace("+", " ")
 
 
-def date_format(date: str = datetime.now()) -> str:
+def dt_format(date: str = datetime.now()) -> str:
   return date.strftime("%d.%m.%y%H:%M:%S")
+
+
+def rkey_format(date: str = datetime.now()) -> str:
+  return date.strftime("%y%m%d%H%M%S")
