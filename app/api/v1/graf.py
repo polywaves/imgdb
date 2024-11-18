@@ -64,6 +64,28 @@ async def uni_posts():
       }
     ]
   }, start_time=start_time)
+
+
+@router.get("/hour_requests", tags=["Get count of last hour requests"])
+async def hour_requests():
+  start_time = time()
+
+  result = await mongo.requests_collection.count_documents({
+    "created_at": {
+      "$gt": time() - (3600 * 1000)
+    }
+  })
+
+  return response_util.response({
+    "result": 1,
+    "data": [
+      {
+        "rkey": time(),
+        "dt": datetime.now(),
+        "val1": result
+      }
+    ]
+  }, start_time=start_time)
   
 
 @router.get("/day_requests", tags=["Get count of last 24h requests"])
@@ -73,6 +95,28 @@ async def day_requests():
   result = await mongo.requests_collection.count_documents({
     "created_at": {
       "$gt": time() - (86400 * 1000)
+    }
+  })
+
+  return response_util.response({
+    "result": 1,
+    "data": [
+      {
+        "rkey": time(),
+        "dt": datetime.now(),
+        "val1": result
+      }
+    ]
+  }, start_time=start_time)
+
+
+@router.get("/week_requests", tags=["Get count of last week requests"])
+async def week_requests():
+  start_time = time()
+
+  result = await mongo.requests_collection.count_documents({
+    "created_at": {
+      "$gt": time() - (86400 * 7 * 1000)
     }
   })
 
