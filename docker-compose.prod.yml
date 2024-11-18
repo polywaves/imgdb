@@ -11,71 +11,22 @@ services:
         delay: 1s
         max_attempts: 10
     depends_on:
-      - api-1
-      - api-2
-      - api-3
-      - api-4
-      - api-5
+      - api
 
-  api-1:
+  api:
     build:
       context: .
     command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
     env_file:
       - .env
     deploy:
+      mode: replicated
+      replicas: 10
       restart_policy:
         condition: on-failure
         delay: 1s
         max_attempts: 10
 
-  api-2:
-    build:
-      context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
-    env_file:
-      - .env
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
-
-  api-3:
-    build:
-      context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
-    env_file:
-      - .env
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
-
-  api-4:
-    build:
-      context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
-    env_file:
-      - .env
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
-
-  api-5:
-    build:
-      context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
-    env_file:
-      - .env
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
 
   mongo:
     image: mongo
@@ -96,12 +47,12 @@ services:
     env_file:
       - .env
     deploy:
+      mode: replicated
+      replicas: 20
       restart_policy:
         condition: on-failure
         delay: 1s
         max_attempts: 10
-      mode: replicated
-      replicas: 20
       resources:
         reservations:
           devices:
