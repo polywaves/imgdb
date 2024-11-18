@@ -18,7 +18,7 @@ router = APIRouter()
 async def uni_vectors():
   start_time = time()
 
-  val1 = 0
+  val1 = await mongo.vector_hashes_collection.count_documents({})
 
   return response_util.response({
     "result": 1, 

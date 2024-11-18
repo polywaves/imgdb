@@ -8,6 +8,7 @@ db = client.get_database(os.environ["MONGO_DB"])
 posts_collection = db.get_collection("posts")
 post_image_ids_collection = db.get_collection("post_image_ids")
 requests_collection = db.get_collection("requests")
+vector_hashes_collection = db.get_collection("vector_hashes")
 
 ## Make migrations
 async def migrate():
@@ -18,3 +19,4 @@ async def migrate():
 
   await posts_collection.create_indexes(posts_indexes)
   await post_image_ids_collection.create_index("id", unique=True)
+  await vector_hashes_collection.create_index("hash", unique=True)

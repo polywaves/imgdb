@@ -38,7 +38,7 @@ services:
       - '8080'
       - --scheme
       - http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:latest
     volumes:
       - ./data/weaviate:/var/lib/weaviate
     restart: always

@@ -1,9 +1,7 @@
 import os
-import weaviate 
-from weaviate.config import AdditionalConfig, Timeout
+import weaviate
 from weaviate.classes.config import Configure, DataType, Property
-from weaviate.classes.query import MetadataQuery, Filter, Metrics
-from weaviate.classes.aggregate import GroupByAggregate
+from weaviate.classes.query import MetadataQuery, Filter
 
 
 collection_name = os.environ["WEAVIATE_COLLECTION_NAME"]
@@ -76,6 +74,17 @@ def create_image_vector(items: list) -> object:
   return collection
 
 
+def get_image_vectors_by_post_id(post_id: int) -> object:
+  collection = client.collections.get(collection_name)
+
+  response = collection.query.fetch_objects(
+    filters=Filter.by_property("post_id").contains_any([post_id]),
+    include_vector=True
+  )
+
+  return response
+
+
 def search_near_image(image, limit: int = 10) -> object:
   collection = client.collections.get(collection_name)
   response = collection.query.near_image(
@@ -84,7 +93,7 @@ def search_near_image(image, limit: int = 10) -> object:
     limit=limit
   )
 
-  return response.objects
+  return response
 
 
 def delete_image_by_uid(uid: int) -> object:
@@ -103,13 +112,4 @@ def delete_images_by_post_id(post_id: int) -> object:
   )
 
   return response
-
-
-def get_count_of_unique_uids():
-  collection = client.collections.get(collection_name)
-  response = collection.aggregate.over_all(
-    group_by=GroupByAggregate(prop="uid")
-  )
-
-  return response.groups
 

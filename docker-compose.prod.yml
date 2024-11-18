@@ -44,7 +44,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongo_data:/etc/mongo
+      - ~/data/mongo:/etc/mongo
     deploy:
       restart_policy:
         condition: on-failure
@@ -78,9 +78,9 @@ services:
       - '8080'
       - --scheme
       - http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     volumes:
-      - weaviate_node_1:/var/lib/weaviate
+      - ~/data/weaviate_node_1:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -104,7 +104,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_node_2:/var/lib/weaviate
+      - ~/data/weaviate_node_2:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -129,7 +129,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_node_3:/var/lib/weaviate
+      - ~/data/weaviate_node_3:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -154,7 +154,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_node_4:/var/lib/weaviate
+      - ~/data/weaviate_node_4:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -179,7 +179,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_node_5:/var/lib/weaviate
+      - ~/data/weaviate_node_5:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -204,7 +204,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
-      - weaviate_node_6:/var/lib/weaviate
+      - ~/data/weaviate_node_6:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -218,11 +218,3 @@ services:
         delay: 1s
         max_attempts: 10
 
-volumes:
-  weaviate_node_1:
-  weaviate_node_2:
-  weaviate_node_3:
-  weaviate_node_4:
-  weaviate_node_5:
-  weaviate_node_6:
-  mongo_data:

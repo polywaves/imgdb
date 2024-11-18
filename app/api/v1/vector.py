@@ -1,3 +1,5 @@
+import hashlib
+import json
 from time import time
 from fastapi import APIRouter, UploadFile, File
 from app.providers import weaviate_provider
@@ -22,7 +24,7 @@ async def search_posts(image: str) -> dict:
 
   response = list()
   post_ids = []
-  for vector in vectors:
+  for vector in vectors.objects:
     distance = vector.metadata.distance
     uid = vector.properties["uid"]
 
@@ -168,6 +170,9 @@ async def training_by_json(params: vector_model.TrainingByJson):
   except Exception:
     logger.debug(f"Post id {params.id} not found in vectorizer database")
 
+  await mongo.vector_hashes_collection.delete_many({
+    "post_id": str(params.id)
+  })
   await mongo.post_image_ids_collection.delete_many({
     "post_id": str(params.id)
   })
@@ -202,6 +207,25 @@ async def training_by_json(params: vector_model.TrainingByJson):
 
   try:
     await mongo.post_image_ids_collection.insert_many(insert_image_ids)
+  except Exception as e:
+    logger.debug(e)
+
+  vectors = weaviate_provider.get_image_vectors_by_post_id(post_id=int(params.id))
+
+  hashes = list()
+  for object in vectors.objects:
+    vector = object.vector["default"]
+    dump = json.dumps(vector, sort_keys=True).encode('utf-8')
+    data_md5 = hashlib.md5(dump).hexdigest()
+
+    hashes.append({
+      "img_id": object.properties["uid"],
+      "post_id": str(object.properties["post_id"]),
+      "hash": data_md5
+    })
+  
+  try:
+    await mongo.vector_hashes_collection.insert_many(hashes)
   except Exception as e:
     logger.debug(e)
 
