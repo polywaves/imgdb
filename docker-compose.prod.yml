@@ -24,7 +24,7 @@ services:
       - /sys:/host/sys:ro
     deploy:
       mode: replicated
-      replicas: 16
+      replicas: 18
       restart_policy:
         condition: on-failure
         delay: 1s
@@ -57,7 +57,7 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 16
+      replicas: 18
       restart_policy:
         condition: on-failure
         delay: 1s
