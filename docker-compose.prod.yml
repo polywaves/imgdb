@@ -24,7 +24,7 @@ services:
       - /sys:/host/sys:ro
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 10
       restart_policy:
         condition: on-failure
         delay: 1s
