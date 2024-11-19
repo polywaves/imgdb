@@ -226,8 +226,6 @@ async def training_by_json(params: vector_model.TrainingByJson):
       "post_id": str(post_id),
       "hash": data_md5
     })
-
-    logger.debug(f"VECTOR {uid} SIZE IS {sys.getsizeof(vector)}")
   
   try:
     await mongo.vector_hashes_collection.insert_many(hashes)
