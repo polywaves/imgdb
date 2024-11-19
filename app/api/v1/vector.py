@@ -1,5 +1,6 @@
 import hashlib
 import json
+import sys
 from time import time
 from fastapi import APIRouter, UploadFile, File
 from app.providers import weaviate_provider
@@ -217,12 +218,16 @@ async def training_by_json(params: vector_model.TrainingByJson):
     vector = object.vector["default"]
     dump = json.dumps(vector).encode('utf-8')
     data_md5 = hashlib.md5(dump).hexdigest()
+    uid = object.properties["uid"]
+    post_id = object.properties["post_id"]
 
     hashes.append({
-      "img_id": object.properties["uid"],
-      "post_id": str(object.properties["post_id"]),
+      "img_id": uid,
+      "post_id": str(post_id),
       "hash": data_md5
     })
+
+    logger.debug(f"VECTOR {uid} SIZE IS {sys.getsizeof(vector)}")
   
   try:
     await mongo.vector_hashes_collection.insert_many(hashes)

@@ -64,14 +64,19 @@ def create_collection() -> object:
 
 
 
-def create_image_vector(items: list) -> object:
+def create_image_vector(items: list) -> list:
   collection = client.collections.get(collection_name)
 
-  with collection.batch.dynamic() as batch:
-    for item in items:
-      batch.add_object(item)
+  # with collection.batch.dynamic() as batch:
+  #   for item in items:
+  #     batch.add_object(item)
 
-  return collection
+  uuids = list()
+  for item in items:
+    uuid = collection.data.insert(item)
+    uuids.append(uuid)
+
+  return uuids
 
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
