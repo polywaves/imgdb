@@ -215,7 +215,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
   hashes = list()
   for object in vectors.objects:
     vector = object.vector["default"]
-    dump = json.dumps(vector, sort_keys=True).encode('utf-8')
+    dump = json.dumps(vector).encode('utf-8')
     data_md5 = hashlib.md5(dump).hexdigest()
 
     hashes.append({
