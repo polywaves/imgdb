@@ -42,7 +42,7 @@ services:
     env_file:
       - .env
     ports:
-      - 27017:27017
+      - 27337:27017
     volumes:
       - ~/data/mongo:/data/db
     deploy:
