@@ -36,7 +36,6 @@ services:
               count: 1
               capabilities: ["gpu"]
 
-
   mongo:
     image: mongo
     env_file:
@@ -79,6 +78,7 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
+    restart: on-failure:0
     volumes:
       - ~/data/weaviate_node_1:/var/lib/weaviate
     env_file:
@@ -87,11 +87,6 @@ services:
       - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
       - CLUSTER_DATA_BIND_PORT=7101
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
 
   weaviate-node-2:
     init: true
@@ -103,6 +98,7 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    restart: on-failure:0
     volumes:
       - ~/data/weaviate_node_2:/var/lib/weaviate
     env_file:
@@ -112,11 +108,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
       - CLUSTER_JOIN=weaviate-node-1:7100
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
 
   weaviate-node-3:
     init: true
@@ -128,6 +119,7 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    restart: on-failure:0
     volumes:
       - ~/data/weaviate_node_3:/var/lib/weaviate
     env_file:
@@ -137,11 +129,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=weaviate-node-1:7100
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
 
   weaviate-node-4:
     init: true
@@ -153,6 +140,7 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    restart: on-failure:0
     volumes:
       - ~/data/weaviate_node_4:/var/lib/weaviate
     env_file:
@@ -162,11 +150,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=weaviate-node-1:7100
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
 
   weaviate-node-5:
     init: true
@@ -178,6 +161,7 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    restart: on-failure:0
     volumes:
       - ~/data/weaviate_node_5:/var/lib/weaviate
     env_file:
@@ -187,11 +171,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=weaviate-node-1:7100
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
 
   weaviate-node-6:
     init: true
@@ -203,6 +182,7 @@ services:
       - --scheme
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    restart: on-failure:0
     volumes:
       - ~/data/weaviate_node_6:/var/lib/weaviate
     env_file:
@@ -212,8 +192,3 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=weaviate-node-1:7100
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
