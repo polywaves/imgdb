@@ -21,7 +21,7 @@ services:
       - /sys:/host/sys:ro
     deploy:
       mode: replicated
-      replicas: 18
+      replicas: 20
       resources:
         reservations:
           devices:
@@ -49,7 +49,7 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 18
+      replicas: 20
       resources:
         reservations:
           devices:
