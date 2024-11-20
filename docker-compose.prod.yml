@@ -89,7 +89,7 @@ services:
       - CLUSTER_DATA_BIND_PORT=7101
     deploy:
       restart_policy:
-        condition: on-failure:0
+        condition: on-failure
         delay: 1s
         max_attempts: 10
 
@@ -114,7 +114,7 @@ services:
       - CLUSTER_JOIN=weaviate-node-1:7100
     deploy:
       restart_policy:
-        condition: on-failure:0
+        condition: on-failure
         delay: 1s
         max_attempts: 10
 
@@ -139,7 +139,7 @@ services:
       - CLUSTER_JOIN=weaviate-node-1:7100
     deploy:
       restart_policy:
-        condition: on-failure:0
+        condition: on-failure
         delay: 1s
         max_attempts: 10
 
@@ -164,7 +164,7 @@ services:
       - CLUSTER_JOIN=weaviate-node-1:7100
     deploy:
       restart_policy:
-        condition: on-failure:0
+        condition: on-failure
         delay: 1s
         max_attempts: 10
 
@@ -214,6 +214,6 @@ services:
       - CLUSTER_JOIN=weaviate-node-1:7100
     deploy:
       restart_policy:
-        condition: on-failure:0
+        condition: on-failure
         delay: 1s
         max_attempts: 10
