@@ -35,6 +35,9 @@ services:
             - driver: nvidia
               count: 1
               capabilities: ["gpu"]
+    depends_on:
+      - weaviate-node-8
+      - mongo
 
   mongo:
     image: mongo
@@ -132,7 +135,6 @@ services:
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
-     - weaviate-node-1
      - weaviate-node-2
 
   weaviate-node-4:
@@ -156,7 +158,6 @@ services:
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
-     - weaviate-node-1
      - weaviate-node-3
 
   weaviate-node-5:
@@ -180,7 +181,6 @@ services:
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
-     - weaviate-node-1
      - weaviate-node-4
 
   weaviate-node-6:
@@ -204,7 +204,6 @@ services:
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
-     - weaviate-node-1
      - weaviate-node-5
 
   weaviate-node-7:
@@ -228,7 +227,6 @@ services:
       - CLUSTER_DATA_BIND_PORT=7113
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
-     - weaviate-node-1
      - weaviate-node-6
 
   weaviate-node-8:
@@ -252,5 +250,4 @@ services:
       - CLUSTER_DATA_BIND_PORT=7115
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
-     - weaviate-node-1
      - weaviate-node-7
