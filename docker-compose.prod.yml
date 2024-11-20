@@ -44,7 +44,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ~/data/mongo:/etc/mongo
+      - ~/data/mongo:/data/db
     deploy:
       restart_policy:
         condition: on-failure
