@@ -18,8 +18,10 @@ def get_memory_usage():
   return int(usage.percent)
 
 
-def get_disk_usage():
-  usage = psutil.disk_usage("/")
+def get_disk_usage(disk: int):
+  disks = ["/", "/mnt/sda1"]
+
+  usage = psutil.disk_usage(disks[disk - 1])
   
   return int(usage.percent)
 

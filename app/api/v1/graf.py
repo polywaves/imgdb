@@ -247,10 +247,10 @@ async def usage():
 
 
 @router.get("/disk_usage", tags=["Get current usage of disk"])
-async def usage():
+async def usage(disk: int = 1):
   start_time = time()
 
-  val1 = usage_util.get_disk_usage()
+  val1 = usage_util.get_disk_usage(disk=disk)
 
   return response_util.response({
     "result": 1,
