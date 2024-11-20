@@ -253,4 +253,4 @@ services:
       - CLUSTER_JOIN=weaviate-node-1:7100
     depends_on:
      - weaviate-node-1
-     - weaviate-node-8
+     - weaviate-node-7
