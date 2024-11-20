@@ -108,6 +108,8 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
 
   weaviate-node-3:
     init: true
@@ -129,6 +131,9 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
+     - weaviate-node-2
 
   weaviate-node-4:
     init: true
@@ -150,6 +155,9 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
+     - weaviate-node-3
 
   weaviate-node-5:
     init: true
@@ -171,6 +179,9 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
+     - weaviate-node-4
 
   weaviate-node-6:
     init: true
@@ -192,6 +203,9 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
+     - weaviate-node-5
 
   weaviate-node-7:
     init: true
@@ -213,6 +227,9 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7112
       - CLUSTER_DATA_BIND_PORT=7113
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
+     - weaviate-node-6
 
   weaviate-node-8:
     init: true
@@ -234,3 +251,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7114
       - CLUSTER_DATA_BIND_PORT=7115
       - CLUSTER_JOIN=weaviate-node-1:7100
+    depends_on:
+     - weaviate-node-1
+     - weaviate-node-8
