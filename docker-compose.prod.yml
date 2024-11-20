@@ -2,14 +2,10 @@ services:
   nginx:
     build:
       context: ./nginx
+    restart: always
     ports:
       - 80:80
       - 443:443
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
     depends_on:
       - api
 
@@ -17,6 +13,7 @@ services:
     build:
       context: .
     command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
+    restart: always
     env_file:
       - .env
     volumes:
@@ -25,10 +22,6 @@ services:
     deploy:
       mode: replicated
       replicas: 18
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
       resources:
         reservations:
           devices:
@@ -41,29 +34,22 @@ services:
 
   mongo:
     image: mongo
+    restart: always
     env_file:
       - .env
     ports:
       - 27337:27017
     volumes:
       - ~/data/mongo:/data/db
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
   
   i2v-neural:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
     env_file:
       - .env
     deploy:
       mode: replicated
       replicas: 18
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 10
       resources:
         reservations:
           devices:
