@@ -20,8 +20,8 @@ services:
       - /sys:/host/sys:ro
       - /mnt/sda1:/mnt/sda1
     deploy:
-      mode: replicated
-      replicas: 20
+      # mode: replicated
+      # replicas: 20
       resources:
         reservations:
           devices:
