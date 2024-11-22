@@ -12,11 +12,16 @@ vector_hashes_collection = db.get_collection("vector_hashes")
 
 ## Make migrations
 async def migrate():
-  await posts_collection.create_index("id")
-  await posts_collection.create_index("images.img_id")
+  posts_indexes = [
+    IndexModel([("id", DESCENDING)]),
+    IndexModel([("images.img_id", DESCENDING)])
+  ]
+  await posts_collection.create_indexes(posts_indexes)
 
   await post_image_ids_collection.create_index("id", unique=True)
   await post_image_ids_collection.create_index("post_id")
 
   await vector_hashes_collection.create_index("hash", unique=True)
   await vector_hashes_collection.create_index("post_id")
+
+  await requests_collection.create_index("url")

@@ -2,6 +2,7 @@ services:
   api:
     build:
       context: .
+    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors --reload
     restart: always
     env_file:
       - .env
@@ -19,6 +20,14 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
+
+  i2v-neural:
+    build:
+      context: ./i2v
+    command: uvicorn app:app --port 8080 --host=0.0.0.0 --use-colors --reload
+    restart: always
+    env_file:
+      - .env
 
   mongo:
     image: mongo
@@ -41,12 +50,6 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:latest
     volumes:
       - ./data/weaviate:/var/lib/weaviate
-    restart: always
-    env_file:
-      - .env
-  
-  i2v-neural:
-    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
     env_file:
       - .env

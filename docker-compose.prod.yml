@@ -12,7 +12,6 @@ services:
   api:
     build:
       context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors
     restart: always
     env_file:
       - .env
@@ -44,7 +43,8 @@ services:
       - ~/data/mongo:/data/db
   
   i2v-neural:
-    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    build:
+      context: ./i2v
     restart: always
     env_file:
       - .env
