@@ -8,7 +8,7 @@ COPY requirements.txt .
 RUN pip install --upgrade pip setuptools
 RUN pip install -r requirements.txt
 
-ARG MODEL_NAME
+ARG MODEL_NAME=resnet50
 COPY download_model.py .
 RUN chmod +x download_model.py
 RUN ./download_model.py
