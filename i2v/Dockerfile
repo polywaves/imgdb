@@ -11,8 +11,9 @@ RUN pip install -r requirements.txt
 
 ARG MODEL_NAME
 COPY download_model.py .
-RUN sh download_model.py
+RUN ./download_model.py
 
 COPY . .
 
+ENTRYPOINT /bin/sh -c
 CMD uvicorn app:app --port 8080 --host=0.0.0.0 --use-colors
