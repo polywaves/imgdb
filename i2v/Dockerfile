@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 
 ARG MODEL_NAME
 COPY download_model.py .
-RUN ./download_model.py
+RUN bash download_model.py
 
 COPY . .
 
