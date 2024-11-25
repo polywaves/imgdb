@@ -9,6 +9,7 @@ services:
       - 27337:27017
     volumes:
       - ~/data/mongo:/data/db
+      - ~/data/mongo_config:/data/configdb
 
   mongo1:
     image: mongo
@@ -18,6 +19,7 @@ services:
       - .env
     volumes:
       - ~/data/mongo1:/data/db
+      - ~/data/mongo1_config:/data/configdb
 
   mongo2:
     image: mongo
@@ -27,3 +29,4 @@ services:
       - .env
     volumes:
       - ~/data/mongo2:/data/db
+      - ~/data/mongo2_config:/data/configdb
