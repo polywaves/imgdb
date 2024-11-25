@@ -30,10 +30,6 @@ services:
     #   start_period: 0s
     #   start_interval: 1s
     #   retries: 30
-    links:
-      - mongo
-      - mongo1
-      - mongo2
     restart: on-failure
     volumes:
       - ~/data/mongo/db:/data/db
@@ -44,10 +40,6 @@ services:
     image: mongo
     command: --replSet rs0
     restart: on-failure
-    links:
-      - mongo
-      - mongo1
-      - mongo2
     volumes:
       - ~/data/mongo1/db:/data/db
       - ~/data/mongo1/configdb:/data/configdb
@@ -56,10 +48,6 @@ services:
     hostname: mongo2
     image: mongo
     command: --replSet rs0
-    links:
-      - mongo
-      - mongo1
-      - mongo2
     restart: on-failure
     volumes:
       - ~/data/mongo2/db:/data/db
