@@ -8,8 +8,7 @@ services:
     ports:
       - 27337:27017
     volumes:
-      - ~/data/mongo:/data/db
-      - ~/data/mongo_config:/data/configdb
+      - ~/data/mongo:/data
 
   mongo1:
     image: mongo
@@ -18,8 +17,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ~/data/mongo1:/data/db
-      - ~/data/mongo1_config:/data/configdb
+      - ~/data/mongo1:/data
 
   mongo2:
     image: mongo
@@ -28,5 +26,4 @@ services:
     env_file:
       - .env
     volumes:
-      - ~/data/mongo2:/data/db
-      - ~/data/mongo2_config:/data/configdb
+      - ~/data/mongo2:/data
