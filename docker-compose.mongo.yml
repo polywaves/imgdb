@@ -1,15 +1,15 @@
 services:
-  # mongoexpress:
-  #   image: mongo-express
-  #   restart: on-failure
-  #   ports:
-  #     - 8081:8081
-  #   environment:
-  #     # - ME_CONFIG_MONGODB_SERVER=mongo,mongo1,mongo2
-  #     - ME_CONFIG_MONGODB_URL="mongodb://mongo:27338,mongo1:27339,mongo2:27340/?replicaSet=rs0"
-  #     # Add your user credentials for authentication
-  #     # - ME_CONFIG_MONGODB_ADMINUSERNAME=writeUser
-  #     # - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
+  mongoexpress:
+    image: mongo-express
+    restart: on-failure
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo:27338,mongo1:27339,mongo2:27340
+      - ME_CONFIG_MONGODB_URL="mongodb://mongo:27338,mongo1:27339,mongo2:27340/?replicaSet=rs0"
+      # Add your user credentials for authentication
+      # - ME_CONFIG_MONGODB_ADMINUSERNAME=writeUser
+      # - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
 
   # mongo0:
   #   image: mongo
@@ -23,7 +23,7 @@ services:
     image: mongo
     command: --replSet rs0 --bind_ip_all --port 27338
     # healthcheck:
-    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'mongo:27338', priority:1}, {_id:1, host:'mongo:27339', priority:0.5}, {_id:2, host:'mongo:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
+    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'mongo:27338', priority:1}, {_id:1, host:'mongo1:27339', priority:0.5}, {_id:2, host:'mongo2:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
     #   interval: 5s
     #   timeout: 30s
     #   start_period: 0s
