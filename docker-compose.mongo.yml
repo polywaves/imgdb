@@ -23,7 +23,7 @@ services:
     image: mongo
     command: --replSet rs0 --bind_ip_all --port 27338
     # healthcheck:
-    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'87.242.104.141:27338', priority:1}, {_id:1, host:'87.242.104.141:27339', priority:0.5}, {_id:2, host:'87.242.104.141:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
+    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'dedic:27338', priority:1}, {_id:1, host:'dedic:27339', priority:0.5}, {_id:2, host:'dedic:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
     #   interval: 5s
     #   timeout: 30s
     #   start_period: 0s
@@ -31,6 +31,8 @@ services:
     #   retries: 30
     ports:
       - 27338:27338
+    extra_hosts:
+      - dedic:87.242.104.141
     restart: on-failure
     volumes:
       - ~/data/mongo/db:/data/db
@@ -41,6 +43,8 @@ services:
     command: --replSet rs0 --bind_ip_all --port 27339
     ports:
       - 27339:27339
+    extra_hosts:
+      - dedic:87.242.104.141
     restart: on-failure
     depends_on:
       - mongo
@@ -53,6 +57,8 @@ services:
     command: --replSet rs0 --bind_ip_all --port 27340
     ports:
       - 27340:27340
+    extra_hosts:
+      - dedic:87.242.104.141
     restart: on-failure
     depends_on:
       - mongo1
