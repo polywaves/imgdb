@@ -22,6 +22,13 @@ services:
   mongo:
     image: mongo
     command: --replSet rs0 --bind_ip_all --port 27338
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'mongo:27338', priority:1}, {_id:1, host:'mongo:27339', priority:0.5}, {_id:2, host:'mongo:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
     ports:
       - 27338:27338
     restart: on-failure
