@@ -20,48 +20,47 @@ services:
   #     - /mnt/sda1/data/mongo:/data/db
 
   mongo:
+    hostname: mongo
     image: mongo
-    command: --replSet rs0 --bind_ip_all --port 27338
+    command: --replSet rs0
     # healthcheck:
-    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'dedic:27338', priority:1}, {_id:1, host:'dedic:27339', priority:0.5}, {_id:2, host:'dedic:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
+    #   test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0', members:[{_id:0, host:'mongo:27338', priority:1}, {_id:1, host:'mongo1:27339', priority:0.5}, {_id:2, host:'mongo2:27340', priority:0.5}]}) }" | mongosh --port 27338 --quiet
     #   interval: 5s
     #   timeout: 30s
     #   start_period: 0s
     #   start_interval: 1s
     #   retries: 30
-    ports:
-      - 27338:27338
-    extra_hosts:
-      - dedic:87.242.104.141
+    links:
+      - mongo
+      - mongo1
+      - mongo2
     restart: on-failure
     volumes:
       - ~/data/mongo/db:/data/db
       - ~/data/mongo/configdb:/data/configdb
 
   mongo1:
+    hostname: mongo1
     image: mongo
-    command: --replSet rs0 --bind_ip_all --port 27339
-    ports:
-      - 27339:27339
-    extra_hosts:
-      - dedic:87.242.104.141
+    command: --replSet rs0
     restart: on-failure
-    depends_on:
+    links:
       - mongo
+      - mongo1
+      - mongo2
     volumes:
       - ~/data/mongo1/db:/data/db
       - ~/data/mongo1/configdb:/data/configdb
 
   mongo2:
+    hostname: mongo2
     image: mongo
-    command: --replSet rs0 --bind_ip_all --port 27340
-    ports:
-      - 27340:27340
-    extra_hosts:
-      - dedic:87.242.104.141
-    restart: on-failure
-    depends_on:
+    command: --replSet rs0
+    links:
+      - mongo
       - mongo1
+      - mongo2
+    restart: on-failure
     volumes:
       - ~/data/mongo2/db:/data/db
       - ~/data/mongo2/configdb:/data/configdb
