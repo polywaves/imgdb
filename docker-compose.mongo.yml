@@ -6,7 +6,7 @@ services:
       - 8081:8081
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongo,mongo1,mongo2
-      - ME_CONFIG_MONGODB_URL="mongodb://mongo1:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0"
+      - ME_CONFIG_MONGODB_URL="mongodb://mongo:27338,mongo1:27339,mongo2:27340/?replicaSet=rs0"
       # Add your user credentials for authentication
       # - ME_CONFIG_MONGODB_ADMINUSERNAME=writeUser
       # - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
@@ -21,25 +21,34 @@ services:
 
   mongo:
     image: mongo
-    command: mongod --replSet rs0
-    restart: always
+    command: mongod --replSet rs0 --bind_ip_all --port 27338
+    ports:
+      - 27338:27338
+    restart: on-failure
     volumes:
-      - ~/data/mongo:/data
+      - ~/data/mongo/db:/data/db
+      - ~/data/mongo/configdb:/data/configdb
 
   mongo1:
     image: mongo
-    command: mongod --replSet rs0
-    restart: always
+    command: mongod --replSet rs0 --bind_ip_all --port 27339
+    ports:
+      - 27339:27339
+    restart: on-failure
     depends_on:
       - mongo
     volumes:
-      - ~/data/mongo1:/data
+      - ~/data/mongo1/db:/data/db
+      - ~/data/mongo1/configdb:/data/configdb
 
   mongo2:
     image: mongo
-    command: mongod --replSet rs0
-    restart: always
+    command: mongod --replSet rs0 --bind_ip_all --port 27340
+    ports:
+      - 27340:27340
+    restart: on-failure
     depends_on:
       - mongo1
     volumes:
-      - ~/data/mongo2:/data
+      - ~/data/mongo2/db:/data/db
+      - ~/data/mongo2/configdb:/data/configdb
