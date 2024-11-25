@@ -14,6 +14,8 @@ services:
     restart: always
     ports:
       - 27338:27017
+    depends_on:
+      - mongo
     volumes:
       - ~/data/mongo1:/data
 
@@ -23,5 +25,7 @@ services:
     restart: always
     ports:
       - 27339:27017
+    depends_on:
+      - mongo1
     volumes:
       - ~/data/mongo2:/data
