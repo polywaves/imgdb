@@ -1,10 +1,18 @@
 services:
+  mongo0:
+    image: mongo
+    restart: always
+    ports:
+      - 27337:27017
+    volumes:
+      - /mnt/sda1/data/mongo:/data/db
+
   mongo:
     image: mongo
     command: mongod --replSet rs0
     restart: always
     ports:
-      - 27337:27017
+      - 27338:27017
     volumes:
       - ~/data/mongo:/data
 
@@ -13,7 +21,7 @@ services:
     command: mongod --replSet rs0
     restart: always
     ports:
-      - 27338:27017
+      - 27339:27017
     depends_on:
       - mongo
     volumes:
@@ -24,7 +32,7 @@ services:
     command: mongod --replSet rs0
     restart: always
     ports:
-      - 27339:27017
+      - 27340:27017
     depends_on:
       - mongo1
     volumes:
