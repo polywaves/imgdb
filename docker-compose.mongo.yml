@@ -3,8 +3,6 @@ services:
     image: mongo
     command: mongod --replSet rs0
     restart: always
-    env_file:
-      - .env
     ports:
       - 27337:27017
     volumes:
@@ -14,8 +12,8 @@ services:
     image: mongo
     command: mongod --replSet rs0
     restart: always
-    env_file:
-      - .env
+    ports:
+      - 27338:27017
     volumes:
       - ~/data/mongo1:/data
 
@@ -23,7 +21,7 @@ services:
     image: mongo
     command: mongod --replSet rs0
     restart: always
-    env_file:
-      - .env
+    ports:
+      - 27339:27017
     volumes:
       - ~/data/mongo2:/data
