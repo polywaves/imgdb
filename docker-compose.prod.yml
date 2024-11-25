@@ -30,36 +30,6 @@ services:
               capabilities: ["gpu"]
     depends_on:
       - weaviate-node-8
-      - mongo
-
-  mongo:
-    image: mongo
-    command: mongod --replSet rs0
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - 27337:27017
-    volumes:
-      - ~/data/mongo:/data/db
-
-  mongo1:
-    image: mongo
-    command: mongod --replSet rs0
-    restart: always
-    env_file:
-      - .env
-    volumes:
-      - ~/data/mongo1:/data/db
-
-  mongo2:
-    image: mongo
-    command: mongod --replSet rs0
-    restart: always
-    env_file:
-      - .env
-    volumes:
-      - ~/data/mongo2:/data/db
   
   i2v-neural:
     build:
