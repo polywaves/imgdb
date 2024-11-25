@@ -34,6 +34,7 @@ services:
 
   mongo:
     image: mongo
+    command: mongod --replSet rs0
     restart: always
     env_file:
       - .env
