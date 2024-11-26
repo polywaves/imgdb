@@ -47,11 +47,11 @@ async def add_process_time_header(request: Request, call_next) -> any:
   # logger.debug(f"RESPONSE: {response_body[0].decode()}")
 
   ## Count requests
-  mongo.requests_collection.insert_one({
-    "client_ip": client_ip,
-    "url": str(request.url),
-    "created_at": time()
-  })
+  # mongo.requests_collection.insert_one({
+  #   "client_ip": client_ip,
+  #   "url": str(request.url),
+  #   "created_at": time()
+  # })
 
   return response
 
