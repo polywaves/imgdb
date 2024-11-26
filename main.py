@@ -41,8 +41,8 @@ async def add_process_time_header(request: Request, call_next) -> any:
 
   response = await call_next(request)
 
-  response_body = [chunk async for chunk in response.body_iterator]
-  response.body_iterator = iterate_in_threadpool(iter(response_body))
+  # response_body = [chunk async for chunk in response.body_iterator]
+  # response.body_iterator = iterate_in_threadpool(iter(response_body))
 
   # logger.debug(f"RESPONSE: {response_body[0].decode()}")
 
