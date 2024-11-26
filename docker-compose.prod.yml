@@ -28,8 +28,6 @@ services:
             - driver: nvidia
               count: 1
               capabilities: ["gpu"]
-    depends_on:
-      - weaviate-node-8
   
   i2v-neural:
     build:
@@ -47,6 +45,43 @@ services:
               count: 1
               capabilities: ["compute"]
 
+  # MONGO CLUSTER
+  mongoexpress:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8337:8081
+    env_file:
+      - .env
+
+  mongo:
+    hostname: mongo
+    image: mongo
+    command: --replSet rs0
+    restart: always
+    volumes:
+      - ~/data/mongo/db:/data/db
+      - ~/data/mongo/configdb:/data/configdb
+
+  mongo1:
+    hostname: mongo1
+    image: mongo
+    command: --replSet rs0
+    restart: always
+    volumes:
+      - ~/data/mongo1/db:/data/db
+      - ~/data/mongo1/configdb:/data/configdb
+
+  mongo2:
+    hostname: mongo2
+    image: mongo
+    command: --replSet rs0
+    restart: always
+    volumes:
+      - ~/data/mongo2/db:/data/db
+      - ~/data/mongo2/configdb:/data/configdb
+
+  # WEAVIATE CLUSTER
   weaviate-node-1:
     init: true
     command:

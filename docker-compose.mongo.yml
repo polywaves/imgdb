@@ -7,13 +7,13 @@ services:
     env_file:
       - .env
 
-  mongo0:
-    image: mongo
-    restart: always
-    ports:
-      - 27337:27017
-    volumes:
-      - ~/data/mongo3:/data/db
+  # mongo0:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - 27337:27017
+  #   volumes:
+  #     - ~/data/mongo3:/data/db
 
   mongo:
     hostname: mongo
