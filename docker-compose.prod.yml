@@ -29,7 +29,7 @@ services:
       replicas: 20
       resources:
         limits:
-          memory: 1.5G
+          memory: 2G
         reservations:
           devices:
             - driver: nvidia
@@ -79,7 +79,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 3G
     volumes:
       - ~/data/mongo/db:/data/db
       - ~/data/mongo/configdb:/data/configdb
@@ -92,7 +92,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 3G
     volumes:
       - ~/data/mongo1/db:/data/db
       - ~/data/mongo1/configdb:/data/configdb
@@ -105,7 +105,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 3G
     volumes:
       - ~/data/mongo2/db:/data/db
       - ~/data/mongo2/configdb:/data/configdb
@@ -134,7 +134,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
 
   node2:
     hostname: node2
@@ -160,7 +160,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node1
 
@@ -188,7 +188,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node2
 
@@ -216,7 +216,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node3
 
@@ -244,7 +244,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node4
 
@@ -272,7 +272,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node5
 
@@ -300,7 +300,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node6
 
@@ -328,6 +328,6 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 11G
     depends_on:
       - node7
