@@ -6,6 +6,10 @@ services:
     ports:
       - 80:80
       - 443:443
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     depends_on:
       - api
 
@@ -23,6 +27,8 @@ services:
       mode: replicated
       replicas: 20
       resources:
+        limits:
+          memory: 2G
         reservations:
           devices:
             - driver: nvidia
@@ -39,6 +45,8 @@ services:
       mode: replicated
       replicas: 20
       resources:
+        limits:
+          memory: 2G
         reservations:
           devices:
             - driver: nvidia
@@ -53,12 +61,20 @@ services:
       - 8337:8081
     env_file:
       - .env
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   mongo:
     hostname: mongo
     image: mongo
     command: --replSet rs0
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 4G
     volumes:
       - ~/data/mongo/db:/data/db
       - ~/data/mongo/configdb:/data/configdb
@@ -68,6 +84,10 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 4G
     volumes:
       - ~/data/mongo1/db:/data/db
       - ~/data/mongo1/configdb:/data/configdb
@@ -77,12 +97,17 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 4G
     volumes:
       - ~/data/mongo2/db:/data/db
       - ~/data/mongo2/configdb:/data/configdb
 
   # WEAVIATE CLUSTER
   weaviate-node-1:
+    hostname: weaviate-node-1
     init: true
     command:
       - --host
@@ -101,8 +126,13 @@ services:
       - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
       - CLUSTER_DATA_BIND_PORT=7101
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-2:
+    hostname: weaviate-node-2
     init: true
     command:
       - --host
@@ -122,10 +152,13 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-1
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-3:
+    hostname: weaviate-node-3
     init: true
     command:
       - --host
@@ -145,10 +178,13 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-2
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-4:
+    hostname: weaviate-node-4
     init: true
     command:
       - --host
@@ -168,10 +204,13 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-3
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-5:
+    hostname: weaviate-node-5
     init: true
     command:
       - --host
@@ -191,10 +230,13 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-4
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-6:
+    hostname: weaviate-node-6
     init: true
     command:
       - --host
@@ -214,10 +256,13 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-5
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-7:
+    hostname: weaviate-node-7
     init: true
     command:
       - --host
@@ -237,10 +282,13 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7112
       - CLUSTER_DATA_BIND_PORT=7113
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-6
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   weaviate-node-8:
+    hostname: weaviate-node-8
     init: true
     command:
       - --host
@@ -260,5 +308,7 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7114
       - CLUSTER_DATA_BIND_PORT=7115
       - CLUSTER_JOIN=weaviate-node-1:7100
-    depends_on:
-     - weaviate-node-7
+    deploy:
+      resources:
+        limits:
+          memory: 8G
