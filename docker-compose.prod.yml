@@ -1,5 +1,6 @@
 services:
   nginx:
+    hostname: nginx
     build:
       context: ./nginx
     restart: always
@@ -12,6 +13,7 @@ services:
           memory: 12G
 
   api:
+    hostname: api
     build:
       context: .
     restart: always
@@ -34,6 +36,7 @@ services:
               capabilities: ["gpu"]
   
   i2v-neural:
+    hostname: i2v-neural
     build:
       context: ./i2v
     restart: always
@@ -53,6 +56,7 @@ services:
 
   # MONGO CLUSTER
   mongoexpress:
+    hostname: mongoexpress
     image: mongo-express
     restart: always
     ports:
