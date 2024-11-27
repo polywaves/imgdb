@@ -6,7 +6,7 @@ from app import mongo
 from app.utils.logger_util import logger
 from app.api import v1
 from starlette.concurrency import iterate_in_threadpool
-import json
+from app.providers import weaviate_provider
 
 
 app = FastAPI(
@@ -18,6 +18,11 @@ app = FastAPI(
 async def startup_event():
   await mongo.migrate()
   logger.debug("MongoDB has migrated")
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+  weaviate_provider.client.close()
 
 
 if os.environ["MODE"] == 'development':
