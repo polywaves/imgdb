@@ -15,4 +15,4 @@ RUN ./download_model.py
 
 COPY . .
 
-CMD uvicorn app:app --port 8080 --host=0.0.0.0 --use-colors
+CMD uvicorn app:app --port 8082 --host=0.0.0.0 --use-colors
