@@ -23,10 +23,10 @@ services:
       - /mnt/sda1:/mnt/sda1
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 16
       resources:
         limits:
-          memory: 1G
+          memory: 2G
         reservations:
           devices:
             - driver: nvidia
@@ -41,7 +41,7 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 16
       resources:
         limits:
           memory: 4G
@@ -62,7 +62,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1G
+          memory: 2G
 
   mongo:
     hostname: mongo
