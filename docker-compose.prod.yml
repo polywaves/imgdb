@@ -10,8 +10,6 @@ services:
       resources:
         limits:
           memory: 2G
-    depends_on:
-      - api
 
   api:
     build:
