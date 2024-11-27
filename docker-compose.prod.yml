@@ -13,7 +13,6 @@ services:
           memory: 12G
 
   api:
-    hostname: api
     build:
       context: .
     restart: always
