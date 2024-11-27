@@ -7,10 +7,10 @@ services:
     ports:
       - 80:80
       - 443:443
-    deploy:
-      resources:
-        limits:
-          memory: 12G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 12G
     depends_on:
       - api
 
@@ -28,8 +28,8 @@ services:
       mode: replicated
       replicas: 20
       resources:
-        limits:
-          memory: 3G
+        # limits:
+        #   memory: 3G
         reservations:
           devices:
             - driver: nvidia
@@ -49,8 +49,8 @@ services:
       mode: replicated
       replicas: 20
       resources:
-        limits:
-          memory: 2G
+        # limits:
+        #   memory: 2G
         reservations:
           devices:
             - driver: nvidia
@@ -66,20 +66,20 @@ services:
       - 8337:8081
     env_file:
       - .env
-    deploy:
-      resources:
-        limits:
-          memory: 1G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 1G
 
   mongo:
     hostname: mongo
     image: mongo
     command: --replSet rs0
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 3G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 3G
     volumes:
       - ~/data/mongo/db:/data/db
       - ~/data/mongo/configdb:/data/configdb
@@ -89,10 +89,10 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 3G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 3G
     volumes:
       - ~/data/mongo1/db:/data/db
       - ~/data/mongo1/configdb:/data/configdb
@@ -102,10 +102,10 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 3G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 3G
     volumes:
       - ~/data/mongo2/db:/data/db
       - ~/data/mongo2/configdb:/data/configdb
@@ -131,10 +131,10 @@ services:
       - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
       - CLUSTER_DATA_BIND_PORT=7101
-    deploy:
-      resources:
-        limits:
-          memory: 8G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
 
   node2:
     hostname: node2
@@ -157,10 +157,10 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
       - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
     depends_on:
       - node1
 
@@ -185,10 +185,10 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
     depends_on:
       - node2
 
@@ -213,10 +213,10 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
     depends_on:
       - node3
 
@@ -241,10 +241,10 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
     depends_on:
       - node4
 
@@ -269,65 +269,65 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
     depends_on:
       - node5
 
-  node7:
-    hostname: node7
-    init: true
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-    restart: on-failure:0
-    volumes:
-      - /mnt/sda1/data/weaviate_node_7:/var/lib/weaviate
-    env_file:
-      - .env
-    environment:
-      - CLUSTER_HOSTNAME=node7
-      - CLUSTER_GOSSIP_BIND_PORT=7112
-      - CLUSTER_DATA_BIND_PORT=7113
-      - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
-    depends_on:
-      - node6
+  # node7:
+  #   hostname: node7
+  #   init: true
+  #   command:
+  #     - --host
+  #     - 0.0.0.0
+  #     - --port
+  #     - '8080'
+  #     - --scheme
+  #     - http
+  #   image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+  #   restart: on-failure:0
+  #   volumes:
+  #     - /mnt/sda1/data/weaviate_node_7:/var/lib/weaviate
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - CLUSTER_HOSTNAME=node7
+  #     - CLUSTER_GOSSIP_BIND_PORT=7112
+  #     - CLUSTER_DATA_BIND_PORT=7113
+  #     - CLUSTER_JOIN=node1:7100
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 8G
+  #   depends_on:
+  #     - node6
 
-  node8:
-    hostname: node8
-    init: true
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-    restart: on-failure:0
-    volumes:
-      - /mnt/sda1/data/weaviate_node_8:/var/lib/weaviate
-    env_file:
-      - .env
-    environment:
-      - CLUSTER_HOSTNAME=node8
-      - CLUSTER_GOSSIP_BIND_PORT=7114
-      - CLUSTER_DATA_BIND_PORT=7115
-      - CLUSTER_JOIN=node1:7100
-    deploy:
-      resources:
-        limits:
-          memory: 8G
-    depends_on:
-      - node7
+  # node8:
+  #   hostname: node8
+  #   init: true
+  #   command:
+  #     - --host
+  #     - 0.0.0.0
+  #     - --port
+  #     - '8080'
+  #     - --scheme
+  #     - http
+  #   image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+  #   restart: on-failure:0
+  #   volumes:
+  #     - /mnt/sda1/data/weaviate_node_8:/var/lib/weaviate
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - CLUSTER_HOSTNAME=node8
+  #     - CLUSTER_GOSSIP_BIND_PORT=7114
+  #     - CLUSTER_DATA_BIND_PORT=7115
+  #     - CLUSTER_JOIN=node1:7100
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 8G
+  #   depends_on:
+  #     - node7
