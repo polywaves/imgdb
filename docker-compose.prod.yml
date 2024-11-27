@@ -154,6 +154,8 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
 
   weaviate-node-3:
     hostname: weaviate-node-3
@@ -180,6 +182,8 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
 
   weaviate-node-4:
     hostname: weaviate-node-4
@@ -206,6 +210,8 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
 
   weaviate-node-5:
     hostname: weaviate-node-5
@@ -232,6 +238,8 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
 
   weaviate-node-6:
     hostname: weaviate-node-6
@@ -258,6 +266,8 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
 
   weaviate-node-7:
     hostname: weaviate-node-7
@@ -284,6 +294,8 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
 
   weaviate-node-8:
     hostname: weaviate-node-8
@@ -310,3 +322,5 @@ services:
       resources:
         limits:
           memory: 8G
+    depends_on:
+      - weaviate-node-1
