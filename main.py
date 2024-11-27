@@ -20,9 +20,9 @@ async def startup_event():
   logger.debug("MongoDB has migrated")
 
 
-# @app.on_event("shutdown")
-# async def shutdown_event():
-#   weaviate_provider.client.close()
+@app.on_event("shutdown")
+async def shutdown_event():
+  weaviate_provider.client.close()
 
 
 if os.environ["MODE"] == 'development':

@@ -7,23 +7,18 @@ from weaviate.classes.query import MetadataQuery, Filter
 collection_name = os.environ["WEAVIATE_COLLECTION_NAME"]
 
 
-def get_client() -> object:
-  client = weaviate.connect_to_custom(
-    http_host=os.environ["WEAVIATE_HOST"],
-    http_port=os.environ["WEAVIATE_HTTP_PORT"],
-    http_secure=os.environ["WEAVIATE_HTTP_SECURE"],
-    grpc_host=os.environ["WEAVIATE_HOST"],
-    grpc_port=os.environ["WEAVIATE_GRPC_PORT"],
-    grpc_secure=os.environ["WEAVIATE_GRPC_SECURE"]
-  )
-
-  return client
+client = weaviate.connect_to_custom(
+  http_host=os.environ["WEAVIATE_HOST"],
+  http_port=os.environ["WEAVIATE_HTTP_PORT"],
+  http_secure=os.environ["WEAVIATE_HTTP_SECURE"],
+  grpc_host=os.environ["WEAVIATE_HOST"],
+  grpc_port=os.environ["WEAVIATE_GRPC_PORT"],
+  grpc_secure=os.environ["WEAVIATE_GRPC_SECURE"]
+)
 
 
 def get_collections() -> list:
-  client = get_client()
   data = client.collections.list_all(simple=False)
-  client.close()
 
   response = list()
   for item in data.values():
@@ -33,19 +28,14 @@ def get_collections() -> list:
 
 
 def delete_collection():
-  client = get_client()
   client.collections.delete(collection_name)
-  client.close()
 
 
 def delete_all_collections():
-  client = get_client()
   client.collections.delete_all()
-  client.close()
 
 
 def create_collection() -> object:
-  client = get_client()
   collection = client.collections.create(
     name=collection_name,
     vectorizer_config=Configure.Vectorizer.img2vec_neural(
@@ -69,26 +59,27 @@ def create_collection() -> object:
       )
     ]
   )
-  
-  client.close()
 
   return collection
 
 
 
 def create_image_vector(items: list):
-  client = get_client()
   collection = client.collections.get(collection_name)
 
   with collection.batch.dynamic() as batch:
     for item in items:
       batch.add_object(item)
 
-  client.close()
+  # uuids = list()
+  # for item in items:
+  #   uuid = collection.data.insert(item)
+  #   uuids.append(uuid)
+
+  # return uuids
 
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
-  client = get_client()
   collection = client.collections.get(collection_name)
 
   response = collection.query.fetch_objects(
@@ -96,13 +87,10 @@ def get_image_vectors_by_post_id(post_id: int) -> object:
     include_vector=True
   )
 
-  client.close()
-
   return response
 
 
 def search_near_image(image, limit: int = 10) -> object:
-  client = get_client()
   collection = client.collections.get(collection_name)
   response = collection.query.near_image(
     near_image=image,
@@ -110,31 +98,23 @@ def search_near_image(image, limit: int = 10) -> object:
     limit=limit
   )
 
-  client.close()
-
   return response
 
 
 def delete_image_by_uid(uid: int) -> object:
-  client = get_client()
   collection = client.collections.get(collection_name)
   response = collection.data.delete_many(
     where=Filter.by_property("uid").contains_any([uid])
   )
 
-  client.close()
-
   return response
 
 
 def delete_images_by_post_id(post_id: int) -> object:
-  client = get_client()
   collection = client.collections.get(collection_name)
   response = collection.data.delete_many(
     where=Filter.by_property("post_id").contains_any([post_id])
   )
-
-  client.close()
 
   return response
 
