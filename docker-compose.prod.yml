@@ -9,7 +9,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: 4G
 
   api:
     build:
@@ -26,7 +26,7 @@ services:
       replicas: 20
       resources:
         limits:
-          memory: 2G
+          memory: 1G
         reservations:
           devices:
             - driver: nvidia
@@ -44,7 +44,7 @@ services:
       replicas: 20
       resources:
         limits:
-          memory: 2G
+          memory: 4G
         reservations:
           devices:
             - driver: nvidia
@@ -62,7 +62,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: 1G
 
   mongo:
     hostname: mongo
