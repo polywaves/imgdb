@@ -11,6 +11,8 @@ services:
       resources:
         limits:
           memory: 12G
+    depends_on:
+      - api
 
   api:
     build:
