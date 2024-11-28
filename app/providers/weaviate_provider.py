@@ -101,7 +101,7 @@ def delete_image_by_uid(uid: int) -> object:
 
 def delete_images_by_post_id(post_id: int) -> object:
   response = collection.data.delete_many(
-    where=Filter.by_property("post_id").contains_any([post_id])
+    where=Filter.by_property("post_id").contains_all([post_id])
   )
 
   return response
