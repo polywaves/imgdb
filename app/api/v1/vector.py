@@ -2,7 +2,7 @@ import hashlib
 import json
 import sys
 from time import time
-from fastapi import APIRouter, UploadFile, File, BackgroundTasks
+from fastapi import APIRouter, UploadFile, File
 from app.providers import weaviate_provider
 from app.models import vector_model
 from app.utils import image_util
@@ -46,20 +46,16 @@ async def search_posts(image: str) -> dict:
   return response
 
 
-async def delete_post_vectors(post_id):
-  try:
-    weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
-  except Exception:
-    logger.debug(f"Post id {post_id} not found in vectorizer database")
-
-
-async def delete_posts(post_ids: list, background_tasks: BackgroundTasks):
+async def delete_posts(post_ids: list):
   deleted = list()
   for post_id in post_ids:
     post_id = post_id.strip()
 
     try:
-      background_tasks.add_task(delete_post_vectors, post_id)
+      try:
+        weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
+      except Exception:
+        logger.debug(f"Post id {post_id} not found in vectorizer database")
 
       await mongo.post_image_ids_collection.delete_many({
         "post_id": str(post_id)
@@ -76,10 +72,10 @@ async def delete_posts(post_ids: list, background_tasks: BackgroundTasks):
 
 
 @router.get("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids throught ,"])
-async def delete_posts_by_ids(post_ids: str, background_tasks: BackgroundTasks):
+async def delete_posts_by_ids(post_ids: str):
   start_time = time()
 
-  deleted = await delete_posts(post_ids=post_ids.split(','), background_tasks=background_tasks)
+  deleted = await delete_posts(post_ids=post_ids.split(','))
 
   return response_util.response({
     "result": 1,
@@ -88,10 +84,10 @@ async def delete_posts_by_ids(post_ids: str, background_tasks: BackgroundTasks):
   
 
 @router.post("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids"])
-async def delete_posts_by_ids(params: vector_model.DeletePostsByIds, background_tasks: BackgroundTasks):
+async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   start_time = time()
 
-  deleted = await delete_posts(post_ids=params.post_ids, background_tasks=background_tasks)
+  deleted = await delete_posts(post_ids=params.post_ids)
   
   return response_util.response({
     "result": 1,
