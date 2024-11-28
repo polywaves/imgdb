@@ -6,7 +6,6 @@ from weaviate.classes.query import MetadataQuery, Filter
 
 collection_name = os.environ["WEAVIATE_COLLECTION_NAME"]
 
-
 client = weaviate.connect_to_custom(
   http_host=os.environ["WEAVIATE_HOST"],
   http_port=os.environ["WEAVIATE_HTTP_PORT"],
@@ -15,6 +14,8 @@ client = weaviate.connect_to_custom(
   grpc_port=os.environ["WEAVIATE_GRPC_PORT"],
   grpc_secure=os.environ["WEAVIATE_GRPC_SECURE"]
 )
+
+collection = client.collections.get(collection_name)
 
 
 def get_collections() -> list:
@@ -35,8 +36,8 @@ def delete_all_collections():
   client.collections.delete_all()
 
 
-def create_collection() -> object:
-  collection = client.collections.create(
+def create_collection():
+  client.collections.create(
     name=collection_name,
     vectorizer_config=Configure.Vectorizer.img2vec_neural(
       image_fields=[
@@ -60,28 +61,18 @@ def create_collection() -> object:
     ]
   )
 
-  return collection
+  global collection
+  collection = client.collections.get(collection_name)
 
 
 
 def create_image_vector(items: list):
-  collection = client.collections.get(collection_name)
-
   with collection.batch.dynamic() as batch:
     for item in items:
       batch.add_object(item)
 
-  # uuids = list()
-  # for item in items:
-  #   uuid = collection.data.insert(item)
-  #   uuids.append(uuid)
-
-  # return uuids
-
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
-  collection = client.collections.get(collection_name)
-
   response = collection.query.fetch_objects(
     filters=Filter.by_property("post_id").contains_any([post_id]),
     include_vector=True
@@ -91,7 +82,6 @@ def get_image_vectors_by_post_id(post_id: int) -> object:
 
 
 def search_near_image(image, limit: int = 10) -> object:
-  collection = client.collections.get(collection_name)
   response = collection.query.near_image(
     near_image=image,
     return_metadata=MetadataQuery(distance=True),
@@ -102,7 +92,6 @@ def search_near_image(image, limit: int = 10) -> object:
 
 
 def delete_image_by_uid(uid: int) -> object:
-  collection = client.collections.get(collection_name)
   response = collection.data.delete_many(
     where=Filter.by_property("uid").contains_any([uid])
   )
@@ -111,7 +100,6 @@ def delete_image_by_uid(uid: int) -> object:
 
 
 def delete_images_by_post_id(post_id: int) -> object:
-  collection = client.collections.get(collection_name)
   response = collection.data.delete_many(
     where=Filter.by_property("post_id").contains_any([post_id])
   )
