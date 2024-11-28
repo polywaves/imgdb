@@ -195,6 +195,11 @@ async def training_by_json(params: vector_model.TrainingByJson):
     options.append(text_util.urldecode(option))
   params.options = options
 
+  sizes = list()
+  for size in params.sizes:
+    sizes.append(text_util.urldecode(size))
+  params.sizes = sizes
+
   post = params.model_dump()
 
   await mongo.posts_collection.insert_one(post)
