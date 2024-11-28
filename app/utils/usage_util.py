@@ -19,7 +19,7 @@ def get_memory_usage():
 
 
 def get_disk_usage(disk: int):
-  disks = ["/", "/mnt/sda1"]
+  disks = ["/", "/mnt/sda1", "/mnt/sdb1"]
 
   usage = psutil.disk_usage(disks[disk - 1])
   
