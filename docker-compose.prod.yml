@@ -27,7 +27,7 @@ services:
       - /mnt/sdb1:/mnt/sdb1
     deploy:
       mode: replicated
-      replicas: 30
+      replicas: 20
       resources:
         # limits:
         #   memory: 3G
@@ -48,7 +48,7 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 16
+      replicas: 18
       resources:
         # limits:
         #   memory: 2G
