@@ -76,10 +76,10 @@ async def delete_posts(post_ids: list, background_tasks: BackgroundTasks):
 
 
 @router.get("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids throught ,"])
-async def delete_posts_by_ids(post_ids: str):
+async def delete_posts_by_ids(post_ids: str, background_tasks: BackgroundTasks):
   start_time = time()
 
-  deleted = await delete_posts(post_ids=post_ids.split(','))
+  deleted = await delete_posts(post_ids=post_ids.split(','), background_tasks=background_tasks)
 
   return response_util.response({
     "result": 1,
@@ -88,10 +88,10 @@ async def delete_posts_by_ids(post_ids: str):
   
 
 @router.post("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids"])
-async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
+async def delete_posts_by_ids(params: vector_model.DeletePostsByIds, background_tasks: BackgroundTasks):
   start_time = time()
 
-  deleted = await delete_posts(post_ids=params.post_ids)
+  deleted = await delete_posts(post_ids=params.post_ids, background_tasks=background_tasks)
   
   return response_util.response({
     "result": 1,
