@@ -2,7 +2,7 @@ import hashlib
 import json
 import sys
 from time import time
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, BackgroundTasks
 from app.providers import weaviate_provider
 from app.models import vector_model
 from app.utils import image_util
@@ -46,16 +46,20 @@ async def search_posts(image: str) -> dict:
   return response
 
 
-async def delete_posts(post_ids: list):
+async def delete_post_vectors(post_id):
+  try:
+    weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
+  except Exception:
+    logger.debug(f"Post id {post_id} not found in vectorizer database")
+
+
+async def delete_posts(post_ids: list, background_tasks: BackgroundTasks):
   deleted = list()
   for post_id in post_ids:
     post_id = post_id.strip()
 
     try:
-      # try:
-      #   weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
-      # except Exception:
-      #   logger.debug(f"Post id {post_id} not found in vectorizer database")
+      background_tasks.add_task(delete_post_vectors, post_id)
 
       await mongo.post_image_ids_collection.delete_many({
         "post_id": str(post_id)
