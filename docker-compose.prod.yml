@@ -48,7 +48,7 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 10
       resources:
         # limits:
         #   memory: 2G
