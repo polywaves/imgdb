@@ -74,7 +74,7 @@ def create_image_vector(items: list):
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
   response = collection.query.fetch_objects(
-    filters=Filter.by_property("post_id").contains_any([post_id]),
+    filters=Filter.by_property("post_id").equal(post_id),
     include_vector=True
   )
 
@@ -93,7 +93,7 @@ def search_near_image(image, limit: int = 10) -> object:
 
 def delete_image_by_uid(uid: int) -> object:
   response = collection.data.delete_many(
-    where=Filter.by_property("uid").contains_any([uid])
+    where=Filter.by_property("uid").equal(uid)
   )
 
   return response
@@ -101,7 +101,7 @@ def delete_image_by_uid(uid: int) -> object:
 
 def delete_images_by_post_id(post_id: int) -> object:
   response = collection.data.delete_many(
-    where=Filter.by_property("post_id").contains_all([post_id])
+    where=Filter.by_property("post_id").equal(post_id)
   )
 
   return response
