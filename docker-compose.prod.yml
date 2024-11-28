@@ -124,7 +124,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     restart: on-failure:0
     volumes:
-      - ~/data/weaviate_node_1:/var/lib/weaviate
+      - /mnt/sda1/data/weaviate_node_1:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -149,7 +149,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - ~/data/weaviate_node_2:/var/lib/weaviate
+      - /mnt/sda1/data/weaviate_node_2:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -233,7 +233,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - /mnt/sda1/data/weaviate_node_5:/var/lib/weaviate
+      - /mnt/sdb1/data/weaviate_node_5:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -261,7 +261,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - /mnt/sda1/data/weaviate_node_6:/var/lib/weaviate
+      - /mnt/sdb1/data/weaviate_node_6:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -289,7 +289,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - /mnt/sda1/data/weaviate_node_7:/var/lib/weaviate
+      - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
     env_file:
       - .env
     environment:
@@ -317,7 +317,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - /mnt/sda1/data/weaviate_node_8:/var/lib/weaviate
+      - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
     env_file:
       - .env
     environment:
