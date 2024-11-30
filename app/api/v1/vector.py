@@ -112,7 +112,7 @@ async def search_by_img_id(img_id: int):
 
   posts = await mongo.posts_collection.find({
     "images.img_id": int(img_id)
-  }).limit(limit)
+  }).limit(limit).to_list()
 
   return response_util.response({
     "result": 1,
