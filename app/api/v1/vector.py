@@ -114,9 +114,14 @@ async def search_by_img_id(img_id: int):
     "images.img_id": int(img_id)
   }).limit(limit).to_list()
 
+  response = list()
+  for post in posts:
+    del post["_id"]
+    response.append(post)
+
   return response_util.response({
     "result": 1,
-    "posts": posts
+    "posts": response
   }, start_time=start_time)
 
 
