@@ -26,10 +26,10 @@ async def search_posts(image: str) -> dict:
   response = list()
   for vector in vectors.objects:
     distance = vector.metadata.distance
-    uid = vector.properties["uid"]
+    post_id = vector.properties["post_id"]
 
     post = await mongo.posts_collection.find_one({
-      "images.img_id": int(uid)
+      "id": str(post_id)
     })
 
     if not post:
