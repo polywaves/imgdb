@@ -24,7 +24,6 @@ async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image, limit=30)
 
   response = list()
-  post_ids = []
   for vector in vectors.objects:
     distance = vector.metadata.distance
     uid = vector.properties["uid"]
@@ -36,12 +35,9 @@ async def search_posts(image: str) -> dict:
     if not post:
       continue
 
-    if post["id"] not in post_ids:
-      post_ids.append(post["id"])
-
-      del post["_id"]
-      post["distance"] = round(distance, 6)
-      response.append(post)
+    del post["_id"]
+    post["distance"] = round(distance, 6)
+    response.append(post)
 
   return response
 
