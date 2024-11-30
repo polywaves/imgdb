@@ -93,16 +93,22 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   }, start_time=start_time)
 
 
-@router.post("/search_by_url", tags=["Search near vectors by url"])
+@router.post("/search_by_url", tags=["Search post by existing url"])
 async def search_by_url(url: str):
   start_time = time()
 
-  image = image_util.from_url_to_base64(url)
-  posts = await search_posts(image=image)
+  posts = await mongo.posts_collection.find({
+    "images.img": url
+  }).limit(limit).to_list()
+
+  response = list()
+  for post in posts:
+    del post["_id"]
+    response.append(post)
 
   return response_util.response({
     "result": 1,
-    "posts": posts
+    "posts": response
   }, start_time=start_time)
 
 

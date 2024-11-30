@@ -14,7 +14,8 @@ vector_hashes_collection = db.get_collection("vector_hashes")
 async def migrate():
   posts_indexes = [
     IndexModel([("id", ASCENDING)]),
-    IndexModel([("images.img_id", ASCENDING)])
+    IndexModel([("images.img_id", ASCENDING)]),
+    IndexModel([("images.img", ASCENDING)])
   ]
   await posts_collection.create_indexes(posts_indexes)
 
