@@ -43,17 +43,17 @@ async def add_process_time_header(request: Request, call_next) -> any:
   if "x-real-ip" in request.headers:
     client_ip = request.headers["x-real-ip"]
 
-  ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
-  route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
+    ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
+    route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
 
-  if client_ip not in ip_list:
-    found = False
-    for route in route_list:
-      if route in url:
-        found = True
+    if client_ip not in ip_list:
+      found = False
+      for route in route_list:
+        if route in url:
+          found = True
 
-    if not found:
-      raise HTTPException(status_code=403, detail="Access denied")
+      if not found:
+        raise HTTPException(status_code=403, detail="Access denied")
 
   logger.info(f"REQUEST BY CLIENT IP: {client_ip}")
 
