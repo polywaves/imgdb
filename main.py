@@ -40,15 +40,16 @@ if os.environ["MODE"] == 'development':
 async def add_process_time_header(request: Request, call_next) -> any:
   url = str(request.url)
   client_ip = request.client.host
-  if "x-real-ip" in request.headers:
+  if "x-real-ip" in request.headers and "x-forwarded-for" in request.headers:
     client_ip = request.headers["x-real-ip"]
+    forwarded_ip = request.headers["x-forwarded-for"]
 
-    logger.info(f"REQUEST BY CLIENT IP: {client_ip}")
+    logger.info(f"REQUEST BY CLIENT IP: {client_ip} FORWARDED {forwarded_ip}")
 
     ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
     route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
 
-    if client_ip not in ip_list:
+    if client_ip not in ip_list and forwarded_ip not in ip_list:
       found = False
       for route in route_list:
         if route in url:
