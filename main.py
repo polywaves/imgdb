@@ -40,8 +40,8 @@ if os.environ["MODE"] == 'development':
 async def add_process_time_header(request: Request, call_next) -> any:
   url = str(request.url)
   client_ip = request.client.host
-  if "X-Real-Ip" in request.headers:
-    client_ip = request.headers["X-Real-Ip"]
+  if "x-real-ip" in request.headers:
+    client_ip = request.headers["x-real-ip"]
 
   ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
   route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
