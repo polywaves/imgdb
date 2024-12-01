@@ -1,6 +1,6 @@
 import os
 from time import time
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app import mongo
 from app.utils.logger_util import logger
@@ -38,9 +38,22 @@ if os.environ["MODE"] == 'development':
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next) -> any:
+  url = str(request.url)
   client_ip = request.client.host
   if "X-Real-Ip" in request.headers:
     client_ip = request.headers["X-Real-Ip"]
+
+  ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
+  route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
+
+  if client_ip not in ip_list:
+    found = False
+    for route in route_list:
+      if route in url:
+        found = True
+
+    if not found:
+      raise HTTPException(status_code=403, detail="Access denied")
 
   logger.info(f"REQUEST BY CLIENT IP: {client_ip}")
 
@@ -54,7 +67,7 @@ async def add_process_time_header(request: Request, call_next) -> any:
   ## Count requests
   await mongo.requests_collection.insert_one({
     "client_ip": client_ip,
-    "url": str(request.url),
+    "url": url,
     "created_at": time()
   })
 
