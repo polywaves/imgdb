@@ -1,0 +1,10 @@
+.pytest_cache
+data
+i2v
+in
+nginx
+venv
+.*
+*.yml
+*.sh
+*.md
