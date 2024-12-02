@@ -20,12 +20,8 @@ services:
         reservations:
           generic_resources:
             - discrete_resource_spec:
-                kind: NVIDIA-GPU
-                value: 0
-          # devices:
-          #   - driver: nvidia
-          #     count: 1
-          #     capabilities: ["compute"]
+              kind: NVIDIA-GPU
+              value: 0
 
 networks:
   services:
