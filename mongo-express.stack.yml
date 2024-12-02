@@ -6,8 +6,6 @@ services:
       - target: 8081
         published: 8337
         mode: host
-    env_file:
-      - /services/.env
     networks:
       - services
     deploy:
