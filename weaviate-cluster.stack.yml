@@ -1,13 +1,7 @@
 services:
   node1:
     hostname: node1
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "/bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     volumes:
       - /data/weaviate_node_1:/var/lib/weaviate
@@ -34,13 +28,7 @@ services:
 
   node2:
     hostname: node2
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sda1/data/weaviate_node_2:/var/lib/weaviate
@@ -68,13 +56,7 @@ services:
 
   node3:
     hostname: node3
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sda1/data/weaviate_node_3:/var/lib/weaviate
@@ -102,13 +84,7 @@ services:
 
   node4:
     hostname: node4
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sdb1/data/weaviate_node_4:/var/lib/weaviate
@@ -136,13 +112,7 @@ services:
 
   node5:
     hostname: node5
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sdb1/data/weaviate_node_5:/var/lib/weaviate
@@ -170,13 +140,7 @@ services:
 
   node6:
     hostname: node6
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sdb1/data/weaviate_node_6:/var/lib/weaviate
@@ -204,13 +168,7 @@ services:
 
   node7:
     hostname: node7
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
@@ -238,13 +196,7 @@ services:
 
   node8:
     hostname: node8
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
+    command: sh -c "sleep 10 && /bin/weaviate --host 0.0.0.0 --port 8080 --scheme http"
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     volumes:
       - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
