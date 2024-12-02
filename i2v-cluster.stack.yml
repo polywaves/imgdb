@@ -20,8 +20,8 @@ services:
         reservations:
           generic_resources:
             - discrete_resource_spec:
-              kind: NVIDIA-GPU
-              value: 0
+                kind: NVIDIA-GPU
+                value: 0
 
 networks:
   services:
