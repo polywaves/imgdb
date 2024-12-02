@@ -10,7 +10,9 @@ services:
         published: 443
         mode: host
     volumes:
-      - /services/nginx:/etc/nginx
+      - /services/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /services/nginx/conf.d:/etc/nginx/conf.d
+      - /services/nginx/ssl:/etc/nginx/ssl
     networks:
       - services
     deploy:
