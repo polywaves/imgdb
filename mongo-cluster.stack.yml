@@ -3,6 +3,9 @@ services:
     hostname: mongo
     image: mongo
     command: --replSet rs0
+    environment:
+      - TZ=Europe/Moscow
+      - DEBIAN_FRONTEND=noninteractive
     volumes:
       - /data/mongo/db:/data/db
       - /data/mongo/configdb:/data/configdb
@@ -18,6 +21,9 @@ services:
     hostname: mongo1
     image: mongo
     command: --replSet rs0
+    environment:
+      - TZ=Europe/Moscow
+      - DEBIAN_FRONTEND=noninteractive
     volumes:
       - /data/mongo1/db:/data/db
       - /data/mongo1/configdb:/data/configdb
@@ -33,6 +39,9 @@ services:
     hostname: mongo2
     image: mongo
     command: --replSet rs0
+    environment:
+      - TZ=Europe/Moscow
+      - DEBIAN_FRONTEND=noninteractive
     volumes:
       - /data/mongo2/db:/data/db
       - /data/mongo2/configdb:/data/configdb

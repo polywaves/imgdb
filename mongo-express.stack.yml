@@ -7,6 +7,8 @@ services:
         published: 8337
         mode: host
     environment:
+      - TZ=Europe/Moscow
+      - DEBIAN_FRONTEND=noninteractive
       - ME_CONFIG_MONGODB_SERVER=mongo,mongo1,mongo2
       - ME_CONFIG_MONGODB_URL=mongodb://mongo:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
       - ME_CONFIG_BASICAUTH_USERNAME=prod

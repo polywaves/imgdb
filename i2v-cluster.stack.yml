@@ -1,0 +1,28 @@
+services:
+  i2v:
+    hostname: i2v
+    image: polywaves/i2v
+    environment:
+      - TZ=Europe/Moscow
+      - DEBIAN_FRONTEND=noninteractive
+      - ENABLE_CUDA=1
+      - CUDA_VISIBLE_DEVICES=0
+    networks:
+      - services
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+      mode: replicated
+      replicas: 10
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+
+networks:
+  services:
+    external: true

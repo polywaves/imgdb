@@ -1,0 +1,41 @@
+services:
+  api:
+    image: polywaves/api
+    environment:
+      - MODE=production
+      - TZ=Europe/Moscow
+      - DEBIAN_FRONTEND=noninteractive
+      - API_ALLOW_IP_LIST=82.146.51.71,5.35.97.93,82.146.51.128,31.135.9.193,82.202.160.225,31.135.8.201,176.123.170.41,82.202.165.124,82.202.165.106,82.202.165.105,79.174.15.67,86.110.215.226,77.246.157.179,92.63.195.135,82.202.166.171,82.202.161.5,31.135.9.197,212.57.116.14,212.57.116.174,185.253.33.152,5.61.63.91
+      - API_EXCLUDE_ROUTES=/vector/search_by_url,/vector/search_by_img_id,/vector/search_by_upload
+      - WEAVIATE_COLLECTION_NAME=prod
+      - WEAVIATE_HOST=node1
+      - WEAVIATE_HTTP_PORT=8080
+      - WEAVIATE_HTTP_SECURE=false
+      - WEAVIATE_GRPC_PORT=50051
+      - WEAVIATE_GRPC_SECURE=false
+      - MONGO_URL=mongodb://mongo:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
+      - MONGO_DB=prod
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /mnt/sda1:/mnt/sda1
+      - /mnt/sdb1:/mnt/sdb1
+    networks:
+      - services
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+      mode: replicated
+      replicas: 100
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["gpu"]
+
+networks:
+  services:
+    external: true
