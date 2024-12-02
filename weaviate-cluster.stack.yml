@@ -1,6 +1,6 @@
 services:
-  weaviate1:
-    hostname: weaviate1
+  node1:
+    hostname: node1
     init: true
     command:
       - --host
@@ -20,7 +20,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate1
+      - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
       - CLUSTER_DATA_BIND_PORT=7101
       - IMAGE_INFERENCE_API=http://i2v:8080
@@ -31,10 +31,10 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
 
-  weaviate2:
-    hostname: weaviate2
+  node2:
+    hostname: node2
     init: true
     command:
       - --host
@@ -54,7 +54,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate2
+      - CLUSTER_HOSTNAME=node2
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
       - CLUSTER_JOIN=node1:7100
@@ -66,12 +66,12 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate1
+      - node1
 
-  weaviate3:
-    hostname: weaviate3
+  node3:
+    hostname: node3
     init: true
     command:
       - --host
@@ -91,7 +91,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate3
+      - CLUSTER_HOSTNAME=node3
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=node1:7100
@@ -103,12 +103,12 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate2
+      - node2
 
-  weaviate4:
-    hostname: weaviate4
+  node4:
+    hostname: node4
     init: true
     command:
       - --host
@@ -128,7 +128,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate4
+      - CLUSTER_HOSTNAME=node4
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=node1:7100
@@ -140,12 +140,12 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate3
+      - node3
 
-  weaviate5:
-    hostname: weaviate5
+  node5:
+    hostname: node5
     init: true
     command:
       - --host
@@ -165,7 +165,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate5
+      - CLUSTER_HOSTNAME=node5
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=node1:7100
@@ -177,12 +177,12 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate4
+      - node4
 
-  weaviate6:
-    hostname: weaviate6
+  node6:
+    hostname: node6
     init: true
     command:
       - --host
@@ -202,7 +202,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate6
+      - CLUSTER_HOSTNAME=node6
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=node1:7100
@@ -214,12 +214,12 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate5
+      - node5
 
-  weaviate7:
-    hostname: weaviate7
+  node7:
+    hostname: node7
     init: true
     command:
       - --host
@@ -239,7 +239,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate7
+      - CLUSTER_HOSTNAME=node7
       - CLUSTER_GOSSIP_BIND_PORT=7112
       - CLUSTER_DATA_BIND_PORT=7113
       - CLUSTER_JOIN=node1:7100
@@ -251,12 +251,12 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate6
+      - node6
 
-  weaviate8:
-    hostname: weaviate8
+  node8:
+    hostname: node8
     init: true
     command:
       - --host
@@ -276,7 +276,7 @@ services:
         delay: 5s
         max_attempts: 5
     environment:
-      - CLUSTER_HOSTNAME=weaviate8
+      - CLUSTER_HOSTNAME=node8
       - CLUSTER_GOSSIP_BIND_PORT=7114
       - CLUSTER_DATA_BIND_PORT=7115
       - CLUSTER_JOIN=node1:7100
@@ -288,9 +288,9 @@ services:
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
       - RAFT_BOOTSTRAP_EXPECT=8
-      - RAFT_JOIN=weaviate1,weaviate2,weaviate3,weaviate4,weaviate5,weaviate6,weaviate7,weaviate8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
     depends_on:
-      - weaviate7
+      - node7
 
 networks:
   services:
