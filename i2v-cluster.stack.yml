@@ -17,10 +17,10 @@ services:
             - discrete_resource_spec:
                 kind: NVIDIA-GPU
                 value: 0
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: ["compute"]
+          # devices:
+          #   - driver: nvidia
+          #     count: 1
+          #     capabilities: ["compute"]
 
 networks:
   services:
