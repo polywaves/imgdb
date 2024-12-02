@@ -7,7 +7,6 @@ services:
       - MODE=production
       - TZ=Europe/Moscow
       - ENABLE_CUDA=1
-      - CUDA_CORE=cuda
     deploy:
       mode: replicated
       replicas: 10
