@@ -2,7 +2,7 @@ services:
   nginx:
     hostname: nginx
     build:
-      context: ~/../services/nginx
+      context: ./nginx
     ports:
       - target: 80
         published: 80
