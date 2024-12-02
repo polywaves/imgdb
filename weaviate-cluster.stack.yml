@@ -24,6 +24,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node2:
     hostname: node2
@@ -51,6 +52,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node3:
     hostname: node3
@@ -78,6 +80,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node4:
     hostname: node4
@@ -105,6 +108,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node5:
     hostname: node5
@@ -132,6 +136,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node6:
     hostname: node6
@@ -159,6 +164,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node7:
     hostname: node7
@@ -186,6 +192,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
   node8:
     hostname: node8
@@ -213,6 +220,7 @@ services:
       - ASYNC_INDEXING=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
 
 networks:
   services:
