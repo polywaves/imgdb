@@ -1,6 +1,5 @@
 import hashlib
 import json
-import sys
 from time import time
 from fastapi import APIRouter, UploadFile, File
 from app.providers import weaviate_provider
@@ -13,17 +12,9 @@ from app.utils import text_util
 
 router = APIRouter()
 
-limit = 30
-
-
-try:
-  weaviate_provider.create_collection()
-except Exception as e:
-  logger.debug(e)
-
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image, limit=limit)
+  vectors = weaviate_provider.search_near_image(image=image, limit=30)
 
   response = list()
   for vector in vectors.objects:
@@ -93,41 +84,42 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
   }, start_time=start_time)
 
 
-@router.post("/search_by_url", tags=["Search post by existing url"])
+@router.post("/search_by_url", tags=["Search near vectors by existing url"])
 async def search_by_url(url: str):
   start_time = time()
 
-  posts = await mongo.posts_collection.find({
-    "images.img": url
-  }).limit(limit).to_list()
-
-  response = list()
-  for post in posts:
-    del post["_id"]
-    response.append(post)
+  image = image_util.from_url_to_base64(url)
+  posts = await search_posts(image=image)
 
   return response_util.response({
     "result": 1,
-    "posts": response
+    "posts": posts
   }, start_time=start_time)
 
 
-@router.get("/search_by_img_id", tags=["Search posts by existing img id"])
+@router.get("/search_by_img_id", tags=["Search near vectors by existing img id"])
 async def search_by_img_id(img_id: int):
   start_time = time()
 
-  posts = await mongo.posts_collection.find({
+  post = await mongo.posts_collection.find_one({
     "images.img_id": int(img_id)
-  }).limit(limit).to_list()
+  })
 
-  response = list()
-  for post in posts:
-    del post["_id"]
-    response.append(post)
+  if not post:
+    return response_util.response({
+      "result": 1,
+      "posts": []
+    }, start_time=start_time)
+
+  posts = list()
+  for image in post["images"]:
+    if image["img_id"] == img_id:
+      image = image_util.from_url_to_base64(image["img"])
+      posts = await search_posts(image=image)
 
   return response_util.response({
     "result": 1,
-    "posts": response
+    "posts": posts
   }, start_time=start_time)
 
 
