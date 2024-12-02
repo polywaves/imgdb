@@ -1,19 +1,14 @@
 services:
   i2v:
     hostname: i2v
-    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    image: polywaves/i2v
+    restart: always
     environment:
+      - MODE=production
       - TZ=Europe/Moscow
-      - DEBIAN_FRONTEND=noninteractive
       - ENABLE_CUDA=1
       - CUDA_VISIBLE_DEVICES=0
-    networks:
-      - services
     deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 5
       mode: replicated
       replicas: 10
       resources:
@@ -22,6 +17,10 @@ services:
             - discrete_resource_spec:
                 kind: NVIDIA-GPU
                 value: 0
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
 
 networks:
   services:
