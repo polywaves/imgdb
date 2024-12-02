@@ -67,8 +67,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node1
 
   node3:
     hostname: node3
@@ -104,8 +102,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node2
 
   node4:
     hostname: node4
@@ -141,8 +137,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node3
 
   node5:
     hostname: node5
@@ -178,8 +172,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node4
 
   node6:
     hostname: node6
@@ -215,8 +207,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node5
 
   node7:
     hostname: node7
@@ -252,8 +242,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node6
 
   node8:
     hostname: node8
@@ -289,8 +277,6 @@ services:
       - RAFT_ENABLE_ONE_NODE_RECOVERY=true
       - RAFT_BOOTSTRAP_EXPECT=8
       - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
-    depends_on:
-      - node7
 
 networks:
   services:
