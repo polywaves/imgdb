@@ -6,6 +6,11 @@ services:
       - target: 8081
         published: 8337
         mode: host
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo,mongo1,mongo2
+      - ME_CONFIG_MONGODB_URL=mongodb://mongo:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
+      - ME_CONFIG_BASICAUTH_USERNAME=prod
+      - ME_CONFIG_BASICAUTH_PASSWORD=J6qC6jUU3Mms
     networks:
       - services
     deploy:
