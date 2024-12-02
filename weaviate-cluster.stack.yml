@@ -30,8 +30,8 @@ services:
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
 
   node2:
     hostname: node2
@@ -65,8 +65,8 @@ services:
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
     depends_on:
       - node1
 
@@ -102,8 +102,8 @@ services:
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
     depends_on:
       - node2
 
@@ -139,8 +139,8 @@ services:
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
     depends_on:
       - node3
 
@@ -176,8 +176,8 @@ services:
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
     depends_on:
       - node4
 
@@ -213,84 +213,84 @@ services:
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
       - DISABLE_LAZY_LOAD_SHARDS=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
     depends_on:
       - node5
 
-  # node7:
-  #   hostname: node7
-  #   init: true
-  #   command:
-  #     - --host
-  #     - 0.0.0.0
-  #     - --port
-  #     - '8080'
-  #     - --scheme
-  #     - http
-  #   image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-  #   volumes:
-  #     - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
-  #   networks:
-  #     - services
-  #   deploy:
-  #     restart_policy:
-  #       condition: on-failure
-  #       delay: 5s
-  #       max_attempts: 5
-  #   environment:
-  #     - CLUSTER_HOSTNAME=node7
-  #     - CLUSTER_GOSSIP_BIND_PORT=7112
-  #     - CLUSTER_DATA_BIND_PORT=7113
-  #     - CLUSTER_JOIN=node1:7100
-  #     - IMAGE_INFERENCE_API=http://i2v:8080
-  #     - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
-  #     - PERSISTENCE_DATA_PATH=/var/lib/weaviate
-  #     - DEFAULT_VECTORIZER_MODULE=img2vec-neural
-  #     - ENABLE_MODULES=img2vec-neural
-  #     - ASYNC_INDEXING=true
-  #     - DISABLE_LAZY_LOAD_SHARDS=true
-  #     - RAFT_BOOTSTRAP_EXPECT=8
-  #     - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7,node8
-  #   depends_on:
-  #     - node6
+  node7:
+    hostname: node7
+    init: true
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --scheme
+      - http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    volumes:
+      - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
+    networks:
+      - services
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+    environment:
+      - CLUSTER_HOSTNAME=node7
+      - CLUSTER_GOSSIP_BIND_PORT=7112
+      - CLUSTER_DATA_BIND_PORT=7113
+      - CLUSTER_JOIN=node1:7100
+      - IMAGE_INFERENCE_API=http://i2v:8080
+      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
+      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+      - DEFAULT_VECTORIZER_MODULE=img2vec-neural
+      - ENABLE_MODULES=img2vec-neural
+      - ASYNC_INDEXING=true
+      - DISABLE_LAZY_LOAD_SHARDS=true
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
+    depends_on:
+      - node6
 
-  # node8:
-  #   hostname: node8
-  #   init: true
-  #   command:
-  #     - --host
-  #     - 0.0.0.0
-  #     - --port
-  #     - '8080'
-  #     - --scheme
-  #     - http
-  #   image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-  #   volumes:
-  #     - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
-  #   networks:
-  #     - services
-  #   deploy:
-  #     restart_policy:
-  #       condition: on-failure
-  #       delay: 5s
-  #       max_attempts: 5
-  #   environment:
-  #     - CLUSTER_HOSTNAME=node8
-  #     - CLUSTER_GOSSIP_BIND_PORT=7114
-  #     - CLUSTER_DATA_BIND_PORT=7115
-  #     - CLUSTER_JOIN=node1:7100
-  #     - IMAGE_INFERENCE_API=http://i2v:8080
-  #     - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
-  #     - PERSISTENCE_DATA_PATH=/var/lib/weaviate
-  #     - DEFAULT_VECTORIZER_MODULE=img2vec-neural
-  #     - ENABLE_MODULES=img2vec-neural
-  #     - ASYNC_INDEXING=true
-  #     - DISABLE_LAZY_LOAD_SHARDS=true
-  #     - RAFT_BOOTSTRAP_EXPECT=8
-  #     - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7,node8
-  #   depends_on:
-  #     - node7
+  node8:
+    hostname: node8
+    init: true
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --scheme
+      - http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    volumes:
+      - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
+    networks:
+      - services
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+    environment:
+      - CLUSTER_HOSTNAME=node8
+      - CLUSTER_GOSSIP_BIND_PORT=7114
+      - CLUSTER_DATA_BIND_PORT=7115
+      - CLUSTER_JOIN=node1:7100
+      - IMAGE_INFERENCE_API=http://i2v:8080
+      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
+      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+      - DEFAULT_VECTORIZER_MODULE=img2vec-neural
+      - ENABLE_MODULES=img2vec-neural
+      - ASYNC_INDEXING=true
+      - DISABLE_LAZY_LOAD_SHARDS=true
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1:8300,node2:8300,node3:8300,node4:8300,node5:8300,node6:8300,node7:8300,node8:8300
+    depends_on:
+      - node7
 
 networks:
   services:
