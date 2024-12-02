@@ -5,6 +5,8 @@ OPERATING SYSTEM - UBUNTU 24.04
 
 Then restart docker daemon: sudo systemctl restart docker
 
+3. If using docker swarm - https://gist.github.com/RafaelWO/290b764e88933b0c0769b6d2394fcad2
+
 
 Useful articles:
 1. Format and mount disk https://techguides.yt/guides/how-to-partition-format-and-auto-mount-disk-on-ubuntu-20-04/
