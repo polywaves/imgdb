@@ -11,7 +11,7 @@ services:
       - http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     volumes:
-      - /mnt/sda1/data/weaviate_node_1:/var/lib/weaviate
+      - /data/weaviate_node_1:/var/lib/weaviate
     networks:
       - services
     deploy:
