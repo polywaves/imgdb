@@ -1,7 +1,7 @@
 services:
   i2v:
     hostname: i2v
-    image: polywaves/i2v
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     environment:
       - TZ=Europe/Moscow
       - DEBIAN_FRONTEND=noninteractive
