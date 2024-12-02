@@ -7,10 +7,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 12G
     depends_on:
       - api
 
@@ -29,8 +25,6 @@ services:
       mode: replicated
       replicas: 100
       resources:
-        # limits:
-        #   memory: 3G
         reservations:
           devices:
             - driver: nvidia
@@ -50,8 +44,6 @@ services:
       mode: replicated
       replicas: 10
       resources:
-        # limits:
-        #   memory: 2G
         reservations:
           devices:
             - driver: nvidia
@@ -67,20 +59,12 @@ services:
       - 8337:8081
     env_file:
       - .env
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 1G
 
   mongo:
     hostname: mongo
     image: mongo
     command: --replSet rs0
     restart: always
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 3G
     volumes:
       - /data/mongo/db:/data/db
       - /data/mongo/configdb:/data/configdb
@@ -90,10 +74,6 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 3G
     volumes:
       - /data/mongo1/db:/data/db
       - /data/mongo1/configdb:/data/configdb
@@ -103,10 +83,6 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 3G
     volumes:
       - /data/mongo2/db:/data/db
       - /data/mongo2/configdb:/data/configdb
@@ -132,10 +108,6 @@ services:
       - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
       - CLUSTER_DATA_BIND_PORT=7101
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
 
   node2:
     hostname: node2
@@ -158,10 +130,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node1
 
@@ -186,10 +154,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node2
 
@@ -214,10 +178,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node3
 
@@ -242,10 +202,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node4
 
@@ -270,10 +226,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node5
 
@@ -298,10 +250,6 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7112
       - CLUSTER_DATA_BIND_PORT=7113
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node6
 
@@ -326,9 +274,5 @@ services:
       - CLUSTER_GOSSIP_BIND_PORT=7114
       - CLUSTER_DATA_BIND_PORT=7115
       - CLUSTER_JOIN=node1:7100
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 16G
     depends_on:
       - node7
