@@ -1,8 +1,7 @@
 services:
   nginx:
     hostname: nginx
-    build:
-      context: ./nginx
+    image: nginx:alpine
     ports:
       - target: 80
         published: 80
@@ -10,6 +9,8 @@ services:
       - target: 443
         published: 443
         mode: host
+    volumes:
+      - /services/nginx:/etc/nginx
     networks:
       - services
     deploy:
