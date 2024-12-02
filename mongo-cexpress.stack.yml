@@ -1,0 +1,21 @@
+services:
+  mongo-express:
+    hostname: mongo-express
+    image: mongo-express
+    ports:
+      - target: 8081
+        published: 8337
+        mode: host
+    env_file:
+      - /services/.env
+    networks:
+      - services
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+
+networks:
+  services:
+    external: true
