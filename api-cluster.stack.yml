@@ -23,7 +23,7 @@ services:
     networks:
       - services
     extra_hosts:
-      - weaviate:172.19.0.5
+      weaviate: 172.19.0.5
     deploy:
       restart_policy:
         condition: always
