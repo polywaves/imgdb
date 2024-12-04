@@ -2,7 +2,6 @@ services:
   i2v:
     hostname: i2v
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
-    restart: always
     environment:
       - MODE=production
       - TZ=Europe/Moscow
@@ -12,6 +11,10 @@ services:
     deploy:
       mode: replicated
       replicas: 10
+      restart_policy:
+        condition: always
+        delay: 5s
+        max_attempts: 20
       resources:
         reservations:
           # generic_resources:

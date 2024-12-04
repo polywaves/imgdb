@@ -13,9 +13,9 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: always
         delay: 5s
-        max_attempts: 5
+        max_attempts: 20
 
   mongo1:
     hostname: mongo1
@@ -31,9 +31,9 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: always
         delay: 5s
-        max_attempts: 5
+        max_attempts: 20
 
   mongo2:
     hostname: mongo2
@@ -49,9 +49,9 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: always
         delay: 5s
-        max_attempts: 5
+        max_attempts: 20
 
 networks:
   services:

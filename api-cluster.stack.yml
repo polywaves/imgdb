@@ -24,9 +24,9 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: always
         delay: 5s
-        max_attempts: 5
+        max_attempts: 20
       mode: replicated
       replicas: 100
       resources:
