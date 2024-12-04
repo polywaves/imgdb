@@ -8,7 +8,7 @@ services:
       - API_ALLOW_IP_LIST=82.146.51.71,5.35.97.93,82.146.51.128,31.135.9.193,82.202.160.225,31.135.8.201,176.123.170.41,82.202.165.124,82.202.165.106,82.202.165.105,79.174.15.67,86.110.215.226,77.246.157.179,92.63.195.135,82.202.166.171,82.202.161.5,31.135.9.197,212.57.116.14,212.57.116.174,185.253.33.152,5.61.63.91
       - API_EXCLUDE_ROUTES=/vector/search_by_url,/vector/search_by_img_id,/vector/search_by_upload
       - WEAVIATE_COLLECTION_NAME=prod
-      - WEAVIATE_HOST=172.19.0.5
+      - WEAVIATE_HOST=weaviate
       - WEAVIATE_HTTP_PORT=8080
       - WEAVIATE_HTTP_SECURE=false
       - WEAVIATE_GRPC_PORT=50051
@@ -22,6 +22,8 @@ services:
       - /mnt/sdb1:/mnt/sdb1
     networks:
       - services
+    extra-hosts:
+      - weaviate:172.19.0.5
     deploy:
       restart_policy:
         condition: always
