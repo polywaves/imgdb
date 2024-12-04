@@ -14,7 +14,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
       resources:
         reservations:
           # generic_resources:

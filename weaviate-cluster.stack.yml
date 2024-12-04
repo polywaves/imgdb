@@ -12,7 +12,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node1
@@ -41,7 +40,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node2
@@ -71,7 +69,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node3
@@ -101,7 +98,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node4
@@ -131,7 +127,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node5
@@ -161,7 +156,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node6
@@ -191,7 +185,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node7
@@ -221,7 +214,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
     environment:
       - LOG_LEVEL=debug
       - CLUSTER_HOSTNAME=node8
