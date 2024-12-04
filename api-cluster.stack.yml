@@ -22,7 +22,7 @@ services:
       - /mnt/sdb1:/mnt/sdb1
     networks:
       - services
-    extra-hosts:
+    extra_hosts:
       - weaviate:172.19.0.5
     deploy:
       restart_policy:
