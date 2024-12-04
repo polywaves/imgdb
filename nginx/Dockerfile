@@ -10,5 +10,3 @@ COPY ./ssl/ /etc/nginx/ssl/
 RUN chmod 600 /etc/nginx/ssl/*.key
 
 WORKDIR /var/www/html
-
-COPY .htpasswd /var/www

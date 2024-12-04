@@ -1,7 +1,7 @@
 services:
   nginx:
     hostname: nginx
-    image: nginx:alpine
+    image: polywaves/nginx
     ports:
       - target: 80
         published: 80
@@ -11,10 +11,6 @@ services:
         mode: host
     environment:
       - TZ=Europe/Moscow
-    volumes:
-      - /services/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /services/nginx/conf.d:/etc/nginx/conf.d
-      - /services/nginx/ssl:/etc/nginx/ssl
     networks:
       - services
     deploy:
