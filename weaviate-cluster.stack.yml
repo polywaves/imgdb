@@ -7,7 +7,7 @@ services:
       - /data/weaviate_node_1:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.5
+        - ipv4_address=172.19.0.5
     deploy:
       restart_policy:
         condition: on-failure
@@ -36,7 +36,7 @@ services:
       - /mnt/sda1/data/weaviate_node_2:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.8
+        - ipv4_address=172.19.0.8
     deploy:
       restart_policy:
         condition: on-failure
@@ -66,7 +66,7 @@ services:
       - /mnt/sda1/data/weaviate_node_3:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.10
+        - ipv4_address=172.19.0.10
     deploy:
       restart_policy:
         condition: on-failure
@@ -96,7 +96,7 @@ services:
       - /mnt/sdb1/data/weaviate_node_4:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.12
+        - ipv4_address=172.19.0.12
     deploy:
       restart_policy:
         condition: on-failure
@@ -126,7 +126,7 @@ services:
       - /mnt/sdb1/data/weaviate_node_5:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.14
+        - ipv4_address=172.19.0.14
     deploy:
       restart_policy:
         condition: on-failure
@@ -156,7 +156,7 @@ services:
       - /mnt/sdb1/data/weaviate_node_6:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.16
+        - ipv4_address=172.19.0.16
     deploy:
       restart_policy:
         condition: on-failure
@@ -186,7 +186,7 @@ services:
       - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.17
+        - ipv4_address=172.19.0.17
     deploy:
       restart_policy:
         condition: on-failure
@@ -216,7 +216,7 @@ services:
       - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
     networks:
       services:
-        ipv4_address: 172.19.0.19
+        - ipv4_address=172.19.0.19
     deploy:
       restart_policy:
         condition: on-failure
