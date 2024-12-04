@@ -232,15 +232,4 @@ services:
 
 networks:
   weaviate:
-    driver: bridge
-    attachable: true
-    config:
-      - subnet: 172.19.0.0/16
-        gateway: 172.19.0.1
-
-  services:
-    driver: bridge
-    attachable: true
-    config:
-      - subnet: 172.20.0.0/16
-        gateway: 172.20.0.1
+    external: true

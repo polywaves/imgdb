@@ -8,6 +8,8 @@ services:
       - ENABLE_CUDA=1
     networks:
       - weaviate
+    depends_on:
+      - node8
     deploy:
       mode: replicated
       replicas: 10
