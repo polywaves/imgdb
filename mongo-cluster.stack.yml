@@ -15,7 +15,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
 
   mongo1:
     hostname: mongo1
@@ -33,7 +32,6 @@ services:
       restart_policy:
         condition: always
         delay: 5s
-        max_attempts: 20
 
   mongo2:
     hostname: mongo2
