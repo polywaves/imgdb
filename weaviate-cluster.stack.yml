@@ -240,5 +240,5 @@ services:
 
 networks:
   services:
-    external: true
-    name: services
+    external:
+      name: services
