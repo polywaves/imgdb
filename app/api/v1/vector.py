@@ -41,10 +41,7 @@ async def delete_posts(post_ids: list):
     post_id = post_id.strip()
 
     try:
-      try:
-        weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
-      except Exception:
-        logger.debug(f"Post id {post_id} not found in vectorizer database")
+      weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
 
       await mongo.post_image_ids_collection.delete_many({
         "post_id": str(post_id)
