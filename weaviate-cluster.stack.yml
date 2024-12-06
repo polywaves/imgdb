@@ -1,4 +1,29 @@
 services:
+  i2v:
+    hostname: i2v
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    environment:
+      - MODE=production
+      - TZ=Europe/Moscow
+      - ENABLE_CUDA=1
+      - NVIDIA_VISIBLE_DEVICES=0
+    networks:
+      - weaviate
+    deploy:
+      mode: replicated
+      replicas: 10
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    depends_on:
+      - node8
+
   node1:
     hostname: node1
     command: --host 0.0.0.0 --port 8080 --scheme http
