@@ -28,7 +28,7 @@ services:
         condition: always
         delay: 5s
       mode: replicated
-      replicas: 100
+      replicas: 10
       resources:
         reservations:
           devices:
