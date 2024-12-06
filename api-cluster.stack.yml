@@ -1,6 +1,6 @@
 services:
   api:
-    image: polywaves/api
+    image: polywaves/api:latest
     environment:
       - MODE=production
       - TZ=Europe/Moscow

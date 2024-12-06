@@ -1,7 +1,7 @@
 services:
   nginx:
     hostname: nginx
-    image: polywaves/nginx
+    image: polywaves/nginx:latest
     ports:
       - target: 80
         published: 80

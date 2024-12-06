@@ -1,6 +1,6 @@
 services:
   task-manager:
-    image: polywaves/api
+    image: polywaves/api:latest
     environment:
       - MODE=development
       - TASK_MANAGER=true
