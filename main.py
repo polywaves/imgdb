@@ -15,7 +15,7 @@ if "TASK_MANAGER" in os.environ:
   async def startup_event():
     logger.debug("Task manager started")
 
-    task_manager.run()
+    await task_manager.run()
     
 else:
   from time import time
