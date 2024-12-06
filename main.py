@@ -1,13 +1,22 @@
+from app import mongo
+from app import task_manager
+
+
+if "TASK_MANAGER" in os.environ:
+  task_manager.run()
+
+  logger.debug("Task manager started")
+  
+  exit()
+
+
 import os
 from time import time
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from app import mongo
-from app import task_manager
 from app.utils.logger_util import logger
 from app.api import v1
 from app.providers import weaviate_provider
-
 
 app = FastAPI(
   redirect_slashes=False
@@ -16,13 +25,6 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup_event():
-  if "TASK_MANAGER" in os.environ:
-    task_manager.run()
-
-    logger.debug("Task manager started")
-    
-    return True
-
   await mongo.migrate()
   logger.debug("MongoDB has been migrated")
 
@@ -71,11 +73,6 @@ async def add_process_time_header(request: Request, call_next) -> any:
         raise HTTPException(status_code=403, detail="Access denied")
 
   response = await call_next(request)
-
-  # response_body = [chunk async for chunk in response.body_iterator]
-  # response.body_iterator = iterate_in_threadpool(iter(response_body))
-
-  # logger.debug(f"RESPONSE: {response_body[0].decode()}")
 
   ## Count requests
   await mongo.requests_collection.insert_one({
