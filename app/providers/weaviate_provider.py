@@ -89,7 +89,7 @@ def search_near_image(image, days: int = 23, limit: int = 30) -> object:
     near_image=image,
     return_metadata=MetadataQuery(distance=True, creation_time=True),
     limit=limit,
-    filters=Filter.by_creation_time().greater_than(filter)
+    # filters=Filter.by_creation_time().greater_than(filter)
   )
 
   return response
