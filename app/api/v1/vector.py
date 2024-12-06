@@ -91,8 +91,13 @@ async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
 async def search_by_url(url: str):
   start_time = time()
 
-  image = image_util.from_url_to_base64(url)
-  posts = await search_posts(image=image)
+  posts = list()
+
+  try:
+    image = image_util.from_url_to_base64(url)
+    posts = await search_posts(image=image)
+  except Exception as e:
+    logger.debug(e)
 
   return response_util.response({
     "result": 1,
@@ -117,8 +122,11 @@ async def search_by_img_id(img_id: int):
   posts = list()
   for image in post["images"]:
     if image["img_id"] == img_id:
-      image = image_util.from_url_to_base64(image["img"])
-      posts = await search_posts(image=image)
+      try:
+        image = image_util.from_url_to_base64(image["img"])
+        posts = await search_posts(image=image)
+      except Exception as e:
+        logger.debug(e)
 
   return response_util.response({
     "result": 1,
@@ -130,8 +138,13 @@ async def search_by_img_id(img_id: int):
 async def search_by_upload(image: UploadFile = File()):
   start_time = time()
 
-  image = image_util.to_base64(await image.read())
-  posts = await search_posts(image=image)
+  posts = list()
+
+  try:
+    image = image_util.to_base64(await image.read())
+    posts = await search_posts(image=image)
+  except Exception as e:
+    logger.debug(e)
 
   return response_util.response({
     "result": 1,
