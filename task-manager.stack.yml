@@ -4,6 +4,12 @@ services:
     environment:
       - MODE=production
       - TASK_MANAGER=true
+      - WEAVIATE_COLLECTION_NAME=prod
+      - WEAVIATE_HOST=node1
+      - WEAVIATE_HTTP_PORT=8080
+      - WEAVIATE_HTTP_SECURE=false
+      - WEAVIATE_GRPC_PORT=50051
+      - WEAVIATE_GRPC_SECURE=false
       - MONGO_URL=mongodb://mongo:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
       - MONGO_DB=prod
     networks:
