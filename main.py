@@ -17,77 +17,75 @@ if "TASK_MANAGER" in os.environ:
 
     task_manager.run()
     
-    exit()
+else:
+  from time import time
+  from fastapi.middleware.cors import CORSMiddleware
+  from app.api import v1
+  from app.providers import weaviate_provider
 
 
-from time import time
-from fastapi.middleware.cors import CORSMiddleware
-from app.api import v1
-from app.providers import weaviate_provider
+  @app.on_event("startup")
+  async def startup_event():
+    await mongo.migrate()
+    logger.debug("MongoDB has been migrated")
+
+    try:
+      weaviate_provider.create_collection()
+      logger.debug("Weaviate has been prepaired")
+    except Exception as e:
+      logger.debug(e)
 
 
-@app.on_event("startup")
-async def startup_event():
-  await mongo.migrate()
-  logger.debug("MongoDB has been migrated")
-
-  try:
-    weaviate_provider.create_collection()
-    logger.debug("Weaviate has been prepaired")
-  except Exception as e:
-    logger.debug(e)
+  @app.on_event("shutdown")
+  async def shutdown_event():
+    weaviate_provider.client.close()
 
 
-@app.on_event("shutdown")
-async def shutdown_event():
-  weaviate_provider.client.close()
+  if os.environ["MODE"] == 'development':
+    logger.debug("Development mode")
+    app.add_middleware(
+      CORSMiddleware,
+      allow_origins=["*"],
+      allow_credentials=True,
+      allow_methods=["*"],
+      allow_headers=["*"],
+    )
 
 
-if os.environ["MODE"] == 'development':
-  logger.debug("Development mode")
-  app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-  )
+  @app.middleware("http")
+  async def add_process_time_header(request: Request, call_next) -> any:
+    url = str(request.url)
+    client_ip = request.client.host
+    if os.environ["MODE"] == 'production' and "x-real-ip" in request.headers:
+      client_ip = request.headers["x-real-ip"]
+
+      logger.info(f"REQUEST BY CLIENT IP: {client_ip}")
+
+      ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
+      route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
+
+      if client_ip not in ip_list:
+        found = False
+        for route in route_list:
+          if route in url:
+            found = True
+
+        if not found:
+          raise HTTPException(status_code=403, detail="Access denied")
+
+    response = await call_next(request)
+
+    ## Count requests
+    await mongo.requests_collection.insert_one({
+      "client_ip": client_ip,
+      "url": url,
+      "created_at": time()
+    })
+
+    return response
 
 
-@app.middleware("http")
-async def add_process_time_header(request: Request, call_next) -> any:
-  url = str(request.url)
-  client_ip = request.client.host
-  if os.environ["MODE"] == 'production' and "x-real-ip" in request.headers:
-    client_ip = request.headers["x-real-ip"]
-
-    logger.info(f"REQUEST BY CLIENT IP: {client_ip}")
-
-    ip_list = os.environ["API_ALLOW_IP_LIST"].split(',')
-    route_list = os.environ["API_EXCLUDE_ROUTES"].split(',')
-
-    if client_ip not in ip_list:
-      found = False
-      for route in route_list:
-        if route in url:
-          found = True
-
-      if not found:
-        raise HTTPException(status_code=403, detail="Access denied")
-
-  response = await call_next(request)
-
-  ## Count requests
-  await mongo.requests_collection.insert_one({
-    "client_ip": client_ip,
-    "url": url,
-    "created_at": time()
-  })
-
-  return response
-
-
-app.include_router(v1.router, prefix='/api/v1')
+  app.include_router(v1.router, prefix='/api/v1')
 
 @app.get("/health")
 def health_check():
