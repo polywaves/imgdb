@@ -3,8 +3,8 @@
 docker build -t polywaves/api .
 docker push polywaves/api
 
-docker build -t polywaves/nginx ./nginx
-docker push polywaves/nginx
+# docker build -t polywaves/nginx ./nginx
+# docker push polywaves/nginx
 
 # docker build -t polywaves/i2v ./i2v
 # docker push polywaves/i2v

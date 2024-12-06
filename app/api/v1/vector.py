@@ -27,8 +27,11 @@ async def search_posts(image: str) -> dict:
 
     if not post:
       continue
-
+    
+    # Fix post data
     del post["_id"]
+    if not post["video"]:
+      del post["video"]
     post["distance"] = round(distance, 6)
     response.append(post)
 
@@ -43,6 +46,9 @@ async def delete_posts(post_ids: list):
     try:
       weaviate_provider.delete_images_by_post_id(post_id=int(post_id))
 
+      await mongo.vector_hashes_collection.delete_many({
+        "post_id": str(post_id)
+      })
       await mongo.post_image_ids_collection.delete_many({
         "post_id": str(post_id)
       })
@@ -152,25 +158,12 @@ async def training_by_json(params: vector_model.TrainingByJson):
       "options": options
     })
 
-  try:
-    weaviate_provider.delete_images_by_post_id(post_id=int(params.id))
-  except Exception:
-    logger.debug(f"Post id {params.id} not found in vectorizer database")
-
-  await mongo.vector_hashes_collection.delete_many({
-    "post_id": str(params.id)
-  })
-  await mongo.post_image_ids_collection.delete_many({
-    "post_id": str(params.id)
-  })
-  await mongo.posts_collection.delete_many({
-    "id": str(params.id)
-  })
+  await delete_posts(post_ids=[params.id])
 
   ## Vectorize image
   weaviate_provider.create_image_vector(items=items)
 
-  ## Decode texts
+  ## Decode data
   params.vendor_capt = text_util.urldecode(params.vendor_capt)
   params.by = text_util.urldecode(params.by)
   params.item_name = text_util.urldecode(params.item_name)

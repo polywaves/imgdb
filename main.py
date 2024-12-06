@@ -3,6 +3,7 @@ from time import time
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app import mongo
+from app import task_manager
 from app.utils.logger_util import logger
 from app.api import v1
 from app.providers import weaviate_provider
@@ -15,6 +16,13 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup_event():
+  if "TASK_MANAGER" in os.environ:
+    task_manager.run()
+
+    logger.debug("Task manager started")
+    
+    return True
+
   await mongo.migrate()
   logger.debug("MongoDB has been migrated")
 
@@ -45,7 +53,7 @@ if os.environ["MODE"] == 'development':
 async def add_process_time_header(request: Request, call_next) -> any:
   url = str(request.url)
   client_ip = request.client.host
-  if "x-real-ip" in request.headers:
+  if os.environ["MODE"] == 'production' and "x-real-ip" in request.headers:
     client_ip = request.headers["x-real-ip"]
 
     logger.info(f"REQUEST BY CLIENT IP: {client_ip}")

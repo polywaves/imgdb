@@ -1,0 +1,20 @@
+services:
+  task-manager:
+    image: polywaves/api
+    environment:
+      - MODE=production
+      - TASK_MANAGER=true
+      - MONGO_URL=mongodb://mongo:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
+      - MONGO_DB=prod
+    networks:
+      - services
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+      mode: replicated
+      replicas: 1
+
+networks:
+  services:
+    external: true

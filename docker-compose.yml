@@ -12,19 +12,9 @@ services:
       - ./:/usr/src/app
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-    labels:
-      autoheal-app: true
-    healthcheck:
-      test: curl --fail http://api:8080/health || exit 1
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
 
-  i2v-neural:
-    build:
-      context: ./i2v
-    command: uvicorn app:app --port 8080 --host=0.0.0.0 --use-colors --reload
+  i2v:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
     env_file:
       - .env
@@ -34,31 +24,24 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - 27017:27017
     volumes:
       - ./data/mongo:/data/db
 
+  mongoexpress:
+    hostname: mongoexpress
+    image: mongo-express
+    restart: always
+    ports:
+      - 8337:8081
+    env_file:
+      - .env
+
   weaviate:
-    command:
-      - --host
-      - 0.0.0.0
-      - --port
-      - '8080'
-      - --scheme
-      - http
-    image: cr.weaviate.io/semitechnologies/weaviate:latest
+    hostname: weaviate
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     volumes:
       - ./data/weaviate:/var/lib/weaviate
     restart: always
     env_file:
       - .env
-
-  autoheal:
-    restart: always
-    image: willfarrell/autoheal
-    environment:
-      - AUTOHEAL_CONTAINER_LABEL=autoheal-app
-      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
