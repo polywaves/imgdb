@@ -17,7 +17,7 @@ if "TASK_MANAGER" in os.environ:
 
     task_manager.run()
     
-  exit()
+    exit()
 
 
 from time import time
