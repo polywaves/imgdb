@@ -1,26 +1,29 @@
 import os
+from fastapi import FastAPI, Request, HTTPException
 from app import mongo
 from app import task_manager
 from app.utils.logger_util import logger
 
 
-if "TASK_MANAGER" in os.environ:
-  task_manager.run()
+app = FastAPI(
+  redirect_slashes=False
+)
 
-  logger.debug("Task manager started")
-  
+
+if "TASK_MANAGER" in os.environ:
+  @app.on_event("startup")
+  async def startup_event():
+    logger.debug("Task manager started")
+
+    task_manager.run()
+    
   exit()
 
 
 from time import time
-from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import v1
 from app.providers import weaviate_provider
-
-app = FastAPI(
-  redirect_slashes=False
-)
 
 
 @app.on_event("startup")
