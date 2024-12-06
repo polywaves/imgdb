@@ -1,3 +1,4 @@
+import os
 from app import mongo
 from app import task_manager
 
@@ -10,7 +11,6 @@ if "TASK_MANAGER" in os.environ:
   exit()
 
 
-import os
 from time import time
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
