@@ -10,7 +10,7 @@ services:
         ipv4_address: 172.19.0.5
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -23,8 +23,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node2:
@@ -38,7 +38,7 @@ services:
         ipv4_address: 172.19.0.8
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -52,8 +52,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node3:
@@ -67,7 +67,7 @@ services:
         ipv4_address: 172.19.0.10
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -81,8 +81,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node4:
@@ -96,7 +96,7 @@ services:
         ipv4_address: 172.19.0.12
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -110,8 +110,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node5:
@@ -125,7 +125,7 @@ services:
         ipv4_address: 172.19.0.14
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -139,8 +139,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node6:
@@ -154,7 +154,7 @@ services:
         ipv4_address: 172.19.0.16
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -168,8 +168,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node7:
@@ -183,7 +183,7 @@ services:
         ipv4_address: 172.19.0.17
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -197,8 +197,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
   node8:
@@ -212,7 +212,7 @@ services:
         ipv4_address: 172.19.0.19
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
     environment:
       - LOG_LEVEL=debug
@@ -226,8 +226,8 @@ services:
       - DEFAULT_VECTORIZER_MODULE=img2vec-neural
       - ENABLE_MODULES=img2vec-neural
       - ASYNC_INDEXING=true
-      - RAFT_BOOTSTRAP_EXPECT=6
-      - RAFT_JOIN=node1,node2,node3,node4,node5,node6
+      - RAFT_BOOTSTRAP_EXPECT=8
+      - RAFT_JOIN=node1,node2,node3,node4,node5,node6,node7,node8
       - RAFT_BOOTSTRAP_TIMEOUT=3600
 
 networks:
