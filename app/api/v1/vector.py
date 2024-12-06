@@ -30,7 +30,7 @@ async def search_posts(image: str) -> dict:
     
     # Fix post data
     del post["_id"]
-    if "://" not in post["video"]:
+    if not post["video"]:
       del post["video"]
     post["distance"] = round(distance, 6)
     response.append(post)
