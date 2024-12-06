@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image, limit=30)
+  vectors = weaviate_provider.search_near_image(image=image)
 
   response = list()
   for vector in vectors.objects:
