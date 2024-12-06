@@ -10,7 +10,7 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
       mode: replicated
       replicas: 1

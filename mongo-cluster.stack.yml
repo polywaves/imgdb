@@ -13,7 +13,7 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
 
   mongo1:
@@ -30,7 +30,7 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
 
   mongo2:
@@ -47,7 +47,7 @@ services:
       - services
     deploy:
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
 
 networks:

@@ -12,7 +12,7 @@ services:
       mode: replicated
       replicas: 10
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
       resources:
         reservations:

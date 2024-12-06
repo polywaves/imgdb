@@ -16,7 +16,7 @@ services:
     deploy:
       mode: global
       restart_policy:
-        condition: always
+        condition: on-failure
         delay: 5s
 
 networks:
