@@ -1,5 +1,6 @@
 import os
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from app import mongo
 from app import task_manager
 from app.utils.logger_util import logger
@@ -71,7 +72,7 @@ else:
             found = True
 
         if not found:
-          raise HTTPException(status_code=403, detail="Access denied")
+          return JSONResponse(content="Access denied", status_code=403)
     
     response = await call_next(request)
 
