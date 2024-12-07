@@ -6,7 +6,9 @@ from datetime import datetime, timedelta
 
 ## Make migrations
 async def run():
-  await fix()
+  await fix(posts_collection)
+  await fix(post_image_ids_collection)
+  await fix(vector_hashes_collection, id_key="img_id")
 
   # # Rewinding posts
   # posts = await posts_collection.find({
@@ -32,18 +34,20 @@ async def run():
 
 
 
-async def fix():
-  rows = await post_image_ids_collection.find({
+async def fix(collection, id_key: str = "id"):
+  rows = await collection.find({
     "created_at": {
       "$exists": False
     }
+  }, {
+    id_key: 1
   }).to_list()
 
   for row in rows:
     timestamp = row["_id"].generation_time.timestamp()
-    id = row["id"]
+    id = row[id_key]
 
-    await post_image_ids_collection.update_one({
+    await collection.update_one({
       "_id": row["_id"]
     }, {
       "$set": {
