@@ -36,14 +36,16 @@ async def fix():
   posts = await posts_collection.find().limit(100).to_list()
 
   for post in posts:
-    # await posts_collection.update_one({
-    #   "_id": post["_id"]
-    # }, {
-    #   "$set": {
-    #     "sizes": sizes
-    #   }
-    # })
+    timestamp = post["_id"].generation_time.timestamp()
 
-    logger.info(post["_id"].generation_time.timestamp())
+    await posts_collection.update_one({
+      "_id": post["_id"]
+    }, {
+      "$set": {
+        "created_at": timestamp
+      }
+    })
+
+    logger.info(post)
 
 
