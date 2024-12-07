@@ -69,11 +69,17 @@ async def delete_posts(post_ids: list):
 async def old_posts(limit: int = 100, days: int = 23):
   start_time = time()
 
-  posts = await mongo.posts_collection.find({
+  items = await mongo.posts_collection.find({
     "created_at": {
       "$lt": (datetime.now() - timedelta(days=days)).timestamp()
     }
   }).sort("created_at", 1).limit(limit).to_list()
+
+  posts = list()
+  for item in items:
+    del item["_id"]
+
+    posts.append(item)
 
   return response_util.response({
     "result": 1,
