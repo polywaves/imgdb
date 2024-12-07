@@ -44,6 +44,6 @@ async def fix():
     #   }
     # })
 
-    logger.info(datetime(post["_id"].generation_time))
+    logger.info(post["_id"].generation_time.timestamp())
 
 
