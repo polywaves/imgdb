@@ -86,6 +86,15 @@ services:
               capabilities: ["gpu"]
     depends_on:
       - mongoexpress
+
+  task-manager:
+    build:
+      context: .
+    restart: always
+    env_file:
+      - .env_task_manager
+    depends_on:
+      - mongoexpress
   
   i2v:
     hostname: i2v

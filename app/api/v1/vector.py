@@ -70,10 +70,10 @@ async def old_posts(limit: int = 100, days: int = 23):
   start_time = time()
 
   posts = await mongo.posts_collection.find({
-    "date": {
+    "created_at": {
       "$lt": (datetime.now() - timedelta(days=days)).timestamp()
     }
-  }).sort("date", 1).limit(limit).to_list()
+  }).sort("created_at", 1).limit(limit).to_list()
 
   return response_util.response({
     "result": 1,
