@@ -34,7 +34,9 @@ async def run():
 
 async def fix():
   rows = await post_image_ids_collection.find({
-    "created_at": None
+    "created_at": {
+      "$exists": False
+    }
   }).to_list()
 
   for row in rows:
