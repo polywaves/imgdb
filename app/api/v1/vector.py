@@ -17,6 +17,7 @@ async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image)
 
   response = list()
+  distances = dict()
   for vector in vectors.objects:
     distance = vector.metadata.distance
     post_id = vector.properties["post_id"]

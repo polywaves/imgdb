@@ -7,7 +7,7 @@ services:
     ports:
       - 8337:8081
     env_file:
-      - .env
+      - .env_mongoexpress
     depends_on:
       - mongo2
 
@@ -61,7 +61,7 @@ services:
       context: .
     restart: always
     env_file:
-      - .env
+      - .env_api
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -83,8 +83,6 @@ services:
     hostname: i2v
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
-    env_file:
-      - .env
     deploy:
       mode: replicated
       replicas: 10
@@ -107,7 +105,7 @@ services:
     volumes:
       - /data/weaviate_node_1:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
@@ -125,7 +123,7 @@ services:
     volumes:
       - /mnt/sda1/data/weaviate_node_2:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node2
       - CLUSTER_GOSSIP_BIND_PORT=7102
@@ -146,7 +144,7 @@ services:
     volumes:
       - /mnt/sda1/data/weaviate_node_3:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node3
       - CLUSTER_GOSSIP_BIND_PORT=7104
@@ -167,7 +165,7 @@ services:
     volumes:
       - /mnt/sdb1/data/weaviate_node_4:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node4
       - CLUSTER_GOSSIP_BIND_PORT=7106
@@ -188,7 +186,7 @@ services:
     volumes:
       - /mnt/sdb1/data/weaviate_node_5:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node5
       - CLUSTER_GOSSIP_BIND_PORT=7108
@@ -209,7 +207,7 @@ services:
     volumes:
       - /mnt/sdb1/data/weaviate_node_6:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node6
       - CLUSTER_GOSSIP_BIND_PORT=7110
@@ -230,7 +228,7 @@ services:
     volumes:
       - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node7
       - CLUSTER_GOSSIP_BIND_PORT=7112
@@ -251,7 +249,7 @@ services:
     volumes:
       - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
     env_file:
-      - .env
+      - .env_weaviate
     environment:
       - CLUSTER_HOSTNAME=node8
       - CLUSTER_GOSSIP_BIND_PORT=7114

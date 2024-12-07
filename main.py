@@ -72,7 +72,7 @@ else:
 
         if not found:
           raise HTTPException(status_code=403, detail="Access denied")
-
+    
     response = await call_next(request)
 
     ## Count requests
