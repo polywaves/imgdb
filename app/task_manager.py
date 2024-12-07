@@ -46,6 +46,6 @@ async def fix():
       }
     })
 
-    logger.info(f"timestamp {timestamp} for {post["id"]} updated")
+    logger.info(f"timestamp {timestamp} for {post["_id"]} updated")
 
 
