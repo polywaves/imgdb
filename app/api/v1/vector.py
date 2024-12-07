@@ -1,6 +1,7 @@
 import hashlib
 import json
 from time import time
+from datetime import datetime, timedelta
 from fastapi import APIRouter, UploadFile, File
 from app.providers import weaviate_provider
 from app.models import vector_model
@@ -62,6 +63,22 @@ async def delete_posts(post_ids: list):
       logger.error(e)
 
   return deleted
+
+
+@router.get("/old_posts", tags=["Get old posts"])
+async def old_posts(limit: int = 100, days: int = 23):
+  start_time = time()
+
+  posts = await mongo.posts_collection.find({
+    "date": {
+      "$lt": (datetime.now() - timedelta(days=days)).timestamp()
+    }
+  }).sort("date", 1).limit(limit).to_list()
+
+  return response_util.response({
+    "result": 1,
+    "posts": posts
+  }, start_time=start_time)
 
 
 @router.get("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids throught ,"])
