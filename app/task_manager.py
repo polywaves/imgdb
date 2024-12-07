@@ -37,6 +37,7 @@ async def fix():
 
   for post in posts:
     timestamp = post["_id"].generation_time.timestamp()
+    post_id = post["id"]
 
     await posts_collection.update_one({
       "_id": post["_id"]
@@ -46,6 +47,6 @@ async def fix():
       }
     })
 
-    logger.info(f"timestamp {timestamp} for {post["_id"]} updated")
+    logger.info(f"timestamp {timestamp} for {post_id} updated")
 
 
