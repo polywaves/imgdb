@@ -33,7 +33,7 @@ async def run():
 
 
 async def fix():
-  posts = await posts_collection.find().limit(100).to_list()
+  posts = await posts_collection.find().limit(1000).to_list()
 
   for post in posts:
     timestamp = post["_id"].generation_time.timestamp()
@@ -46,6 +46,6 @@ async def fix():
       }
     })
 
-    logger.info(post)
+    logger.info(f"timestamp {timestamp} for {post["id"]} updated")
 
 
