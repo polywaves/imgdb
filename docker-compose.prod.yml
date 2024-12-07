@@ -83,6 +83,8 @@ services:
     hostname: i2v
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
+    env_file:
+      - .env_i2v
     deploy:
       mode: replicated
       replicas: 10
