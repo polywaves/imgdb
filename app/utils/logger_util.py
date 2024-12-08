@@ -10,7 +10,7 @@ class JsonFormatter(logging.Formatter):
     record_dict = {
       "level": record.levelname,
       "date": self.formatTime(record),
-      "message": record.getMessage(),
+      "message": json.dumps(record.getMessage(), indent=2),
       "module": record.module,
       "lineno": record.lineno,
     }
