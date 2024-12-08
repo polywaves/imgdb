@@ -43,6 +43,7 @@ async def search_posts(image: str) -> dict:
     if not post["video"]:
       del post["video"]
     post["distance"] = distance
+    post["date"] = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y %H:%M:%S")
 
     if distance not in distances:
       distances[distance] = list()
