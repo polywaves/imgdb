@@ -91,14 +91,15 @@ async def search_posts(image: str) -> dict:
   response = list()
   count = 0
   for vendor in vendors.values():
-    count += 1
-    if count > 30:
+    if count >= 30:
       break
 
     i = 0
     for post in vendor:
       if i == 0:
         response.append(post)
+
+        count += 1
       else:
         break
 
