@@ -23,18 +23,20 @@ else:
   from fastapi.middleware.cors import CORSMiddleware
   from app.api import v1
   from app.providers import weaviate_provider
-  
+
 
   @app.on_event("startup")
   async def startup_event():
-    await mongo.migrate()
-    logger.debug("MongoDB has been migrated")
+    # await mongo.migrate()
+    # logger.debug("MongoDB has been migrated")
 
-    try:
-      weaviate_provider.create_collection()
-      logger.debug("Weaviate has been prepaired")
-    except Exception as e:
-      logger.debug(e)
+    # try:
+    #   weaviate_provider.create_collection()
+    #   logger.debug("Weaviate has been prepaired")
+    # except Exception as e:
+    #   logger.debug(e)
+
+    logger.info("App started")
 
 
   @app.on_event("shutdown")
