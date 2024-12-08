@@ -14,6 +14,15 @@ from app.utils import text_util
 router = APIRouter()
 
 
+def response_posts(data: dict) -> list:
+  response = list()
+  for posts in data.values():
+    for post in posts:
+      response.append(post)
+
+  return response
+
+
 async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image)
 
@@ -40,33 +49,63 @@ async def search_posts(image: str) -> dict:
 
     distances[distance].append(post)
 
-  if len(distances) == 1:
-    # Sort by dates
-    dates = dict()
-    for value in distances.values():
-        for post in value:
-          date = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y")
+  distances = sorted(distances.items())
+  if len(distances) != 1:
+    return response_posts(distances)
 
-          if date not in dates:
-            dates[date] = list()
+  # Sort by dates
+  dates = dict()
+  for value in distances.values():
+    for post in value:
+      date = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y")
 
-          dates[date].append(post)
+      if date not in dates:
+        dates[date] = list()
 
-    dates = sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True)
+      dates[date].append(post)
 
-    # Sort by prices
-    if len(dates) == 1:
-      prices = dict()
-      for value in dates.values():
-          for post in value:
-            price = post["price"]
+  dates = sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True)
+  if len(dates) != 1:
+    return response_posts(dates)
 
-            if price not in prices:
-              prices[price] = list()
+  # Sort by prices
+  prices = dict()
+  for value in dates.values():
+    for post in value:
+      price = post["price"]
 
-            prices[price].append(post)
+      if price not in prices:
+        prices[price] = list()
 
-      prices = sorted(prices.items())
+      prices[price].append(post)
+
+  prices = sorted(prices.items())
+  if len(prices) != 1:
+    return response_posts(prices)
+
+  # Sort by vendor id
+  vendors = dict()
+  for value in prices.values():
+    for post in value:
+      vendor = post["vendor_id"]
+
+      if vendor not in vendors:
+        vendors[vendor] = list()
+      
+      vendors[vendor].append(post)
+
+  for vendor in vendors.values():
+    if len(vendor) > 1:
+      i = 0
+      for post in vendor:
+        if i > 0:
+          del vendor[i]
+
+        i += 1
+
+  return response_posts(vendors)
+              
+
 
   
 
