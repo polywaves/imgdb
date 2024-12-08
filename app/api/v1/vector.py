@@ -24,7 +24,7 @@ def response_posts(data: dict) -> list:
 
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image) 
+  vectors = weaviate_provider.search_near_image(image=image, limit=300)
 
   distances = dict()
   for vector in vectors.objects:
@@ -50,8 +50,6 @@ async def search_posts(image: str) -> dict:
     distances[distance].append(post)
 
   distances = dict(sorted(distances.items()))
-  if len(distances) != 1:
-    return response_posts(distances)
 
   # Sort by dates
   dates = dict()
@@ -65,8 +63,6 @@ async def search_posts(image: str) -> dict:
       dates[date].append(post)
 
   dates = dict(sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
-  if len(dates) != 1:
-    return response_posts(dates)
 
   # Sort by prices
   prices = dict()
@@ -80,8 +76,6 @@ async def search_posts(image: str) -> dict:
       prices[price].append(post)
 
   prices = dict(sorted(prices.items()))
-  if len(prices) != 1:
-    return response_posts(prices)
 
   # Sort by vendor id
   vendors = dict()
@@ -95,7 +89,12 @@ async def search_posts(image: str) -> dict:
       vendors[vendor].append(post)
 
   response = list()
+  count = 0
   for vendor in vendors.values():
+    count += 1
+    if count > 30:
+      break
+
     i = 0
     for post in vendor:
       if i == 0:
