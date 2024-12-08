@@ -17,7 +17,6 @@ router = APIRouter()
 async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image)
 
-  response = list()
   distances = dict()
   for vector in vectors.objects:
     distance = round(vector.metadata.distance, 6)
@@ -41,9 +40,35 @@ async def search_posts(image: str) -> dict:
 
     distances[distance].append(post)
 
-    response.append(post)
+  if len(distances) == 1:
+    # Sort by dates
+    dates = dict()
+    for value in distances.values():
+        for post in value:
+          date = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y")
 
-  return response
+          if date not in dates:
+            dates[date] = list()
+
+          dates[date].append(post)
+
+    dates = sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True)
+
+    # Sort by prices
+    if len(dates) == 1:
+      prices = dict()
+      for value in dates.values():
+          for post in value:
+            price = post["price"]
+
+            if price not in prices:
+              prices[price] = list()
+
+            prices[price].append(post)
+
+      prices = sorted(prices.items())
+
+  
 
 
 async def delete_posts(post_ids: list):
@@ -226,6 +251,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
   params.sizes = sizes
 
   post = params.model_dump()
+  post["created_at"] = time()
 
   await mongo.posts_collection.insert_one(post)
 
@@ -233,7 +259,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
   for image in post["images"]:
     insert_image_ids.append({
       "id": image["img_id"],
-      "post_id": params.id
+      "post_id": params.id,
+      "created_at": time()
     })
 
   try:
@@ -254,7 +281,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
     hashes.append({
       "img_id": uid,
       "post_id": str(post_id),
-      "hash": data_md5
+      "hash": data_md5,
+      "created_at": time()
     })
   
   try:
