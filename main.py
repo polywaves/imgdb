@@ -23,7 +23,7 @@ else:
   from fastapi.middleware.cors import CORSMiddleware
   from app.api import v1
   from app.providers import weaviate_provider
-
+  
 
   @app.on_event("startup")
   async def startup_event():

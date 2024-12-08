@@ -24,7 +24,7 @@ def response_posts(data: dict) -> list:
 
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image)
+  vectors = weaviate_provider.search_near_image(image=image) 
 
   distances = dict()
   for vector in vectors.objects:
@@ -49,7 +49,7 @@ async def search_posts(image: str) -> dict:
 
     distances[distance].append(post)
 
-  distances = sorted(distances.items())
+  distances = dict(sorted(distances.items()))
   if len(distances) != 1:
     return response_posts(distances)
 
@@ -64,8 +64,7 @@ async def search_posts(image: str) -> dict:
 
       dates[date].append(post)
 
-  dates = sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True)
-  logger.info(dates)
+  dates = dict(sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
   if len(dates) != 1:
     return response_posts(dates)
 
@@ -80,7 +79,7 @@ async def search_posts(image: str) -> dict:
 
       prices[price].append(post)
 
-  prices = sorted(prices.items())
+  prices = dict(sorted(prices.items()))
   if len(prices) != 1:
     return response_posts(prices)
 
@@ -95,21 +94,19 @@ async def search_posts(image: str) -> dict:
       
       vendors[vendor].append(post)
 
+  response = list()
   for vendor in vendors.values():
-    if len(vendor) > 1:
-      i = 0
-      for post in vendor:
-        if i > 0:
-          del vendor[i]
+    i = 0
+    for post in vendor:
+      if i == 0:
+        response.append(post)
+      else:
+        break
 
-        i += 1
+      i += 1
 
-  return response_posts(vendors)
+  return response
               
-
-
-  
-
 
 async def delete_posts(post_ids: list):
   deleted = list()

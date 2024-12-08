@@ -1,17 +1,17 @@
 services:
-  api:
-    build:
-      context: .
-    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors --reload
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - 8080:8080
-    volumes:
-      - ./:/usr/src/app
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
+  # api:
+  #   build:
+  #     context: .
+  #   command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors --reload
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - ./:/usr/src/app
+  #     - /proc:/host/proc:ro
+  #     - /sys:/host/sys:ro
 
   i2v:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
@@ -22,6 +22,8 @@ services:
   mongo:
     image: mongo
     restart: always
+    ports:
+      - 27017:27017
     env_file:
       - .env
     volumes:
@@ -43,5 +45,8 @@ services:
     volumes:
       - ./data/weaviate:/var/lib/weaviate
     restart: always
+    ports:
+      - 8080:8080
+      - 50051:50051
     env_file:
       - .env
