@@ -50,63 +50,70 @@ async def search_posts(image: str) -> dict:
 
     distances[distance].append(post)
 
-  distances = dict(sorted(distances.items()))
+  return distances
 
-  # Sort by dates
-  dates = dict()
-  for value in distances.values():
-    for post in value:
-      date = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y")
+  # for distance 
 
-      if date not in dates:
-        dates[date] = list()
 
-      dates[date].append(post)
 
-  dates = dict(sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
 
-  # Sort by prices
-  prices = dict()
-  for value in dates.values():
-    for post in value:
-      price = post["price"]
+  # distances = dict(sorted(distances.items()))
 
-      if price not in prices:
-        prices[price] = list()
+  # # Sort by dates
+  # dates = dict()
+  # for value in distances.values():
+  #   for post in value:
+  #     date = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y")
 
-      prices[price].append(post)
+  #     if date not in dates:
+  #       dates[date] = list()
 
-  prices = dict(sorted(prices.items()))
+  #     dates[date].append(post)
 
-  # Sort by vendor id
-  vendors = dict()
-  for value in prices.values():
-    for post in value:
-      vendor = post["vendor_id"]
+  # dates = dict(sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
 
-      if vendor not in vendors:
-        vendors[vendor] = list()
+  # # Sort by prices
+  # prices = dict()
+  # for value in dates.values():
+  #   for post in value:
+  #     price = post["price"]
+
+  #     if price not in prices:
+  #       prices[price] = list()
+
+  #     prices[price].append(post)
+
+  # prices = dict(sorted(prices.items()))
+
+  # # Sort by vendor id
+  # vendors = dict()
+  # for value in prices.values():
+  #   for post in value:
+  #     vendor = post["vendor_id"]
+
+  #     if vendor not in vendors:
+  #       vendors[vendor] = list()
       
-      vendors[vendor].append(post)
+  #     vendors[vendor].append(post)
 
-  response = list()
-  count = 0
-  for vendor in vendors.values():
-    if count >= 30:
-      break
+  # response = list()
+  # count = 0
+  # for vendor in vendors.values():
+  #   if count >= 30:
+  #     break
 
-    i = 0
-    for post in vendor:
-      if i == 0:
-        response.append(post)
+  #   i = 0
+  #   for post in vendor:
+  #     if i == 0:
+  #       response.append(post)
 
-        count += 1
-      else:
-        break
+  #       count += 1
+  #     else:
+  #       break
 
-      i += 1
+  #     i += 1
 
-  return response
+  # return response
               
 
 async def delete_posts(post_ids: list):
