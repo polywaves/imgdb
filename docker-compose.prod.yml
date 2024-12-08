@@ -16,6 +16,8 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
+    ports:
+      - 13317:27017
     env_file:
       - .env_mongo
     volumes:
@@ -29,6 +31,8 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
+    ports:
+      - 13318:27017
     env_file:
       - .env_mongo
     volumes:
@@ -42,6 +46,8 @@ services:
     image: mongo
     command: --replSet rs0
     restart: always
+    ports:
+      - 13319:27017
     env_file:
       - .env_mongo
     volumes:
@@ -121,6 +127,9 @@ services:
     command: --host 0.0.0.0 --port 8080 --scheme http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     restart: on-failure:0
+    ports:
+      - 13808:8080
+      - 13051:50051
     volumes:
       - /data/weaviate_node_1:/var/lib/weaviate
     env_file:
