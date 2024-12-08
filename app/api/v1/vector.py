@@ -50,6 +50,7 @@ async def search_posts(image: str) -> dict:
     distances[distance].append(post)
 
   distances = sorted(distances.items())
+  logger.info(distances)
   if len(distances) != 1:
     return response_posts(distances)
 
