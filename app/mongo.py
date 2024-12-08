@@ -17,16 +17,19 @@ async def migrate():
     posts_indexes = [
       IndexModel([("id", ASCENDING)]),
       IndexModel([("images.img_id", ASCENDING)]),
-      IndexModel([("images.img", ASCENDING)])
+      IndexModel([("images.img", ASCENDING)]),
+      IndexModel([("created_at", ASCENDING)])
     ]
     await posts_collection.create_indexes(posts_indexes)
 
     await post_image_ids_collection.create_index("id", unique=True)
     await post_image_ids_collection.create_index("post_id")
+    await post_image_ids_collection.create_index("created_at")
 
     await vector_hashes_collection.create_index("hash", unique=True)
     await vector_hashes_collection.create_index("post_id")
     await vector_hashes_collection.create_index("img_id")
+    await vector_hashes_collection.create_index("created_at")
 
     await requests_collection.create_index("url")
     await requests_collection.create_index("created_at")

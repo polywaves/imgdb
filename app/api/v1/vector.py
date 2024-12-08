@@ -20,7 +20,7 @@ async def search_posts(image: str) -> dict:
   response = list()
   distances = dict()
   for vector in vectors.objects:
-    distance = vector.metadata.distance
+    distance = round(vector.metadata.distance, 6)
     post_id = vector.properties["post_id"]
 
     post = await mongo.posts_collection.find_one({
@@ -34,7 +34,13 @@ async def search_posts(image: str) -> dict:
     del post["_id"]
     if not post["video"]:
       del post["video"]
-    post["distance"] = round(distance, 6)
+    post["distance"] = distance
+
+    if distance not in distances:
+      distances[distance] = list()
+
+    distances[distance].append(post)
+
     response.append(post)
 
   return response
@@ -73,7 +79,10 @@ async def old_posts(limit: int = 100, days: int = 23):
     "created_at": {
       "$lt": (datetime.now() - timedelta(days=days)).timestamp()
     }
-  }).sort("created_at", 1).limit(limit).to_list()
+  }, {
+    "id": 1,
+    "created_at": 1
+  }).sort("created_at", -1).limit(limit).to_list()
 
   posts = list()
   for item in items:
