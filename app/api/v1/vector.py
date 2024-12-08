@@ -50,7 +50,6 @@ async def search_posts(image: str) -> dict:
     distances[distance].append(post)
 
   distances = sorted(distances.items())
-  logger.info(distances)
   if len(distances) != 1:
     return response_posts(distances)
 
@@ -66,6 +65,7 @@ async def search_posts(image: str) -> dict:
       dates[date].append(post)
 
   dates = sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True)
+  logger.info(dates)
   if len(dates) != 1:
     return response_posts(dates)
 
