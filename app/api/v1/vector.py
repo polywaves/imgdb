@@ -27,7 +27,7 @@ async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image, limit=50)
 
   ## Make distances and fix data
-  response = dict()
+  data = dict()
   for vector in vectors.objects:
     distance = round(vector.metadata.distance, 6)
     post_id = vector.properties["post_id"]
@@ -55,11 +55,13 @@ async def search_posts(image: str) -> dict:
 
     id = f"{distance}:{price}:{vendor_id}"
 
-    if id not in response:
-      response[id] = post
+    if id not in data:
+      data[id] = post
 
-    if id in response and response[id]["created_at"] < post["created_at"]:
-      response[id] = post
+    if id in data and data[id]["created_at"] < post["created_at"]:
+      data[id] = post
+
+  response = dict(sorted(data.items()))
 
   return response
     
