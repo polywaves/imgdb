@@ -46,9 +46,9 @@ async def search_posts(image: str) -> dict:
 
     post["distance"] = distance
 
-    created_at = post["created_at"]
-    post["date"] = datetime.fromtimestamp(created_at).strftime("%d.%m.%y")
-    post["time"] = datetime.fromtimestamp(created_at).strftime("%H:%M:%S")
+    created_at = datetime.fromtimestamp(post["created_at"])
+    post["date"] = created_at.strftime("%d.%m.%y")
+    post["time"] = created_at.strftime("%H:%M:%S")
 
     if distance not in distances:
       distances[distance] = list()
@@ -64,7 +64,7 @@ async def search_posts(image: str) -> dict:
 
       dates[date].append(post)
 
-    distances[distance] = dict(sorted(dates.items(), reverse=True))
+    distances[distance] = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
 
     # distances[distance] = sorted(posts, key=lambda post: post["created_at"], reverse=True)
     
