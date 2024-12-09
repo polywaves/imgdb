@@ -51,7 +51,7 @@ async def search_posts(image: str) -> dict:
     distances[distance].append(post)
 
   for distance, posts in distances.items():
-    distances[distance] = sorted(posts.items(), key=lambda post: post["created_at"], reverse=True)
+    distances[distance] = sorted(posts, key=lambda post: post["created_at"], reverse=True)
     
   return distances
 
