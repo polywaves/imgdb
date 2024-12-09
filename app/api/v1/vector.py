@@ -70,7 +70,7 @@ async def search_posts(image: str) -> dict:
         dates[date] = list()
       dates[date].append(post)
 
-    dates = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
+    # dates = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
     
     for date, posts in dates.items():
       prices = dict()
@@ -81,7 +81,7 @@ async def search_posts(image: str) -> dict:
           prices[price] = list()
         prices[price].append(post)
 
-      prices = dict(sorted(prices.items()))
+      # prices = dict(sorted(prices.items()))
       data[distance][date] = prices
 
   ## Generate response by vendor id
