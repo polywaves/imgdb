@@ -24,7 +24,7 @@ def response_posts(data: dict) -> list:
 
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image, limit=30)
+  vectors = weaviate_provider.search_near_image(image=image, limit=100)
 
   distances = dict()
   for vector in vectors.objects:
@@ -40,10 +40,15 @@ async def search_posts(image: str) -> dict:
     
     # Fix post data
     del post["_id"]
+
     if not post["video"]:
       del post["video"]
+
     post["distance"] = distance
-    post["date"] = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y %H:%M:%S")
+
+    created_at = post["created_at"]
+    post["date"] = datetime.fromtimestamp(created_at).strftime("%d.%m.%y")
+    post["time"] = datetime.fromtimestamp(created_at).strftime("%H:%M:%S")
 
     if distance not in distances:
       distances[distance] = list()
@@ -53,11 +58,11 @@ async def search_posts(image: str) -> dict:
   for distance, posts in distances.items():
     dates = dict()
     for post in posts:
-      created_at = post["created_at"]
-      if created_at not in dates:
-        dates[created_at] = list()
+      date = post["date"]
+      if date not in dates:
+        dates[date] = list()
 
-      dates[created_at].append(post)
+      dates[date].append(post)
 
     distances[distance] = dates
 
