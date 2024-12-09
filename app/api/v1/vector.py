@@ -58,6 +58,7 @@ async def search_posts(image: str) -> dict:
     if id not in data:
       data[id] = post
 
+    ## Replace to greater fresh post
     if id in data and data[id]["created_at"] < post["created_at"]:
       data[id] = post
 
