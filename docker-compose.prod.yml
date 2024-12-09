@@ -77,7 +77,7 @@ services:
       - /mnt/sdb1:/mnt/sdb1
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 10
       resources:
         reservations:
           devices:

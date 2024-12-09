@@ -64,7 +64,7 @@ async def search_posts(image: str) -> dict:
 
       dates[date].append(post)
 
-    distances[distance] = dates
+    distances[distance] = dict(sorted(dates.items(), reverse=True))
 
     # distances[distance] = sorted(posts, key=lambda post: post["created_at"], reverse=True)
     
