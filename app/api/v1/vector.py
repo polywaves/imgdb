@@ -85,12 +85,17 @@ async def search_posts(image: str) -> dict:
       data[distance][date] = prices
 
   ## Generate response by vendor id
-  response = list()
+  response = dict()
   for distance, dates in data.items():
     for date, prices in dates.items():
       for price, posts in prices.items():
         for post in posts:
-          response.append(post)
+          vendor_id = post["vendor_id"]
+          id = f"{distance}:{date}:{price}:{vendor_id}"
+          if id not in response:
+            response[id] = list()
+
+          response[id].append(post)
     
   return response
               
