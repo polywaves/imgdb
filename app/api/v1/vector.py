@@ -55,7 +55,7 @@ async def search_posts(image: str) -> dict:
     vendor_id = post["vendor_id"]
     price = post["price"]
 
-    id = f"{distance}:{date}:{price}:{vendor_id}"
+    id = f"{distance}:{price}:{vendor_id}:{date}"
     if id not in response:
       response[id] = list()
 
