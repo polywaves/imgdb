@@ -24,7 +24,7 @@ def response_posts(data: dict) -> list:
 
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image, limit=50)
+  vectors = weaviate_provider.search_near_image(image=image, limit=300)
 
   ## Make distances and fix data
   data = dict()
@@ -61,7 +61,17 @@ async def search_posts(image: str) -> dict:
     if id in data and data[id]["created_at"] < post["created_at"]:
       data[id] = post
 
-  response = dict(sorted(data.items()))
+  data = dict(sorted(data.items()))
+
+  response = list()
+  count = 0
+  for post in data.values():
+    count += 1
+
+    if count > 30:
+      break
+    
+    response.append(post)
 
   return response
     
