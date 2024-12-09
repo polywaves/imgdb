@@ -48,18 +48,18 @@ async def search_posts(image: str) -> dict:
     post["distance"] = distance
 
     created_at = datetime.fromtimestamp(post["created_at"])
-    date = created_at.strftime("%d.%m.%y")
-    post["date"] = date
-    post["time"] = created_at.strftime("%H:%M:%S")
+    post["creation_date"] = created_at.strftime("%d.%m.%y %H:%M:%S")
 
     vendor_id = post["vendor_id"]
     price = post["price"]
 
-    id = f"{distance}:{price}:{vendor_id}:{date}"
-    if id not in response:
-      response[id] = list()
+    id = f"{distance}:{price}:{vendor_id}"
 
-    response[id].append(post)
+    if id not in response:
+      response[id] = post
+
+    if id in response and response[id]["created_at"] < post["created_at"]:
+      response[id] = post
 
   return response
     
