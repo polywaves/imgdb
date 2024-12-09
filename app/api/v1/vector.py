@@ -58,10 +58,10 @@ async def search_posts(image: str) -> dict:
     id = f"{distance}:{date}:{price}:{vendor_id}"
     if id not in response:
       response[id] = list()
-      
+
     response[id].append(post)
 
-    return response
+  return response
     
 
   #   if distance not in distances:
