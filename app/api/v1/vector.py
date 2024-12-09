@@ -27,7 +27,7 @@ async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image, limit=50)
 
   ## Make distances and fix data
-  distances = dict()
+  response = dict()
   for vector in vectors.objects:
     distance = round(vector.metadata.distance, 6)
     post_id = vector.properties["post_id"]
@@ -48,56 +48,69 @@ async def search_posts(image: str) -> dict:
     post["distance"] = distance
 
     created_at = datetime.fromtimestamp(post["created_at"])
-    post["date"] = created_at.strftime("%d.%m.%y")
+    date = created_at.strftime("%d.%m.%y")
+    post["date"] = date
     post["time"] = created_at.strftime("%H:%M:%S")
 
-    if distance not in distances:
-      distances[distance] = list()
+    vendor_id = post["vendor_id"]
+    price = post["price"]
 
-    distances[distance].append(post)
+    id = f"{distance}:{date}:{price}:{vendor_id}"
+    if id not in response:
+      response[id] = list()
+      
+    response[id].append(post)
 
-  ## Grouping data
-  data = dict()
-  for distance, posts in distances.items():
-    data[distance] = dict()
-
-    dates = dict()
-    for post in posts:
-      date = post["date"]
-      data[distance][date] = dict()
-
-      if date not in dates:
-        dates[date] = list()
-      dates[date].append(post)
-
-    # dates = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
+    return response
     
-    for date, posts in dates.items():
-      prices = dict()
-      for post in posts:
-        price = post["price"]
 
-        if price not in prices:
-          prices[price] = list()
-        prices[price].append(post)
+  #   if distance not in distances:
+  #     distances[distance] = list()
 
-      # prices = dict(sorted(prices.items()))
-      data[distance][date] = prices
+  #   distances[distance].append(post)
 
-  ## Generate response by vendor id
-  response = dict()
-  for distance, dates in data.items():
-    for date, prices in dates.items():
-      for price, posts in prices.items():
-        for post in posts:
-          vendor_id = post["vendor_id"]
-          id = f"{distance}:{date}:{price}:{vendor_id}"
-          if id not in response:
-            response[id] = list()
+  # ## Grouping data
+  # data = dict()
+  # for distance, posts in distances.items():
+  #   data[distance] = dict()
 
-          response[id].append(post)
+  #   dates = dict()
+  #   for post in posts:
+  #     date = post["date"]
+  #     data[distance][date] = dict()
+
+  #     if date not in dates:
+  #       dates[date] = list()
+  #     dates[date].append(post)
+
+  #   # dates = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
     
-  return response
+  #   for date, posts in dates.items():
+  #     prices = dict()
+  #     for post in posts:
+  #       price = post["price"]
+
+  #       if price not in prices:
+  #         prices[price] = list()
+  #       prices[price].append(post)
+
+  #     # prices = dict(sorted(prices.items()))
+  #     data[distance][date] = prices
+
+  # ## Generate response by vendor id
+  # response = dict()
+  # for distance, dates in data.items():
+  #   for date, prices in dates.items():
+  #     for price, posts in prices.items():
+  #       for post in posts:
+  #         vendor_id = post["vendor_id"]
+  #         id = f"{distance}:{date}:{price}:{vendor_id}"
+  #         if id not in response:
+  #           response[id] = list()
+
+  #         response[id].append(post)
+    
+  # return response
               
 
 async def delete_posts(post_ids: list):
