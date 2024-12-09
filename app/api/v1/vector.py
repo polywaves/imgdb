@@ -51,7 +51,17 @@ async def search_posts(image: str) -> dict:
     distances[distance].append(post)
 
   for distance, posts in distances.items():
-    distances[distance] = sorted(posts, key=lambda post: post["created_at"], reverse=True)
+    dates = dict()
+    for post in posts:
+      created_at = post["created_at"]
+      if created_at not in dates:
+        dates[created_at] = list()
+
+      dates[created_at].append(post)
+
+    distances[distance] = dates
+
+    # distances[distance] = sorted(posts, key=lambda post: post["created_at"], reverse=True)
     
   return distances
 
