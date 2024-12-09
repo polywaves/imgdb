@@ -55,20 +55,34 @@ async def search_posts(image: str) -> dict:
 
     distances[distance].append(post)
 
+  response = dict()
   for distance, posts in distances.items():
+    response[distance] = dict()
+
     dates = dict()
     for post in posts:
       date = post["date"]
+      response[distance][date] = dict()
+
       if date not in dates:
         dates[date] = list()
-
       dates[date].append(post)
 
-    distances[distance] = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
-
-    # distances[distance] = sorted(posts, key=lambda post: post["created_at"], reverse=True)
+    dates = dict(sorted(dates.items(), key=lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
     
-  return distances
+    for date, posts in dates.items():
+      prices = dict()
+      for post in posts:
+        price = post["price"]
+
+        if price not in prices:
+          prices[price] = list()
+        prices[price].append(post)
+
+      prices = dict(sorted(prices.items()))
+      response[distance][date] = prices
+    
+  return response
 
   # for distance 
 
