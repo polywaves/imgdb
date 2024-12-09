@@ -26,6 +26,7 @@ def response_posts(data: dict) -> list:
 async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image, limit=50)
 
+  ## Make distances and fix data
   distances = dict()
   for vector in vectors.objects:
     distance = round(vector.metadata.distance, 6)
@@ -55,14 +56,15 @@ async def search_posts(image: str) -> dict:
 
     distances[distance].append(post)
 
-  response = dict()
+  ## Grouping data
+  data = dict()
   for distance, posts in distances.items():
-    response[distance] = dict()
+    data[distance] = dict()
 
     dates = dict()
     for post in posts:
       date = post["date"]
-      response[distance][date] = dict()
+      data[distance][date] = dict()
 
       if date not in dates:
         dates[date] = list()
@@ -80,72 +82,17 @@ async def search_posts(image: str) -> dict:
         prices[price].append(post)
 
       prices = dict(sorted(prices.items()))
-      response[distance][date] = prices
+      data[distance][date] = prices
+
+  ## Generate response by vendor id
+  response = list()
+  for distance, dates in data.items():
+    for date, prices in dates.items():
+      for price, posts in prices.items():
+        for post in posts:
+          response.append(post)
     
   return response
-
-  # for distance 
-
-
-
-
-  # distances = dict(sorted(distances.items()))
-
-  # # Sort by dates
-  # dates = dict()
-  # for value in distances.values():
-  #   for post in value:
-  #     date = datetime.fromtimestamp(post["created_at"]).strftime("%d.%m.%y")
-
-  #     if date not in dates:
-  #       dates[date] = list()
-
-  #     dates[date].append(post)
-
-  # dates = dict(sorted(dates.items(), key = lambda x: datetime.strptime(x[0], "%d.%m.%y"), reverse=True))
-
-  # # Sort by prices
-  # prices = dict()
-  # for value in dates.values():
-  #   for post in value:
-  #     price = post["price"]
-
-  #     if price not in prices:
-  #       prices[price] = list()
-
-  #     prices[price].append(post)
-
-  # prices = dict(sorted(prices.items()))
-
-  # # Sort by vendor id
-  # vendors = dict()
-  # for value in prices.values():
-  #   for post in value:
-  #     vendor = post["vendor_id"]
-
-  #     if vendor not in vendors:
-  #       vendors[vendor] = list()
-      
-  #     vendors[vendor].append(post)
-
-  # response = list()
-  # count = 0
-  # for vendor in vendors.values():
-  #   if count >= 30:
-  #     break
-
-  #   i = 0
-  #   for post in vendor:
-  #     if i == 0:
-  #       response.append(post)
-
-  #       count += 1
-  #     else:
-  #       break
-
-  #     i += 1
-
-  # return response
               
 
 async def delete_posts(post_ids: list):
