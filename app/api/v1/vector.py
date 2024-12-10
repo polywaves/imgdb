@@ -14,15 +14,6 @@ from app.utils import text_util
 router = APIRouter()
 
 
-def response_posts(data: dict) -> list:
-  response = list()
-  for posts in data.values():
-    for post in posts:
-      response.append(post)
-
-  return response
-
-
 async def search_posts(image: str) -> dict:
   vectors = weaviate_provider.search_near_image(image=image, limit=150)
 
@@ -106,13 +97,13 @@ async def old_posts(limit: int = 100, days: int = 23):
   start_time = time()
 
   items = await mongo.posts_collection.find({
-    "created_at": {
-      "$lt": (datetime.now() - timedelta(days=days)).timestamp()
+    "creation_date": {
+      "$lt": (datetime.now() - timedelta(days=days)).strftime("%d.%m.%y")
     }
   }, {
     "id": 1,
-    "created_at": 1
-  }).sort("created_at", 1).limit(limit).to_list()
+    "creation_date": 1
+  }).sort("creation_date", 1).limit(limit).to_list()
 
   posts = list()
   for item in items:
