@@ -15,10 +15,10 @@ async def run():
 
 async def fix(collection, repr: dict):
   rows = await collection.find({
-    "creation_date": {
-      "$exists": False
-    }
-  }, repr).limit(10).to_list()
+    # "creation_date": {
+    #   "$exists": False
+    # }
+  }, repr).to_list()
 
   for row in rows:
     id = row["id"]
