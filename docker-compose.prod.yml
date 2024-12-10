@@ -58,8 +58,6 @@ services:
     restart: always
     env_file:
       - .env_nginx
-    volumes:
-      - ./static:/var/www/html/static
     ports:
       - 80:80
       - 443:443
