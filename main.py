@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.docs import get_swagger_ui_html
 from app import mongo
 from app import task_manager
@@ -44,14 +45,16 @@ else:
   async def shutdown_event():
     weaviate_provider.client.close()
 
-  logger.debug("Development mode")
-  app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-  )
+
+  if os.environ["MODE"] == 'development':
+    logger.debug("Development mode")
+    app.add_middleware(
+      CORSMiddleware,
+      allow_origins=["*"],
+      allow_credentials=True,
+      allow_methods=["*"],
+      allow_headers=["*"],
+    )
 
 
   @app.middleware("http")
@@ -91,18 +94,20 @@ else:
   app.include_router(v1.router, prefix='/api/v1')
 
 
-@app.get("/apidoc", include_in_schema=False)
-async def custom_swagger_ui_html():
-  return get_swagger_ui_html(
-    openapi_url=app.openapi_url,
-    title=f"{app.title} - Swagger UI",
-    # swagger_ui_dark.css raw url
-    swagger_css_url="https://raw.githubusercontent.com/Amoenus/SwaggerDark/master/SwaggerDark.css"
-  )
+  @app.get("/apidoc", include_in_schema=False)
+  async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+      openapi_url=app.openapi_url,
+      title=f"{app.title} - Swagger UI",
+      # swagger_ui_dark.css raw url
+      swagger_css_url="/static/SwaggerDark.css"
+    )
 
 
-@app.get("/health")
-def health_check():
-  return {
-    "status": "healthy"
-  }
+  @app.get("/health")
+  def health_check():
+    return {
+      "status": "healthy"
+    }
+
+  app.mount("/static", StaticFiles(directory="static"), name="static")
