@@ -72,12 +72,12 @@ def create_image_vector(items: list):
     for item in items:
       batch.add_object(item)
 
-    try:
-      failed_objects = batch.failed_objects
-    except Exception:
-      failed_objects = None
-    
-    return failed_objects
+  try:
+    failed_objects = collection.batch.failed_objects
+  except Exception:
+    failed_objects = None
+  
+  return failed_objects
 
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
