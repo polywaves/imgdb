@@ -72,6 +72,8 @@ def create_image_vector(items: list):
     for item in items:
       batch.add_object(item)
 
+    return batch.failed_objects
+
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
   response = collection.query.fetch_objects(

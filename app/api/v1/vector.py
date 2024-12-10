@@ -231,7 +231,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
   await delete_posts(post_ids=[params.id])
 
   ## Vectorize image
-  weaviate_provider.create_image_vector(items=items)
+  failed_objects = weaviate_provider.create_image_vector(items=items)
+  logger.info(failed_objects)
 
   ## Decode data
   params.vendor_capt = text_util.urldecode(params.vendor_capt)
