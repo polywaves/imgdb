@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.openapi.docs import get_swagger_ui_html
 from app import mongo
 from app import task_manager
 from app.utils.logger_util import logger
@@ -17,7 +18,6 @@ if "TASK_MANAGER" in os.environ:
     logger.debug("Task manager started")
 
     await task_manager.run()
-    
 else:
   from time import time
   from fastapi.middleware.cors import CORSMiddleware
@@ -56,7 +56,7 @@ else:
 
 
   @app.middleware("http")
-  async def add_process_time_header(request: Request, call_next) -> any:
+  async def http_processing(request: Request, call_next) -> any:
     url = str(request.url)
     client_ip = request.client.host
     if os.environ["MODE"] == 'production' and "x-real-ip" in request.headers:
@@ -79,16 +79,28 @@ else:
     response = await call_next(request)
 
     ## Count requests
-    await mongo.requests_collection.insert_one({
-      "client_ip": client_ip,
-      "url": url,
-      "created_at": time()
-    })
+    if "_requests" not in url:
+      await mongo.requests_collection.insert_one({
+        "client_ip": client_ip,
+        "url": url,
+        "created_at": time()
+      })
 
     return response
 
 
   app.include_router(v1.router, prefix='/api/v1')
+
+
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html_github():
+  return get_swagger_ui_html(
+    openapi_url=app.openapi_url,
+    title=f"{app.title} - Swagger UI",
+    # swagger_ui_dark.css raw url
+    swagger_css_url="https://raw.githubusercontent.com/Itz-fork/Fastapi-Swagger-UI-Dark/main/assets/swagger_ui_dark.min.css"
+  )
+
 
 @app.get("/health")
 def health_check():
