@@ -811,9 +811,9 @@
       border: 2px solid #3e4346 !important;
   }
 
-  ::-webkit-scrollbar-corner {}
+  /* ::-webkit-scrollbar-corner {}
 
-  ::-webkit-resizer {}
+  ::-webkit-resizer {} */
 
   ::-webkit-scrollbar-button:vertical:start:decrement {
       background:
