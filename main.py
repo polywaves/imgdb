@@ -8,6 +8,7 @@ from app.utils.logger_util import logger
 
 
 app = FastAPI(
+  docs_url = None,
   redirect_slashes=False
 )
 
