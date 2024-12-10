@@ -11,27 +11,26 @@ async def run():
 
 async def fix_posts():
   rows = await posts_collection.find({
-    "creation_date": {
+    "creation_timestamp": {
       "$exists": False
     }
   }, {
     "id": 1,
-    "posted": 1
+    "creation_date": 1
   }).to_list()
 
   for row in rows:
     id = row["id"]
-    posted = row["posted"]
-    creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y").strftime("%d.%m.%y")
+    creation_timestamp = datetime.strptime(row["creation_date"], "%d.%m.%y").timestamp()
 
     await posts_collection.update_one({
       "_id": row["_id"]
     }, {
       "$set": {
-        "creation_date": creation_date
+        "creation_timestamp": 
       }
     })
 
-    logger.info(f"creation date {creation_date} for post id {id} updated")
+    logger.info(f"creation timestamp {creation_timestamp} for post id {id} updated")
 
 
