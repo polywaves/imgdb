@@ -214,6 +214,8 @@ async def training_by_json(params: vector_model.TrainingByJson):
   items = list()
   images = list()
   for image in params.images:
+    logger.info(image.img)
+
     items.append({
       "image": image_util.from_url_to_base64(image.img),
       "uid": int(image.img_id),
