@@ -103,7 +103,7 @@ async def old_posts(limit: int = 100, days: int = 23):
   }, {
     "id": 1,
     "creation_date": 1
-  }).sort("creation_date", 1).limit(limit).to_list()
+  }).sort("creation_date", -1).limit(limit).to_list()
 
   posts = list()
   for item in items:
