@@ -100,7 +100,7 @@ else:
       openapi_url=app.openapi_url,
       title=f"{app.title} - Swagger UI",
       # swagger_ui_dark.css raw url
-      swagger_css_url="/static/SwaggerDark.css"
+      swagger_css_url="/static/swagger_ui_dark.css"
     )
 
 
