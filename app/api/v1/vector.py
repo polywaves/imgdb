@@ -249,6 +249,10 @@ async def training_by_json(params: vector_model.TrainingByJson):
   post = params.model_dump()
   post["created_at"] = time()
 
+  posted = post["posted"]
+  creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y").strftime("%d.%m.%y")
+  post["creation_date"] = creation_date
+
   await mongo.posts_collection.insert_one(post)
 
   insert_image_ids = list()
