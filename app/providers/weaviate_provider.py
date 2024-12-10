@@ -72,13 +72,6 @@ def create_image_vector(items: list):
     for item in items:
       batch.add_object(item)
 
-  try:
-    failed_objects = collection.batch.failed_objects
-  except Exception:
-    failed_objects = None
-  
-  return failed_objects
-
 
 def get_image_vectors_by_post_id(post_id: int) -> object:
   response = collection.query.fetch_objects(
@@ -89,14 +82,11 @@ def get_image_vectors_by_post_id(post_id: int) -> object:
   return response
 
 
-def search_near_image(image, days: int = 23, limit: int = 30) -> object:
-  filter = datetime.now() - timedelta(days=days)
-
+def search_near_image(image, limit: int = 30) -> object:
   response = collection.query.near_image(
     near_image=image,
     return_metadata=MetadataQuery(distance=True, creation_time=True),
-    limit=limit,
-    # filters=Filter.by_creation_time().greater_than(filter)
+    limit=limit
   )
 
   return response

@@ -118,6 +118,29 @@ async def old_posts(limit: int = 100, days: int = 23):
   }, start_time=start_time)
 
 
+@router.get("/search_posts_by_ids", tags=["Search posts by ids throught ,"])
+async def search_posts_by_ids(post_ids: str):
+  start_time = time()
+
+  posts = list()
+  for post_id in post_ids.split(','):
+    post_id = post_id.strip()
+
+    count = await mongo.posts_collection.count_documents({
+      "id": post_id
+    })
+
+    if count == 0:
+      posts.append({
+        "id": post_id
+      })
+
+  return response_util.response({
+    "result": 1,
+    "posts": posts
+  }, start_time=start_time)
+
+
 @router.get("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids throught ,"])
 async def delete_posts_by_ids(post_ids: str):
   start_time = time()
@@ -214,8 +237,6 @@ async def training_by_json(params: vector_model.TrainingByJson):
   items = list()
   images = list()
   for image in params.images:
-    logger.info(image.img)
-
     items.append({
       "image": image_util.from_url_to_base64(image.img),
       "uid": int(image.img_id),
@@ -231,8 +252,7 @@ async def training_by_json(params: vector_model.TrainingByJson):
   await delete_posts(post_ids=[params.id])
 
   ## Vectorize image
-  failed_objects = weaviate_provider.create_image_vector(items=items)
-  logger.info(failed_objects)
+  weaviate_provider.create_image_vector(items=items)
 
   ## Decode data
   params.vendor_capt = text_util.urldecode(params.vendor_capt)
