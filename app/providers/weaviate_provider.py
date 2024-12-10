@@ -72,9 +72,10 @@ def create_image_vector(items: list):
     for item in items:
       batch.add_object(item)
 
-    failed_objects = None
-    if batch.failed_objects:
+    try:
       failed_objects = batch.failed_objects
+    except Exception:
+      failed_objects = None
     
     return failed_objects
 
