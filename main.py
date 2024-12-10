@@ -44,16 +44,14 @@ else:
   async def shutdown_event():
     weaviate_provider.client.close()
 
-
-  if os.environ["MODE"] == 'development':
-    logger.debug("Development mode")
-    app.add_middleware(
-      CORSMiddleware,
-      allow_origins=["*"],
-      allow_credentials=True,
-      allow_methods=["*"],
-      allow_headers=["*"],
-    )
+  logger.debug("Development mode")
+  app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+  )
 
 
   @app.middleware("http")
@@ -99,7 +97,7 @@ async def custom_swagger_ui_html():
     openapi_url=app.openapi_url,
     title=f"{app.title} - Swagger UI",
     # swagger_ui_dark.css raw url
-    # swagger_css_url="https://raw.githubusercontent.com/Amoenus/SwaggerDark/master/SwaggerDark.css"
+    swagger_css_url="https://raw.githubusercontent.com/Amoenus/SwaggerDark/master/SwaggerDark.css"
   )
 
 
