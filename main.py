@@ -109,5 +109,3 @@ else:
     return {
       "status": "healthy"
     }
-
-  app.mount("/static", StaticFiles(directory="static"), name="static")
