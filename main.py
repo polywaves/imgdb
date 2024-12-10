@@ -99,7 +99,7 @@ async def custom_swagger_ui_html():
     openapi_url=app.openapi_url,
     title=f"{app.title} - Swagger UI",
     # swagger_ui_dark.css raw url
-    swagger_css_url="https://raw.githubusercontent.com/Amoenus/SwaggerDark/refs/heads/master/SwaggerDark.css"
+    swagger_css_url="https://raw.githubusercontent.com/Amoenus/SwaggerDark/master/SwaggerDark.css"
   )
 
 
