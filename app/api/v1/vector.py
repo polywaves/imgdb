@@ -40,7 +40,7 @@ async def search_posts(image: str) -> dict:
       data[id] = post
 
     ## Replace to greater fresh post
-    if id in data and data[id]["creation_date"] < post["creation_date"]:
+    if id in data and data[id]["creation_timestamp"] < post["creation_timestamp"]:
       data[id] = post
 
 
@@ -57,6 +57,7 @@ async def search_posts(image: str) -> dict:
     # Fix post data
     del post["_id"]
     del post["creation_date"]
+    del post["creation_timestamp"]
     del post["created_at"]
 
     if not post["video"]:
@@ -97,13 +98,13 @@ async def old_posts(limit: int = 100, days: int = 23):
   start_time = time()
 
   items = await mongo.posts_collection.find({
-    "creation_date": {
-      "$lt": (datetime.now() - timedelta(days=days)).strftime("%d.%m.%y")
+    "creation_timestamp": {
+      "$lt": (datetime.now() - timedelta(days=days)).timestamp()
     }
   }, {
     "id": 1,
     "creation_date": 1
-  }).sort("creation_date", 1).limit(limit).to_list()
+  }).sort("creation_timestamp", 1).limit(limit).to_list()
 
   posts = list()
   for item in items:
@@ -250,8 +251,9 @@ async def training_by_json(params: vector_model.TrainingByJson):
   post["created_at"] = time()
 
   posted = post["posted"]
-  creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y").strftime("%d.%m.%y")
-  post["creation_date"] = creation_date
+  creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y")
+  post["creation_date"] = creation_date.strftime("%d.%m.%y")
+  post["creation_timestamp"] = creation_date.timestamp()
 
   await mongo.posts_collection.insert_one(post)
 
