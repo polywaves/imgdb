@@ -27,7 +27,7 @@ async def fix_posts():
       "_id": row["_id"]
     }, {
       "$set": {
-        "creation_timestamp": 
+        "creation_timestamp": creation_timestamp
       }
     })
 
