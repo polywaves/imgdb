@@ -52,13 +52,6 @@ async def search_posts(image: str) -> dict:
     if id in data and data[id]["creation_date"] < post["creation_date"]:
       data[id] = post
 
-    # Fix post data
-    del post["_id"]
-    del post["creation_date"]
-    del post["created_at"]
-
-    if not post["video"]:
-      del post["video"]
 
   data = dict(sorted(data.items()))
 
@@ -69,6 +62,14 @@ async def search_posts(image: str) -> dict:
 
     if count > 30:
       break
+
+    # Fix post data
+    del post["_id"]
+    del post["creation_date"]
+    del post["created_at"]
+
+    if not post["video"]:
+      del post["video"]
     
     response.append(post)
 
