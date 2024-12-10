@@ -24,7 +24,7 @@ def response_posts(data: dict) -> list:
 
 
 async def search_posts(image: str) -> dict:
-  vectors = weaviate_provider.search_near_image(image=image, limit=300)
+  vectors = weaviate_provider.search_near_image(image=image, limit=150)
 
   ## Make distances and fix data
   data = dict()
@@ -38,18 +38,8 @@ async def search_posts(image: str) -> dict:
 
     if not post:
       continue
-    
-    # Fix post data
-    del post["_id"]
-
-    if not post["video"]:
-      del post["video"]
 
     post["distance"] = distance
-
-    created_at = datetime.fromtimestamp(post["created_at"])
-    post["creation_date"] = created_at.strftime("%d.%m.%y %H:%M:%S")
-
     vendor_id = post["vendor_id"]
     price = post["price"]
 
@@ -59,8 +49,16 @@ async def search_posts(image: str) -> dict:
       data[id] = post
 
     ## Replace to greater fresh post
-    if id in data and data[id]["created_at"] < post["created_at"]:
+    if id in data and data[id]["creation_date"] < post["creation_date"]:
       data[id] = post
+
+    # Fix post data
+    del post["_id"]
+    del post["creation_date"]
+    del post["created_at"]
+
+    if not post["video"]:
+      del post["video"]
 
   data = dict(sorted(data.items()))
 

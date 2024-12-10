@@ -6,26 +6,25 @@ from datetime import datetime, timedelta
 
 ## Make migrations
 async def run():
-  await fix(posts_collection, repr={
+  await fix_posts()
+
+
+async def fix_posts():
+  rows = await posts_collection.find({
+    "creation_date": {
+      "$exists": False
+    }
+  }, {
     "id": 1,
     "posted": 1
-  })
-
-
-
-async def fix(collection, repr: dict):
-  rows = await collection.find({
-    # "creation_date": {
-    #   "$exists": False
-    # }
-  }, repr).to_list()
+  }).to_list()
 
   for row in rows:
     id = row["id"]
     posted = row["posted"]
     creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y").strftime("%d.%m.%y")
 
-    await collection.update_one({
+    await posts_collection.update_one({
       "_id": row["_id"]
     }, {
       "$set": {
