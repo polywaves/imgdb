@@ -6,14 +6,14 @@ from datetime import datetime, timedelta
 
 ## Make migrations
 async def run():
-  await fix(posts_collection, {
+  await fix(posts_collection, repr={
     "id": 1,
     "posted": 1
   })
 
 
 
-async def fix(collection, id_key: dict):
+async def fix(collection, repr: dict):
   rows = await collection.find({
     "creation_date": {
       "$exists": False
