@@ -21,8 +21,9 @@ async def fix(collection, repr: dict):
   }, repr).limit(10).to_list()
 
   for row in rows:
+    id = row["id"]
     posted = row["posted"]
-    creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y")
+    creation_date = datetime.strptime(f"{posted}.{datetime.now().strftime('%y')}", "%d.%m.%y").strftime("%d.%m.%y")
 
     await collection.update_one({
       "_id": row["_id"]
@@ -32,6 +33,6 @@ async def fix(collection, repr: dict):
       }
     })
 
-    logger.info(f"creation date {creation_date} for {id} updated")
+    logger.info(f"creation date {creation_date} for post id {id} updated")
 
 
