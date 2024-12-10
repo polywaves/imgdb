@@ -93,7 +93,7 @@ else:
   app.include_router(v1.router, prefix='/api/v1')
 
 
-@app.get("/docs", include_in_schema=False)
+@app.get("/apidoc", include_in_schema=False)
 async def custom_swagger_ui_html_github():
   return get_swagger_ui_html(
     openapi_url=app.openapi_url,
