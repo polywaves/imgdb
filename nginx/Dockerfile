@@ -5,9 +5,10 @@ RUN rm /etc/nginx/nginx.conf
 
 COPY ./conf.d/ /etc/nginx/conf.d/
 COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./static/ /var/www/html/static/
 
 COPY ./ssl/ /etc/nginx/ssl/
 RUN chmod 600 /etc/nginx/ssl/*.key
 
 WORKDIR /var/www/html
+
+COPY ./static/ ./static/
