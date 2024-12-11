@@ -112,7 +112,7 @@ services:
               count: 1
               capabilities: ["compute"]
     depends_on:
-      - node8
+      - node4
 
   # WEAVIATE CLUSTER
   node1:
