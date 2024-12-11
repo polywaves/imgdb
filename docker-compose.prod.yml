@@ -112,7 +112,7 @@ services:
               count: 1
               capabilities: ["compute"]
     depends_on:
-      - node8
+      - node6
 
   # WEAVIATE CLUSTER
   node1:
@@ -237,48 +237,6 @@ services:
         ipv4_address: 172.19.0.16
     depends_on:
       - node5
-
-  node7:
-    hostname: node7
-    init: true
-    command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-    restart: on-failure:0
-    volumes:
-      - /mnt/sdb1/data/weaviate_node_7:/var/lib/weaviate
-    env_file:
-      - .env_weaviate
-    environment:
-      - CLUSTER_HOSTNAME=node7
-      - CLUSTER_GOSSIP_BIND_PORT=7112
-      - CLUSTER_DATA_BIND_PORT=7113
-      - CLUSTER_JOIN=node1:7100
-    networks:
-      default:
-        ipv4_address: 172.19.0.17
-    depends_on:
-      - node6
-
-  node8:
-    hostname: node8
-    init: true
-    command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
-    restart: on-failure:0
-    volumes:
-      - /mnt/sdb1/data/weaviate_node_8:/var/lib/weaviate
-    env_file:
-      - .env_weaviate
-    environment:
-      - CLUSTER_HOSTNAME=node8
-      - CLUSTER_GOSSIP_BIND_PORT=7114
-      - CLUSTER_DATA_BIND_PORT=7115
-      - CLUSTER_JOIN=node1:7100
-    networks:
-      default:
-        ipv4_address: 172.19.0.19
-    depends_on:
-      - node7
 
 networks:
   default:
