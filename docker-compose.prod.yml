@@ -19,8 +19,8 @@ services:
     env_file:
       - .env_mongo
     volumes:
-      - /data/mongo/db:/data/db
-      - /data/mongo/configdb:/data/configdb
+      - /mnt/sdb1/data/mongo/db:/data/db
+      - /mnt/sdb1/data/mongo/configdb:/data/configdb
     depends_on:
       - i2v
 
@@ -32,8 +32,8 @@ services:
     env_file:
       - .env_mongo
     volumes:
-      - /data/mongo1/db:/data/db
-      - /data/mongo1/configdb:/data/configdb
+      - /mnt/sdb1/data/mongo1/db:/data/db
+      - /mnt/sdb1/data/mongo1/configdb:/data/configdb
     depends_on:
       - mongo
 
@@ -45,8 +45,8 @@ services:
     env_file:
       - .env_mongo
     volumes:
-      - /data/mongo2/db:/data/db
-      - /data/mongo2/configdb:/data/configdb
+      - /mnt/sdb1/data/mongo2/db:/data/db
+      - /mnt/sdb1/data/mongo2/configdb:/data/configdb
     depends_on:
       - mongo1
 
