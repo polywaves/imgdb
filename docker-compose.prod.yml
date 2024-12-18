@@ -75,12 +75,12 @@ services:
               count: 1
               capabilities: ["gpu"]
 
-  task-manager:
-    build:
-      context: .
-    restart: always
-    env_file:
-      - .env_task_manager
+  # task-manager:
+  #   build:
+  #     context: .
+  #   restart: always
+  #   env_file:
+  #     - .env_task_manager
   
   i2v:
     hostname: i2v
