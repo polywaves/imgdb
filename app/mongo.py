@@ -18,9 +18,8 @@ async def migrate():
       IndexModel([("id", ASCENDING)]),
       IndexModel([("images.img_id", ASCENDING)]),
       IndexModel([("images.img", ASCENDING)]),
-      IndexModel([("created_at", ASCENDING)]),
-      IndexModel([("creation_date", ASCENDING)]),
       IndexModel([("creation_timestamp", ASCENDING)]),
+      IndexModel([("created_at", ASCENDING)])
     ]
     await posts_collection.create_indexes(posts_indexes)
 

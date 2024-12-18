@@ -56,9 +56,7 @@ async def search_posts(image: str) -> dict:
 
     # Fix post data
     del post["_id"]
-    del post["creation_date"]
     del post["creation_timestamp"]
-    del post["created_at"]
 
     if not post["video"]:
       del post["video"]
