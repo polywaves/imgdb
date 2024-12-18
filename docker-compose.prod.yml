@@ -8,8 +8,6 @@ services:
       - 8337:8081
     env_file:
       - .env_mongoexpress
-    depends_on:
-      - mongo2
 
   mongo:
     hostname: mongo
@@ -21,8 +19,6 @@ services:
     volumes:
       - /mnt/sdb1/data/mongo/db:/data/db
       - /mnt/sdb1/data/mongo/configdb:/data/configdb
-    depends_on:
-      - i2v
 
   mongo1:
     hostname: mongo1
@@ -34,8 +30,6 @@ services:
     volumes:
       - /mnt/sdb1/data/mongo1/db:/data/db
       - /mnt/sdb1/data/mongo1/configdb:/data/configdb
-    depends_on:
-      - mongo
 
   mongo2:
     hostname: mongo2
@@ -47,8 +41,6 @@ services:
     volumes:
       - /mnt/sdb1/data/mongo2/db:/data/db
       - /mnt/sdb1/data/mongo2/configdb:/data/configdb
-    depends_on:
-      - mongo1
 
 
   nginx:
@@ -61,8 +53,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    depends_on:
-      - api
 
   api:
     build:
@@ -84,8 +74,6 @@ services:
             - driver: nvidia
               count: 1
               capabilities: ["gpu"]
-    depends_on:
-      - mongoexpress
 
   task-manager:
     build:
@@ -93,8 +81,6 @@ services:
     restart: always
     env_file:
       - .env_task_manager
-    depends_on:
-      - mongoexpress
   
   i2v:
     hostname: i2v
@@ -111,8 +97,6 @@ services:
             - driver: nvidia
               count: 1
               capabilities: ["compute"]
-    depends_on:
-      - node6
 
   # WEAVIATE CLUSTER
   node1:
