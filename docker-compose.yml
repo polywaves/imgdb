@@ -1,52 +1,24 @@
 services:
-  # api:
-  #   build:
-  #     context: .
-  #   command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors --reload
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 8080:8080
-  #   volumes:
-  #     - ./:/usr/src/app
-  #     - /proc:/host/proc:ro
-  #     - /sys:/host/sys:ro
-
-  i2v:
-    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+  api:
+    build:
+      context: .
     restart: always
-    env_file:
-      - .env
-
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
+    command: uvicorn main:app --port 8081 --host=0.0.0.0 --use-colors --reload
     env_file:
       - .env
     volumes:
-      - ./data/mongo:/data/db
+      - ./:/app
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    links:
+      - oracle
 
-  mongoexpress:
-    hostname: mongoexpress
-    image: mongo-express
-    restart: always
-    ports:
-      - 8337:8081
-    env_file:
-      - .env
-
-  weaviate:
-    hostname: weaviate
-    command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
+  oracle:
+    image: container-registry.oracle.com/database/free:latest
     volumes:
-      - ./data/weaviate:/var/lib/weaviate
-    restart: always
+      - ./data/oradata:/opt/oracle/oradata
     ports:
-      - 8080:8080
-      - 50051:50051
+      - 1521:1521
+    restart: unless-stopped
     env_file:
-      - .env
+      - .env_oracle

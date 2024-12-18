@@ -1,14 +1,18 @@
+import os
+import threading
 import torch
 import torchvision.models as models
 import torchvision.transforms as transforms
-import threading
 from PIL import Image
 
-class Img2VecPytorch(object):
-  def __init__(self, cuda_support, cuda_core):
-    self.device = torch.device(cuda_core if cuda_support else "cpu")
 
-    self.model = models.resnet50(pretrained=True)
+class I2v:
+  cuda_core = "cuda:0" if "CUDA_ENABLE" in os.environ else "cpu"
+
+  def __init__(self):
+    self.device = torch.device(self.cuda_core)
+
+    self.model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
     self.layer_output_size = 2048
     self.extraction_layer = self.model._modules.get('avgpool')
 
@@ -22,18 +26,21 @@ class Img2VecPytorch(object):
     self.to_tensor = transforms.ToTensor()
     self.lock = threading.Lock()
 
-  def get_vec(self, image_path):
-    img = Image.open(image_path).convert('RGB')
+  def get_vector(self, image) -> list:
+    img = Image.open(image).convert('RGB')
 
     with self.lock:
       image = self.normalize(self.to_tensor(self.scaler(img))).unsqueeze(0).to(self.device)
       my_embedding = torch.zeros(1, self.layer_output_size, 1, 1)
 
-      def copy_data(m, i, o):
-        my_embedding.copy_(o.data)
+      def copy_data(*args):
+        my_embedding.copy_(args[2].data)
 
       h = self.extraction_layer.register_forward_hook(copy_data)
       self.model(image)
       h.remove()
 
-      return my_embedding.numpy()[0, :, 0, 0]
+      return my_embedding.numpy()[0, :, 0, 0].tolist()
+    
+
+i2v = I2v()

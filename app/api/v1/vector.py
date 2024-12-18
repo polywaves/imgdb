@@ -3,10 +3,8 @@ import json
 from time import time
 from datetime import datetime, timedelta
 from fastapi import APIRouter, UploadFile, File
-from app.providers import weaviate_provider
-from app.models import vector_model
+from app.schemas import vector_schema
 from app.utils import image_util
-from app import mongo
 from app.utils.logger_util import logger
 from app.utils import response_util
 from app.utils import text_util
@@ -154,7 +152,7 @@ async def delete_posts_by_ids(post_ids: str):
   
 
 @router.post("/delete_posts_by_ids", tags=["Delete post and image vectors by post ids"])
-async def delete_posts_by_ids(params: vector_model.DeletePostsByIds):
+async def delete_posts_by_ids(params: vector_schema.DeletePostsByIds):
   start_time = time()
 
   deleted = await delete_posts(post_ids=params.post_ids)
@@ -231,7 +229,7 @@ async def search_by_upload(image: UploadFile = File()):
   
 
 @router.post("/training", tags=["Training by json"])
-async def training_by_json(params: vector_model.TrainingByJson):
+async def training_by_json(params: vector_schema.TrainingByJson):
   start_time = time()
 
   items = list()
