@@ -17,8 +17,8 @@ services:
     env_file:
       - .env_mongo
     volumes:
-      - /mnt/sdb1/data/mongo/db:/data/db
-      - /mnt/sdb1/data/mongo/configdb:/data/configdb
+      - /data/mongo/db:/data/db
+      - /data/mongo/configdb:/data/configdb
 
   mongo1:
     hostname: mongo1
@@ -28,8 +28,8 @@ services:
     env_file:
       - .env_mongo
     volumes:
-      - /mnt/sdb1/data/mongo1/db:/data/db
-      - /mnt/sdb1/data/mongo1/configdb:/data/configdb
+      - /data/mongo1/db:/data/db
+      - /data/mongo1/configdb:/data/configdb
 
   mongo2:
     hostname: mongo2
@@ -39,8 +39,8 @@ services:
     env_file:
       - .env_mongo
     volumes:
-      - /mnt/sdb1/data/mongo2/db:/data/db
-      - /mnt/sdb1/data/mongo2/configdb:/data/configdb
+      - /data/mongo2/db:/data/db
+      - /data/mongo2/configdb:/data/configdb
 
 
   nginx:
@@ -65,6 +65,7 @@ services:
       - /sys:/host/sys:ro
       - /mnt/sda1:/mnt/sda1
       - /mnt/sdb1:/mnt/sdb1
+      - /mnt/sdc1:/mnt/sdc1
     deploy:
       mode: replicated
       replicas: 20
@@ -106,7 +107,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     restart: on-failure:0
     volumes:
-      - /data/weaviate_node_1:/var/lib/weaviate
+      - /mnt/sdc1/data/weaviate_node_1:/var/lib/weaviate
     env_file:
       - .env_weaviate
     environment:
@@ -124,7 +125,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - /mnt/sda1/data/weaviate_node_2:/var/lib/weaviate
+      - /data/weaviate_node_2:/var/lib/weaviate
     env_file:
       - .env_weaviate
     environment:
