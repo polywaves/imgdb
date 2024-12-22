@@ -141,7 +141,7 @@ services:
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
     restart: on-failure:0
     volumes:
-      - /data/weaviate_node_2:/var/lib/weaviate
+      - /mnt/sdc1/data/weaviate_node_2:/var/lib/weaviate
     env_file:
       - .env_weaviate
     environment:
