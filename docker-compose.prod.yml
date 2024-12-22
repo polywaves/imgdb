@@ -120,7 +120,7 @@ services:
     hostname: node1
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate::1.28.2
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sdc1/data/weaviate_node_1:/var/lib/weaviate
