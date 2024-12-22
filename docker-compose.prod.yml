@@ -120,7 +120,7 @@ services:
     hostname: node1
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
+    image: cr.weaviate.io/semitechnologies/weaviate::1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sdc1/data/weaviate_node_1:/var/lib/weaviate
@@ -138,7 +138,7 @@ services:
     hostname: node2
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sdc1/data/weaviate_node_2:/var/lib/weaviate
@@ -159,7 +159,7 @@ services:
     hostname: node3
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sda1/data/weaviate_node_3:/var/lib/weaviate
@@ -180,7 +180,7 @@ services:
     hostname: node4
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sda1/data/weaviate_node_4:/var/lib/weaviate
@@ -201,7 +201,7 @@ services:
     hostname: node5
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sdb1/data/weaviate_node_5:/var/lib/weaviate
@@ -222,7 +222,7 @@ services:
     hostname: node6
     init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
-    image: cr.weaviate.io/semitechnologies/weaviate:1.27.0
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
     restart: on-failure:0
     volumes:
       - /mnt/sdb1/data/weaviate_node_6:/var/lib/weaviate
