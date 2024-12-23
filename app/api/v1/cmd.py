@@ -16,7 +16,7 @@ async def restart_neuro():
     "up": list()
   }
   nodes = 6
-  for node in round(nodes):
+  for node in range(nodes):
     cmd = f"docker compose -f docker-compose.prod.yml down node{node}"
     data["down"].append(subprocess.call(cmd, shell=True))
 
