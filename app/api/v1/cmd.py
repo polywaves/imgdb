@@ -21,10 +21,10 @@ async def restart_neuro():
     "up": list()
   }
   nodes = 6
-  for node in range(nodes):
+  for node in range(1, nodes + 1):
     data["down"].append(docker.compose.down(f"node{node}"))
 
-  for node in range(nodes):
+  for node in range(1, nodes + 1):
     data["up"].append(docker.compose.up(f"node{node}"))
 
   logger.debug(data)
