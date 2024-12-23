@@ -1,23 +1,28 @@
 services:
-  # api:
-  #   build:
-  #     context: .
-  #   command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors --reload
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 8080:8080
-  #   volumes:
-  #     - ./:/usr/src/app
-  #     - /proc:/host/proc:ro
-  #     - /sys:/host/sys:ro
+  api:
+    build:
+      context: .
+    command: uvicorn main:app --port 8080 --host=0.0.0.0 --use-colors --reload
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/usr/src/app
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - mongoexpress
 
   i2v:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
     restart: always
     env_file:
       - .env
+    depends_on:
+      - weaviate
 
   mongo:
     image: mongo
@@ -28,6 +33,8 @@ services:
       - .env
     volumes:
       - ./data/mongo:/data/db
+    depends_on:
+      - weaviate
 
   mongoexpress:
     hostname: mongoexpress
@@ -37,16 +44,16 @@ services:
       - 8337:8081
     env_file:
       - .env
+    depends_on:
+      - mongo
 
   weaviate:
     hostname: weaviate
+    init: true
     command: --host 0.0.0.0 --port 8080 --scheme http
     image: cr.weaviate.io/semitechnologies/weaviate:1.27.3
     volumes:
       - ./data/weaviate:/var/lib/weaviate
     restart: always
-    ports:
-      - 8080:8080
-      - 50051:50051
     env_file:
       - .env
