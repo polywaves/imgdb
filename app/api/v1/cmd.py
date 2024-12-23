@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 docker = DockerClient(
-  compose_files=["./docker-compose.prod.yml"]
+  compose_files=["docker-compose.prod.yml"]
 )
 
 
@@ -16,16 +16,10 @@ docker = DockerClient(
 async def restart_neuro():
   start_time = time()
 
-  data = {
-    "down": list(),
-    "up": list()
-  }
+  data = list()
   nodes = 6
   for node in range(1, nodes + 1):
-    data["down"].append(docker.compose.down(f"node{node}"))
-
-  for node in range(1, nodes + 1):
-    data["up"].append(docker.compose.up(f"node{node}"))
+    data.append(docker.compose.restart(f"node{node}"))
 
   logger.debug(data)
 
