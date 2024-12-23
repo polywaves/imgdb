@@ -7,7 +7,10 @@ from app.utils import response_util
 router = APIRouter()
 
 
-docker = DockerClient(compose_files=["./docker-compose.prod.yml"])
+docker = DockerClient(
+  compose_files=["./docker-compose.prod.yml"], 
+  host="/var/run/docker.sock"
+)
 
 
 @router.get("/restart_neuro", tags=["Restart neuro nodes"])
