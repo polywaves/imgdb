@@ -70,6 +70,7 @@ services:
     restart: always
     env_file:
       - .env_api
+    privileged: true
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
