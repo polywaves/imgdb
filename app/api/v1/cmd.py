@@ -38,7 +38,7 @@ def get_portainer_containers(jwt: str, filter: str) -> str:
   containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], "endpoints/1/docker/v1.41/containers/json"), headers=headers, params=payload).json()
   data = list()
   for container in containers:
-    if filter in container["Names"]:
+    if filter in container["Names"][0]:
       data.append(container)      
 
   return data
