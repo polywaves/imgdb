@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-RUN curl -fsSL https://get.docker.com | sh
+# RUN curl -fsSL https://get.docker.com | sh
 
 COPY . .
 
