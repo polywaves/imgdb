@@ -9,7 +9,7 @@ from app.utils import response_util
 router = APIRouter()
 
 
-def get_portainer_jwt() -> str:
+def get_jwt() -> str:
   payload = json.dumps({
     "password": os.environ["PORTAINER_PASSWORD"],
     "username": os.environ["PORTAINER_USERNAME"]
@@ -23,7 +23,7 @@ def get_portainer_jwt() -> str:
   return response["jwt"]
 
 
-def get_portainer_containers(jwt: str, filter: str) -> str:
+def get_containers(jwt: str, filter: str) -> str:
   headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {jwt}"
@@ -35,30 +35,32 @@ def get_portainer_containers(jwt: str, filter: str) -> str:
     if filter in container["Names"][0]:
       data.append(container)      
 
-  return data
+  return data.reverse()
+
+
+def restart_container(jwt: str, id: str) -> str:
+  headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {jwt}"
+  }
+
+  response = requests.request("POST", os.path.join(os.environ["PORTAINER_HOST"], f"endpoints/1/docker/containers/{id}/restart"), headers=headers).json()  
+
+  return response
 
 
 @router.get("/restart_neuro", tags=["Restart neuro nodes"])
 async def restart_neuro():
   start_time = time()
 
-  jwt = get_portainer_jwt()
-  containers = get_portainer_containers(jwt=jwt, filter="node")
+  jwt = get_jwt()
+  containers = get_containers(jwt=jwt, filter="node")
 
-  logger.debug(containers)
+  for container in containers:
+    restart = restart_container(jwt=jwt, id=container["Id"])
 
-  # http://87.242.104.141:9000/api/endpoints/1/docker/v1.41/containers/a84062a6e8f2f8ee28c62118219cf5b875adb13c7a81fea47278a7f91890809a/restart
-  # http://87.242.104.141:9000/api/endpoints/1/docker/v1.41/containers/json
-
-
-  data = list()
-  nodes = 6
-  # for node in range(1, nodes + 1):
-  #   data.append(docker.compose.restart(f"node{node}"))
-
-  # logger.debug(data)
+    logger.debug(restart)
 
   return response_util.response({
-    "result": 1,
-    "data": containers
+    "result": 1
   }, start_time=start_time)
