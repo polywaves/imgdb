@@ -35,7 +35,7 @@ def get_containers(jwt: str, filter: str) -> str:
     if filter in container["Names"]:
       data.append(container)  
 
-  response = data.reverse()
+  response = list(reversed(data))
   logger.debug(response)    
 
   return response
