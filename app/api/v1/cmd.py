@@ -22,9 +22,9 @@ async def restart_neuro():
     "Content-Type": "application/json"
   }
 
-  response = await requests.request("POST", url, headers=headers, data=payload)
+  response = requests.request("POST", url, headers=headers, data=payload)
 
-  logger.debug(await response.json())
+  logger.debug(response.json())
 
 
   data = list()
