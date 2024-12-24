@@ -8,7 +8,8 @@ router = APIRouter()
 
 
 docker = DockerClient(
-  compose_files=["docker-compose.prod.yml"]
+  compose_files=["/services/docker-compose.prod.yml"],
+  host="services:62o0mFESlRtB@87.242.104.141"
 )
 
 
