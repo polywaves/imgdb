@@ -32,7 +32,7 @@ def get_portainer_containers(jwt: str, filter: str) -> str:
   }
   headers = {
     "Content-Type": "application/json",
-    "X-API-Key": jwt
+    "Authorization": f"Bearer {jwt}"
   }
 
   containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], "endpoints/1/docker/containers/json"), headers=headers, params=payload).json()
