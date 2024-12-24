@@ -41,13 +41,24 @@ def get_containers(jwt: str, filter: str) -> str:
   return response
 
 
-def restart_container(jwt: str, id: str) -> str:
+def stop_container(jwt: str, id: str) -> str:
   headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {jwt}"
   }
 
-  response = requests.request("POST", os.path.join(os.environ["PORTAINER_HOST"], f"endpoints/1/docker/containers/{id}/restart"), headers=headers).text
+  response = requests.request("POST", os.path.join(os.environ["PORTAINER_HOST"], f"endpoints/1/docker/containers/{id}/stop"), headers=headers).text
+
+  return response
+
+
+def start_container(jwt: str, id: str) -> str:
+  headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {jwt}"
+  }
+
+  response = requests.request("POST", os.path.join(os.environ["PORTAINER_HOST"], f"endpoints/1/docker/containers/{id}/start"), headers=headers).text
 
   return response
 
@@ -60,12 +71,13 @@ async def restart_neuro():
   containers = get_containers(jwt=jwt, filter="node")
 
   for container in containers:
-    logger.debug(container)
+    stop = stop_container(jwt=jwt, id=container["Id"])
+    logger.debug(stop)
 
-    restart = restart_container(jwt=jwt, id=container["Id"])
-    logger.debug(restart)
+  for container in containers:
+    start = start_container(jwt=jwt, id=container["Id"])
+    logger.debug(start)
 
   return response_util.response({
-    "result": 1,
-    "data": containers
+    "result": 1
   }, start_time=start_time)
