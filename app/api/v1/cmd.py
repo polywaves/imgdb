@@ -66,5 +66,5 @@ async def restart_neuro():
 
   return response_util.response({
     "result": 1,
-    "data": data
+    "data": containers
   }, start_time=start_time)
