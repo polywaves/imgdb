@@ -32,7 +32,7 @@ def get_containers(jwt: str, filter: str) -> str:
   containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], 'endpoints/1/docker/containers/json?all=true&filters={"label":["com.docker.compose.project=services"]}'), headers=headers).json()
   data = list()
   for container in containers:
-    if filter in container["Names"]:
+    if filter in container["Names"][0]:
       data.append(container)  
 
   response = list(reversed(data))
