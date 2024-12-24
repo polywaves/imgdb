@@ -32,11 +32,10 @@ def get_containers(jwt: str, filter: str) -> str:
   containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], 'endpoints/1/docker/containers/json?all=true&filters={"label":["com.docker.compose.project=services"]}'), headers=headers).json()
   data = list()
   for container in containers:
-    logger.debug(container["Names"])
     if filter in container["Names"]:
       data.append(container)      
 
-  return data.reverse()
+  return reversed(data)
 
 
 def restart_container(jwt: str, id: str) -> str:
@@ -60,9 +59,8 @@ async def restart_neuro():
   for container in containers:
     logger.debug(container)
 
-    # restart = restart_container(jwt=jwt, id=container["Id"])
-
-    # logger.debug(restart)
+    restart = restart_container(jwt=jwt, id=container["Id"])
+    logger.debug(restart)
 
   return response_util.response({
     "result": 1,
