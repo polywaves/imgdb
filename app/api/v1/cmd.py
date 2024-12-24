@@ -35,7 +35,7 @@ def get_portainer_containers(jwt: str, filter: str) -> str:
     "Authorization": f"Bearer {jwt}"
   }
 
-  containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], "endpoints/1/docker/v1.41/containers/json"), headers=headers, params=payload).json()
+  containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], 'endpoints/1/docker/containers/json?all=true&filters={"label":["com.docker.compose.project=services"]}'), headers=headers).json()
   logger.debug(containers)
   data = list()
   for container in containers:
@@ -56,7 +56,7 @@ async def restart_neuro():
   logger.debug(containers)
 
   # http://87.242.104.141:9000/api/endpoints/1/docker/v1.41/containers/a84062a6e8f2f8ee28c62118219cf5b875adb13c7a81fea47278a7f91890809a/restart
-  # http://87.242.104.141:9000/api/endpoints/1/docker/v1.41/containers/json?all=true&filters={"label":["com.docker.compose.project=services"]}
+  # http://87.242.104.141:9000/api/endpoints/1/docker/v1.41/containers/json
 
 
   data = list()
