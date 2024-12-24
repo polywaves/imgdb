@@ -1,28 +1,38 @@
+import requests
+import json
 from time import time
 from fastapi import APIRouter
-from python_on_whales import DockerClient
 from app.utils.logger_util import logger
 from app.utils import response_util
 
 router = APIRouter()
 
 
-docker = DockerClient(
-  compose_files=["/services/docker-compose.prod.yml"],
-  host="ssh://services:62o0mFESlRtB@87.242.104.141"
-)
-
-
 @router.get("/restart_neuro", tags=["Restart neuro nodes"])
 async def restart_neuro():
   start_time = time()
 
+  url = "http://87.242.104.141:9000/api/auth"
+
+  payload = json.dumps({
+    "password": "62o0mFESlRtB",
+    "username": "admin"
+  })
+  headers = {
+    "Content-Type": "application/json"
+  }
+
+  response = requests.request("POST", url, headers=headers, data=payload)
+
+  logger.debug(await response.json())
+
+
   data = list()
   nodes = 6
-  for node in range(1, nodes + 1):
-    data.append(docker.compose.restart(f"node{node}"))
+  # for node in range(1, nodes + 1):
+  #   data.append(docker.compose.restart(f"node{node}"))
 
-  logger.debug(data)
+  # logger.debug(data)
 
   return response_util.response({
     "result": 1,
