@@ -32,7 +32,7 @@ def get_containers(jwt: str, filter: str) -> str:
   containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], 'endpoints/1/docker/containers/json?all=true&filters={"label":["com.docker.compose.project=services"]}'), headers=headers).json()
   data = list()
   for container in containers:
-    logger.debug(container)
+    logger.debug(container["Names"])
     if filter in container["Names"]:
       data.append(container)      
 
