@@ -1,6 +1,4 @@
 .pytest_cache
 data
-nginx
-venv
 .idea
 .vscode
