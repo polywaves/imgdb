@@ -24,24 +24,16 @@ def get_portainer_jwt() -> str:
 
 
 def get_portainer_containers(jwt: str, filter: str) -> str:
-  payload = {
-    "all": True,
-    "filters": {
-      "label": ["com.docker.compose.project=services"]
-    }
-  }
   headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {jwt}"
   }
 
   containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], 'endpoints/1/docker/containers/json?all=true&filters={"label":["com.docker.compose.project=services"]}'), headers=headers).json()
-  logger.debug(containers)
   data = list()
   for container in containers:
-    logger.debug(container)
-    # if filter in container["Names"][0]:
-    #   data.append(container)      
+    if filter in container["Names"][0]:
+      data.append(container)      
 
   return data
 
