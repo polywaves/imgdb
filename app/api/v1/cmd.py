@@ -35,7 +35,7 @@ def get_portainer_containers(jwt: str, filter: str) -> str:
     "Authorization": f"Bearer {jwt}"
   }
 
-  containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], "endpoints/1/docker/containers/json"), headers=headers, params=payload).json()
+  containers = requests.request("GET", os.path.join(os.environ["PORTAINER_HOST"], "endpoints/1/docker/v1.41/containers/json"), headers=headers, params=payload).json()
   logger.debug(containers)
   data = list()
   for container in containers:
