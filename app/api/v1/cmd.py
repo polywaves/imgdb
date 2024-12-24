@@ -57,10 +57,13 @@ async def restart_neuro():
   containers = get_containers(jwt=jwt, filter="node")
 
   for container in containers:
-    restart = restart_container(jwt=jwt, id=container["Id"])
+    logger.debug(container)
 
-    logger.debug(restart)
+    # restart = restart_container(jwt=jwt, id=container["Id"])
+
+    # logger.debug(restart)
 
   return response_util.response({
-    "result": 1
+    "result": 1,
+    "data": containers
   }, start_time=start_time)
