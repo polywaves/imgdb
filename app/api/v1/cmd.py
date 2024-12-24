@@ -47,7 +47,7 @@ def restart_container(jwt: str, id: str) -> str:
     "Authorization": f"Bearer {jwt}"
   }
 
-  response = requests.request("POST", os.path.join(os.environ["PORTAINER_HOST"], f"endpoints/1/docker/containers/{id}/restart"), headers=headers).json()  
+  response = requests.request("POST", os.path.join(os.environ["PORTAINER_HOST"], f"endpoints/1/docker/containers/{id}/restart"), headers=headers).text
 
   return response
 
