@@ -1,0 +1,32 @@
+services:
+  api:
+    build:
+      context: .
+    restart: always
+    env_file:
+      - .env_api
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /mnt/sda1:/mnt/sda1
+      - /mnt/sdb1:/mnt/sdb1
+      - /mnt/sdc1:/mnt/sdc1
+    deploy:
+      mode: replicated
+      replicas: 20
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["gpu"]
+      networks:
+        - api
+
+
+networks:
+  api:
+    ipam:
+      driver: bridge
+      config:
+        - subnet: 172.21.0.0/16

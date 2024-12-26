@@ -1,0 +1,137 @@
+services:
+  node1:
+    hostname: node1
+    init: true
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
+    restart: on-failure:0
+    volumes:
+      - /mnt/sdc1/data/weaviate_node_1:/var/lib/weaviate
+    env_file:
+      - .env_weaviate
+    environment:
+      - IMAGE_INFERENCE_API=http://172.20.0.5:8080
+      - CLUSTER_HOSTNAME=node1
+      - CLUSTER_GOSSIP_BIND_PORT=7100
+      - CLUSTER_DATA_BIND_PORT=7101
+    networks:
+      weaviate:
+        ipv4_address: 172.19.0.5
+
+  node2:
+    hostname: node2
+    init: true
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
+    restart: on-failure:0
+    volumes:
+      - /mnt/sdc1/data/weaviate_node_2:/var/lib/weaviate
+    env_file:
+      - .env_weaviate
+    environment:
+      - IMAGE_INFERENCE_API=http://172.20.0.8:8080
+      - CLUSTER_HOSTNAME=node2
+      - CLUSTER_GOSSIP_BIND_PORT=7102
+      - CLUSTER_DATA_BIND_PORT=7103
+      - CLUSTER_JOIN=node1:7100
+    networks:
+      weaviate:
+        ipv4_address: 172.19.0.8
+    depends_on:
+      - node1
+
+  node3:
+    hostname: node3
+    init: true
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
+    restart: on-failure:0
+    volumes:
+      - /mnt/sda1/data/weaviate_node_3:/var/lib/weaviate
+    env_file:
+      - .env_weaviate
+    environment:
+      - IMAGE_INFERENCE_API=http://172.20.0.10:8080
+      - CLUSTER_HOSTNAME=node3
+      - CLUSTER_GOSSIP_BIND_PORT=7104
+      - CLUSTER_DATA_BIND_PORT=7105
+      - CLUSTER_JOIN=node1:7100
+    networks:
+      weaviate:
+        ipv4_address: 172.19.0.10
+    depends_on:
+      - node2
+
+  node4:
+    hostname: node4
+    init: true
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
+    restart: on-failure:0
+    volumes:
+      - /mnt/sda1/data/weaviate_node_4:/var/lib/weaviate
+    env_file:
+      - .env_weaviate
+    environment:
+      - IMAGE_INFERENCE_API=http://172.20.0.12:8080
+      - CLUSTER_HOSTNAME=node4
+      - CLUSTER_GOSSIP_BIND_PORT=7106
+      - CLUSTER_DATA_BIND_PORT=7107
+      - CLUSTER_JOIN=node1:7100
+    networks:
+      weaviate:
+        ipv4_address: 172.19.0.12
+    depends_on:
+      - node3
+
+  node5:
+    hostname: node5
+    init: true
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
+    restart: on-failure:0
+    volumes:
+      - /mnt/sdb1/data/weaviate_node_5:/var/lib/weaviate
+    env_file:
+      - .env_weaviate
+    environment:
+      - IMAGE_INFERENCE_API=http://172.20.0.14:8080
+      - CLUSTER_HOSTNAME=node5
+      - CLUSTER_GOSSIP_BIND_PORT=7108
+      - CLUSTER_DATA_BIND_PORT=7109
+      - CLUSTER_JOIN=node1:7100
+    networks:
+      weaviate:
+        ipv4_address: 172.19.0.14
+    depends_on:
+      - node4
+
+  node6:
+    hostname: node6
+    init: true
+    command: --host 0.0.0.0 --port 8080 --scheme http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.2
+    restart: on-failure:0
+    volumes:
+      - /mnt/sdb1/data/weaviate_node_6:/var/lib/weaviate
+    env_file:
+      - .env_weaviate
+    environment:
+      - IMAGE_INFERENCE_API=http://172.20.0.16:8080
+      - CLUSTER_HOSTNAME=node6
+      - CLUSTER_GOSSIP_BIND_PORT=7110
+      - CLUSTER_DATA_BIND_PORT=7111
+      - CLUSTER_JOIN=node1:7100
+    networks:
+      weaviate:
+        ipv4_address: 172.19.0.16
+    depends_on:
+      - node5
+
+
+networks:
+  weaviate:
+    ipam:
+      driver: bridge
+      config:
+        - subnet: 172.19.0.0/16

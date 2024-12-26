@@ -1,0 +1,105 @@
+services:
+  i2v1:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
+    env_file:
+      - .env_i2v
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    networks:
+      i2v:
+        ipv4_address: 172.20.0.5
+
+  i2v2:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
+    env_file:
+      - .env_i2v
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    networks:
+      i2v:
+        ipv4_address: 172.20.0.8
+
+  i2v3:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
+    env_file:
+      - .env_i2v
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    networks:
+      i2v:
+        ipv4_address: 172.20.0.10
+
+  i2v4:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
+    env_file:
+      - .env_i2v
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    networks:
+      i2v:
+        ipv4_address: 172.20.0.12
+
+  i2v5:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
+    env_file:
+      - .env_i2v
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    networks:
+      i2v:
+        ipv4_address: 172.20.0.14
+
+  i2v6:
+    image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
+    restart: always
+    env_file:
+      - .env_i2v
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["compute"]
+    networks:
+      i2v:
+        ipv4_address: 172.20.0.16
+
+
+networks:
+  i2v:
+    ipam:
+      driver: bridge
+      config:
+        - subnet: 172.20.0.0/16
+      
