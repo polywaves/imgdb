@@ -99,7 +99,7 @@ services:
 networks:
   i2v:
     ipam:
-      driver: bridge
+      driver: default
       config:
         - subnet: 172.20.0.0/16
       
