@@ -18,6 +18,8 @@ services:
         ipv4_address: 172.19.0.5
     extra_hosts:
       - i2v:172.20.0.5
+    ports:
+      - 172.19.0.5:8080:8080
 
   node2:
     hostname: node2

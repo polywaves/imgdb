@@ -14,6 +14,8 @@ services:
     networks:
       i2v:
         ipv4_address: 172.20.0.5
+    ports:
+      - 172.20.0.5:8080:8080
 
   i2v2:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
@@ -30,6 +32,8 @@ services:
     networks:
       i2v:
         ipv4_address: 172.20.0.8
+    ports:
+      - 172.20.0.8:8080:8080
 
   i2v3:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
@@ -46,6 +50,8 @@ services:
     networks:
       i2v:
         ipv4_address: 172.20.0.10
+    ports:
+      - 172.20.0.10:8080:8080
 
   i2v4:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
@@ -62,6 +68,8 @@ services:
     networks:
       i2v:
         ipv4_address: 172.20.0.12
+    ports:
+      - 172.20.0.12:8080:8080
 
   i2v5:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
@@ -78,6 +86,8 @@ services:
     networks:
       i2v:
         ipv4_address: 172.20.0.14
+    ports:
+      - 172.20.0.14:8080:8080
 
   i2v6:
     image: cr.weaviate.io/semitechnologies/img2vec-pytorch:resnet50
@@ -94,6 +104,8 @@ services:
     networks:
       i2v:
         ipv4_address: 172.20.0.16
+    ports:
+      - 172.20.0.16:8080:8080
 
 
 networks:
