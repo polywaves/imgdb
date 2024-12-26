@@ -58,6 +58,7 @@ else:
 
   @app.middleware("http")
   async def http_processing(request: Request, call_next) -> any:
+    start_time = time()
     url = str(request.url)
     client_ip = request.client.host
     if os.environ["MODE"] == 'production' and "x-real-ip" in request.headers:
@@ -84,7 +85,8 @@ else:
       await mongo.requests_collection.insert_one({
         "client_ip": client_ip,
         "url": url,
-        "created_at": time()
+        "created_at": time(),
+        "duration": time() - start_time
       })
 
     return response
