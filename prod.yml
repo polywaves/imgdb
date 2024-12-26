@@ -105,7 +105,7 @@ services:
       - .env_i2v
     deploy:
       mode: replicated
-      replicas: 6
+      replicas: 12
       resources:
         reservations:
           devices:
