@@ -10,13 +10,14 @@ services:
     env_file:
       - .env_weaviate
     environment:
-      - IMAGE_INFERENCE_API=http://172.20.0.5:8080
       - CLUSTER_HOSTNAME=node1
       - CLUSTER_GOSSIP_BIND_PORT=7100
       - CLUSTER_DATA_BIND_PORT=7101
     networks:
       weaviate:
         ipv4_address: 172.19.0.5
+    extra_hosts:
+      - i2v:172.20.0.5
 
   node2:
     hostname: node2
@@ -29,7 +30,6 @@ services:
     env_file:
       - .env_weaviate
     environment:
-      - IMAGE_INFERENCE_API=http://172.20.0.8:8080
       - CLUSTER_HOSTNAME=node2
       - CLUSTER_GOSSIP_BIND_PORT=7102
       - CLUSTER_DATA_BIND_PORT=7103
@@ -37,6 +37,8 @@ services:
     networks:
       weaviate:
         ipv4_address: 172.19.0.8
+    extra_hosts:
+      - i2v:172.20.0.8
     depends_on:
       - node1
 
@@ -51,7 +53,6 @@ services:
     env_file:
       - .env_weaviate
     environment:
-      - IMAGE_INFERENCE_API=http://172.20.0.10:8080
       - CLUSTER_HOSTNAME=node3
       - CLUSTER_GOSSIP_BIND_PORT=7104
       - CLUSTER_DATA_BIND_PORT=7105
@@ -59,6 +60,8 @@ services:
     networks:
       weaviate:
         ipv4_address: 172.19.0.10
+    extra_hosts:
+      - i2v:172.20.0.10
     depends_on:
       - node2
 
@@ -73,7 +76,6 @@ services:
     env_file:
       - .env_weaviate
     environment:
-      - IMAGE_INFERENCE_API=http://172.20.0.12:8080
       - CLUSTER_HOSTNAME=node4
       - CLUSTER_GOSSIP_BIND_PORT=7106
       - CLUSTER_DATA_BIND_PORT=7107
@@ -81,6 +83,8 @@ services:
     networks:
       weaviate:
         ipv4_address: 172.19.0.12
+    extra_hosts:
+      - i2v:172.20.0.12
     depends_on:
       - node3
 
@@ -95,7 +99,6 @@ services:
     env_file:
       - .env_weaviate
     environment:
-      - IMAGE_INFERENCE_API=http://172.20.0.14:8080
       - CLUSTER_HOSTNAME=node5
       - CLUSTER_GOSSIP_BIND_PORT=7108
       - CLUSTER_DATA_BIND_PORT=7109
@@ -103,6 +106,8 @@ services:
     networks:
       weaviate:
         ipv4_address: 172.19.0.14
+    extra_hosts:
+      - i2v:172.20.0.14
     depends_on:
       - node4
 
@@ -117,7 +122,6 @@ services:
     env_file:
       - .env_weaviate
     environment:
-      - IMAGE_INFERENCE_API=http://172.20.0.16:8080
       - CLUSTER_HOSTNAME=node6
       - CLUSTER_GOSSIP_BIND_PORT=7110
       - CLUSTER_DATA_BIND_PORT=7111
@@ -125,6 +129,8 @@ services:
     networks:
       weaviate:
         ipv4_address: 172.19.0.16
+    extra_hosts:
+      - i2v:172.20.0.16
     depends_on:
       - node5
 
