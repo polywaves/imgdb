@@ -78,16 +78,19 @@ else:
         if not found:
           return JSONResponse(content="Access denied", status_code=403)
     
-    response = await call_next(request)
-
-    ## Count requests
-    if "_requests" not in url:
-      await mongo.requests_collection.insert_one({
-        "client_ip": client_ip,
-        "url": url,
-        "created_at": time(),
-        "duration": time() - start_time
-      })
+    try:
+      response = await call_next(request)
+    except Exception as e:
+      response = JSONResponse(content=str(e), status_code=500)
+    finally:
+      ## Count requests
+      if "_requests" not in url:
+        await mongo.requests_collection.insert_one({
+          "client_ip": client_ip,
+          "url": url,
+          "created_at": time(),
+          "duration": time() - start_time
+        })
 
     return response
 
