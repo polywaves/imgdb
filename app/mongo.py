@@ -34,6 +34,8 @@ async def migrate():
 
     await requests_collection.create_index("url")
     await requests_collection.create_index("created_at")
+    await requests_collection.create_index("duration")
+    await requests_collection.create_index("error")
   except Exception as e:
     logger.debug(e)
 

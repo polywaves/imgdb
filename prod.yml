@@ -78,7 +78,7 @@ services:
       - /mnt/sdc1:/mnt/sdc1
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 50
       resources:
         reservations:
           devices:
